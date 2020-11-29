@@ -8,24 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  registerMode = false;
-  users: any;
-  constructor(private http: HttpClient) { }
+
+  constructor() { }
 
   ngOnInit(): void {
   }
-  registerToggle(){
-    this.registerMode = !this.registerMode;
-  }
 
-  getUsers() {
-    this.http.get('https://localhost:5001/api/users').subscribe(
-      (users) => {
-        this.users = users;  //getting users from api and signing them to users in this class
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
 }

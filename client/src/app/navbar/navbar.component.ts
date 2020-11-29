@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { User } from '../_models/user';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -10,11 +8,15 @@ import { AccountService } from '../_services/account.service';
 })
 export class NavbarComponent implements OnInit {
   model: any = {};
-  
+  registerMode = false;
   constructor(public accountService: AccountService) { }
 
   ngOnInit(): void {
   
+  }
+
+  registerToggle(){
+    this.registerMode = !this.registerMode;
   }
 
   login(){
@@ -34,10 +36,11 @@ export class NavbarComponent implements OnInit {
     this.accountService.currentUser$.subscribe(user => {
     }, error => {
         console.log(error);
-    })
+    });
   }
 
-
-
+  cancelRegisterMode(event: boolean){
+    this.registerMode = event;
+  }
 
 }
