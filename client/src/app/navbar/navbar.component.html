@@ -1,22 +1,22 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top "  style="background-color: #000000;">
 <div class="container">
-    <a class="navbar-brand" href="#">NeinGag</a>
+    <a class="navbar-brand" routerLink='/' >NeinGag</a>
     
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Popular</a>
+          <a class="nav-link" routerLink='/memes' routerLinkActive='active'>ALL MEMES</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Fresh</a>
+          <a class="nav-link" routerLink='/lists' routerLinkActive='active' >Lists</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Bonk</a>
+          <a class="nav-link" routerLink='/errors' routerLinkActive='active' >Erorr</a>
         </li>
         
       </ul>
 
-      <div class="dropdown" *ngIf="accountService.currentUser$ | async" dropdown>
-        <a class="dropdown-toggle text-light" dropdownToggle>Welcome </a>
+      <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+        <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.username | titlecase}}</a>
         <div class="dropdown-menu mt-3" *dropdownMenu>
           <a class="dropdown-item">My Profile</a>
           <div class="dropdown-divider"></div>

@@ -1,4 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -9,7 +11,8 @@ import { AccountService } from '../_services/account.service';
 export class NavbarComponent implements OnInit {
   model: any = {};
   registerMode = false;
-  constructor(public accountService: AccountService) { }
+  constructor(public accountService: AccountService, private router: Router,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
   
@@ -21,14 +24,13 @@ export class NavbarComponent implements OnInit {
 
   login(){
    this.accountService.login(this.model).subscribe(response => {
-     console.log(response);
-   }, error => {
-     console.log(error);
+     this.router.navigateByUrl('/memes');
    });
   }
 
   logout(){
     this.accountService.logout();
+    this.router.navigateByUrl('/');
     
   }
 
