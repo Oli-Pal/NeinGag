@@ -1,1 +1,41 @@
-<p>meme-detail works!</p>
+<div class="container mt-2" >
+    <div class="card mb-4">
+        <div class="card-header">Category: {{member?.country}} do zmiany na
+        </div>
+        <div class="card-img-wrapper">
+            <img src="{{member?.photoUrl}}" alt="{{member?.username}}" class="card-img-top">
+        </div>
+        <div class="card-body p-1">
+            <h6 class="card-title ">
+                <div class="d-flex">
+                <li class="list-inline-item "><p>100 points</p></li>
+                <li class="list-inline-item mr-auto"><p>90 comments</p></li>
+                <li class="list-inline-item "><p>Posted by: {{member?.username | titlecase}}</p></li>
+            </div>
+               <ul class="list-inline d-flex animate member-icons ml-2">
+                   <ng-container>
+                   <li class="list-inline-item "><button class="btn btn-success"><i class="fa fa-thumbs-up"></i></button></li>
+                   <li class="list-inline-item mr-auto "><button class="btn btn-danger"><i class="fa fa-thumbs-down"></i></button></li>
+                   <li class="list-inline-item mr-2"><button class="btn btn-warning" 
+                    routerLink="/detail/{{member?.username}}"><i class="fa fa-user"></i></button></li>
+                    </ng-container>
+            </ul>
+              
+            </h6>
+        </div>
+    </div>
+    <div class="container comments">
+        <!-- <form #commentForm="ngForm" style="margin-top: 50px;" (ngSubmit)="register()" autocomplete="off" > -->
+            <form>
+            <div class="form-group d-flex">
+    
+            <textarea type="text" class="form-control" rows="3" placeholder="Write your comments"></textarea>
+            <button class="btn btn-success " type="submit"> Post </button>
+            <button class="btn btn-danger " type="button">Cancel</button>
+        </div>
+    
+        </form>
+        
+    
+    </div> 
+    </div>
