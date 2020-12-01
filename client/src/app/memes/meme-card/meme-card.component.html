@@ -3,7 +3,7 @@
     </div>
     <div class="card-img-wrapper" >
         <ng-container>
-        <img src="{{member?.photoUrl}}" routerLink="/memes/{{member?.username}}"  alt="{{member?.username}}" class="card-img-top">
+        <img src="{{member?.photoUrl || '/client/src/assets/img/user.png'}}" routerLink="/memes/{{member?.username}}"  alt="{{member?.username}}" class="card-img-top">
     </ng-container>
 </div>
     <div class="card-body p-1">
