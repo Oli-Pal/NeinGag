@@ -1,9 +1,10 @@
-<div class="card mb-4" >
-    <div class="card-header">Category: {{member?.country}} do zmiany na
+<div class="card mb-4" *ngFor="let photo of member.photos" >
+    <div class="card-header">Category: {{photo?.description}} 
     </div>
     <div class="card-img-wrapper" >
         <ng-container>
-        <img src="{{member?.photoUrl || '/client/src/assets/img/user.png'}}" routerLink="/memes/{{member?.username}}"  alt="{{member?.username}}" class="card-img-top">
+
+        <img src="{{photo?.url || '/client/src/assets/img/user.png'}}" routerLink="/memes/{{member?.username}}"  alt="{{member?.username}}" class="card-img-top">
     </ng-container>
 </div>
     <div class="card-body p-1">
