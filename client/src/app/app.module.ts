@@ -22,6 +22,7 @@ import { MemeCardComponent } from './memes/meme-card/meme-card.component';
 import { MemeCommentsComponent } from './memes/meme-comments/meme-comments.component';
 import { MemberDetailComponent } from './memes/member-detail/member-detail.component';
 import { MemeDetailComponent } from './memes/meme-detail/meme-detail.component';
+import { MemberEditComponent } from './memes/member-edit/member-edit.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MemeDetailComponent } from './memes/meme-detail/meme-detail.component';
     MemeCardComponent,
     MemeCommentsComponent,
     MemberDetailComponent,
-    MemeDetailComponent
+    MemeDetailComponent,
+    MemberEditComponent
   ],
   imports: [
     BrowserModule,

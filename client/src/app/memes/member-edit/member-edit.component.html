@@ -1,0 +1,52 @@
+<div class="container mt-4">
+    <div class="row">
+     
+      <div class="col-4">
+        <div class="card">
+          <img class="card-img-top img-thumbnail" src="{{photoUrl || '../../../../../assets/img/user.png" 
+          alt="{{member?.nickname}}">
+          <div class="card-body">
+            <div>
+              <strong>Location:</strong>
+              <p> {{member?.country}}</p>
+            </div>
+            <div>
+              <strong>Age:</strong>
+              <p>{{member?.age}}</p>
+            </div>
+            <div>
+              <strong>Last Active:</strong>
+              <p>{{member?.lastActive}}</p>
+            </div>
+            <div>
+              <strong>Member Since:</strong>
+              <p>{{member?.created | date: 'mediumDate'}}</p>
+            </div>
+          </div>
+          <div class="card-footer">
+              <button  form="editform" class="btn btn-success btn-block">Save Changes</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="tab-pannel">
+          <tabset class="member-tabset">
+          <tab heading="Edit Profile">
+            <form id="editform" >
+            <h4>Location Details:</h4>
+            <div class="form-inline">
+              <label for="country">Country</label>
+              <input type="text" class="form-control" name="country">
+            </div>
+            </form>
+          </tab>
+          <tab heading="Edit Photos">
+   
+          </tab>
+      
+  
+          </tabset>
+        </div>
+      </div>
+    </div>
+  </div>

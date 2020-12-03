@@ -11,24 +11,13 @@ import { MembersService } from 'src/app/_services/members.service';
 })
 export class MemberDetailComponent implements OnInit {
   member: Member;
-  galleryOptions: NgxGalleryOptions[];
-  galleryImages: NgxGalleryImage[];
+
 
   constructor(private memberService: MembersService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.loadMember();
 
-    this.galleryOptions = [
-      {
-        width: '600px',
-        height: '400px',
-        imagePercent: 100,
-        thumbnailsColumns: 4,
-        imageAnimation: NgxGalleryAnimation.Slide,
-        preview: false
-      }
-    ]
   }
   
   getImages(): NgxGalleryImage[] {
@@ -47,7 +36,6 @@ export class MemberDetailComponent implements OnInit {
     this.memberService.getMember(this.route.snapshot.paramMap.get('username'))
     .subscribe(member => {
       this.member = member;
-      this.galleryImages = this.getImages();
     });
   }
 }

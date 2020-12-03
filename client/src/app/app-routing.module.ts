@@ -6,6 +6,7 @@ import { TestErrorsComponent } from './errors/test-errors/test-errors.component'
 import { HomeComponent } from './home/home.component';
 import { ListsComponent } from './lists/lists.component';
 import { MemberDetailComponent } from './memes/member-detail/member-detail.component';
+import { MemberEditComponent } from './memes/member-edit/member-edit.component';
 import { MemeCommentsComponent } from './memes/meme-comments/meme-comments.component';
 import { MemeDetailComponent } from './memes/meme-detail/meme-detail.component';
 import { MemeListComponent } from './memes/meme-list/meme-list.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
     children: [
       {path: 'memes/:username', component: MemeDetailComponent},
       {path: 'detail/:username', component: MemberDetailComponent},
+      {path: 'edit', component: MemberEditComponent},
       {path: 'messages', component: MessagesComponent}
     ]
   },
