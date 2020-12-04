@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Photo } from '../_models/photo';
 import { User } from '../_models/user';
 
 @Injectable({
@@ -17,34 +18,36 @@ export class AccountService {
 
   constructor(private http: HttpClient) { }
 
-  register(model: any){
-    return this.http.post(this.baseUrl + 'account/register', model).pipe(
-      map((user: User) => {
-        if (user){
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentUserSource.next(user);
-        }
-      })
-    );
-
-  }
-
-  login(model: any){ // after , we specify what body our post will have
+  login(model: any) {
     return this.http.post(this.baseUrl + 'account/login', model).pipe(
       map((response: User) => {
         const user = response;
-        if (user){
-          localStorage.setItem('user', JSON.stringify(user)); //populating user inside localstorage in browser, changing object to string
-          this.currentUserSource.next(user); //setting this to currentuser we get back from api
+        if (user) {
+          this.setCurrentUser(user);
         }
       })
     );
   }
 
+  register(model: any) {
+    return this.http.post(this.baseUrl + 'account/register', model).pipe(
+      map((user: User) => {
+        if (user) {
+         this.setCurrentUser(user);
+        }
+      })
+    );
+  }
+
+
+
   setCurrentUser(user: User){
+    localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
 
   }
+
+
 
   logout(){
     localStorage.removeItem('user');

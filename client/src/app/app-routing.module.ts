@@ -10,6 +10,7 @@ import { MemberEditComponent } from './memes/member-edit/member-edit.component';
 import { MemeCommentsComponent } from './memes/meme-comments/meme-comments.component';
 import { MemeDetailComponent } from './memes/meme-detail/meme-detail.component';
 import { MemeListComponent } from './memes/meme-list/meme-list.component';
+import { PhotoEditorComponent } from './memes/photo-editor/photo-editor.component';
 import { MessagesComponent } from './messages/messages.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './_guards/auth.guard';
@@ -24,7 +25,8 @@ const routes: Routes = [
       {path: 'memes/:username', component: MemeDetailComponent},
       {path: 'detail/:username', component: MemberDetailComponent},
       {path: 'edit', component: MemberEditComponent},
-      {path: 'messages', component: MessagesComponent}
+      {path: 'messages', component: MessagesComponent},
+      {path: 'add-photo', component: PhotoEditorComponent}
     ]
   },
   {path: 'memes', component: MemeListComponent},

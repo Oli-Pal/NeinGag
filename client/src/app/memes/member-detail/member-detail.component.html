@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-4">
       <div class="card">
-        <img class="card-img-top img-thumbnail" src="{{member?.photoUrl}}" alt="{{member?.nickname}}">
+        <img class="card-img-top img-thumbnail" src="../../../../../assets/img/user.png" alt="{{member?.nickname}}">
         <div class="card-body">
           <div>
             <strong>Name:</strong>
@@ -43,7 +43,10 @@
           <p>dddddd</p>
         </tab>
         <tab heading="Messages">
-          <p>Messages will go here</p>
+          <p *ngFor="let photo of member.photos">
+            <img src="{{photo.url}}" alt="DDDDDDd">
+          </p>
+          
         </tab>
 
         </tabset>

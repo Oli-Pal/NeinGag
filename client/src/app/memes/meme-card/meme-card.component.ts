@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Member } from 'src/app/_models/member';
+import { Photo } from 'src/app/_models/photo';
 
 @Component({
   selector: 'app-meme-card',
@@ -8,6 +9,7 @@ import { Member } from 'src/app/_models/member';
 })
 export class MemeCardComponent implements OnInit {
   @Input() member: Member;
+  @Input() photo: Photo;
     constructor() { }
 
   ngOnInit(): void {

@@ -10,10 +10,15 @@
           <a class="nav-link" routerLink='/lists' routerLinkActive='active' >Fresh</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink='/errors' routerLinkActive='active' >Erorr</a>
+          <a class="nav-link" routerLink='/add-photo' routerLinkActive='active' >Upload Photo</a>
         </li>
-        
+        <!-- <li class="nav-item">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Launch demo modal
+        </button>
+      </li> -->
       </ul>
+      
 
       <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
         <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.username | titlecase}}</a>

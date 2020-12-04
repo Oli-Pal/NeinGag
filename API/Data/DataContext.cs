@@ -11,5 +11,6 @@ namespace API.Data
         }
 
         public DbSet<AppUser> Users { get; set; }  //<> class that we want to create 
+        public DbSet<Photo> Photos { get; set; }
     }
 }

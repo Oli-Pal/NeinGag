@@ -48,6 +48,13 @@ namespace API.Data
             .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
+        // public async Task<Photo> GetDescriptionOfPhotoAsync(string description)
+        // {
+        //     return await _context.Photos
+        //     .Include(p => p.Url)
+        //     .SingleOrDefaultAsync(x => x.Description == description);
+        // }
+
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
             return await _context.Users

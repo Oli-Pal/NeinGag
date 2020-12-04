@@ -23,6 +23,7 @@ import { MemeCommentsComponent } from './memes/meme-comments/meme-comments.compo
 import { MemberDetailComponent } from './memes/member-detail/member-detail.component';
 import { MemeDetailComponent } from './memes/meme-detail/meme-detail.component';
 import { MemberEditComponent } from './memes/member-edit/member-edit.component';
+import { PhotoEditorComponent } from './memes/photo-editor/photo-editor.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MemberEditComponent } from './memes/member-edit/member-edit.component';
     MemeCommentsComponent,
     MemberDetailComponent,
     MemeDetailComponent,
-    MemberEditComponent
+    MemberEditComponent,
+    PhotoEditorComponent
   ],
   imports: [
     BrowserModule,
