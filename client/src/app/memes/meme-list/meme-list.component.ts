@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Console } from 'console';
 import { Member } from 'src/app/_models/member';
 import { Pagination } from 'src/app/_models/pagination';
 import { MembersService } from 'src/app/_services/members.service';
@@ -30,8 +29,12 @@ export class MemeListComponent implements OnInit {
     this.memberService.getMembers(this.pageNumber, this.pageSize).subscribe(response => {
       this.members = response.result;
       this.pagination = response.pagination;
-      console.log('huj');
     });
+  }
+  
+  pageChanged(event: any){
+    this.pageNumber = event.page;
+    this.loadMembers();
   }
 
 
