@@ -8,8 +8,7 @@ import { Photo } from 'src/app/_models/photo';
   styleUrls: ['./meme-card.component.css']
 })
 export class MemeCardComponent implements OnInit {
-  @Input() member: Member;
-  @Input() photo: Photo;
+  @Input() photos: Photo;
     constructor() { }
 
   ngOnInit(): void {

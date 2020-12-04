@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Member } from 'src/app/_models/member';
+import { Photo } from 'src/app/_models/photo';
 import { MembersService } from 'src/app/_services/members.service';
+import { PhotosService } from 'src/app/_services/photos.service';
 
 @Component({
   selector: 'app-meme-list',
@@ -9,17 +11,20 @@ import { MembersService } from 'src/app/_services/members.service';
 })
 export class MemeListComponent implements OnInit {
   members: Member[];
+  photos: Photo[];
 
-  constructor(private memberService: MembersService) { }
+  constructor(private memberService: MembersService, private photosService: PhotosService) { }
 
   ngOnInit(): void {
-    this.loadMembers();
+    this.loadPhotos();
   }
 
-  loadMembers(){
-    this.memberService.getMembers().subscribe(members => {
-      this.members = members;
+
+  loadPhotos(){
+    this.photosService.getPhotos().subscribe(photos => {
+      this.photos = photos;
     });
   }
+
 
 }

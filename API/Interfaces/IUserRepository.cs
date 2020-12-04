@@ -19,5 +19,7 @@ namespace API.Interfaces
         // Task<Photo> GetDescriptionOfPhotoAsync(string description);
         Task<IEnumerable<MemberDto>> GetMembersAsync();
         Task<MemberDto> GetMemberAsync(string username);
+
+        Task<IEnumerable<PhotoMemeDto>> GetPhotosByIdAsync();
     }
 }

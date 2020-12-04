@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Member } from '../_models/member';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Photo } from '../_models/photo';
 
 @Injectable({
   providedIn: 'root'
