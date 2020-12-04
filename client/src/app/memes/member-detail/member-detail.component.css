@@ -6,12 +6,11 @@
     }
     .card-body{
     padding: 0 25px;
-   /* background-color: rgb(104, 104, 104);*/
     }
     
     .card-footer{
     padding: 10px 15px;
-   /* background-color: rgb(17, 17, 17);*/
+    background-color: #fff;
     border-top: none;
     
     

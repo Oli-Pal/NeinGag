@@ -4,7 +4,6 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FileUploadModule } from 'ng2-file-upload';
-import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   declarations: [],
@@ -15,15 +14,13 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
       positionClass: 'toast-bottom-right'
     }),
     TabsModule.forRoot(),
-    FileUploadModule,
-    PaginationModule.forRoot()
+    FileUploadModule
   ],
   exports: [
     BsDropdownModule,
     ToastrModule,
     TabsModule,
-    FileUploadModule,
-    PaginationModule
+    FileUploadModule
   ]
 })
 export class SharedModule { }
