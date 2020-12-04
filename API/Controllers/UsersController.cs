@@ -40,7 +40,7 @@ namespace API.Controllers
         [HttpGet("photos")]
         public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPhotos()
         {
-            var photos = await _userRepository.GetPhotosByIdAsync();
+            var photos = await _userRepository.GetPhotosAsync();
 
             return Ok(photos);
         }

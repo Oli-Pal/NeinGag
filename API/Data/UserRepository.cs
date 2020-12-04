@@ -35,9 +35,11 @@ namespace API.Data
                     .ToListAsync();
         }
 
-        public async Task<IEnumerable<PhotoMemeDto>> GetPhotosByIdAsync()
+        public async Task<IEnumerable<PhotoMemeDto>> GetPhotosAsync()
         {
-            return await _context.Photos.ProjectTo<PhotoMemeDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _context.Photos.ProjectTo<PhotoMemeDto>(_mapper.ConfigurationProvider)
+            .OrderByDescending(x => x.Id)
+            .ToListAsync();
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)
@@ -53,12 +55,7 @@ namespace API.Data
             .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
-        // public async Task<Photo> GetDescriptionOfPhotoAsync(string description)
-        // {
-        //     return await _context.Photos
-        //     .Include(p => p.Url)
-        //     .SingleOrDefaultAsync(x => x.Description == description);
-        // }
+    
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {

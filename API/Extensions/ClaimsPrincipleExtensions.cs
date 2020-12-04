@@ -9,9 +9,6 @@ namespace API.Extensions
             return user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
 
-        //  public static string GetDescription(this ClaimsPrincipal photo)
-        // {
-        //     return photo.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        // }
+    
     }
 }
