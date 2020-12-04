@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Member } from 'src/app/_models/member';
-import { Pagination } from 'src/app/_models/pagination';
+import { Photo } from 'src/app/_models/photo';
 import { MembersService } from 'src/app/_services/members.service';
+import { PhotosService } from 'src/app/_services/photos.service';
 
 @Component({
   selector: 'app-meme-list',
@@ -10,31 +11,19 @@ import { MembersService } from 'src/app/_services/members.service';
 })
 export class MemeListComponent implements OnInit {
   members: Member[];
-  pagination: Pagination;
-  pageNumber = 1;
-  pageSize = 5;
+  photos: Photo[];
 
-  constructor(private memberService: MembersService) { }
+  constructor(private memberService: MembersService, private photosService: PhotosService) { }
 
   ngOnInit(): void {
-    //this.members$ = this.memberService.getMembers();
-    this.loadMembers();
+    this.loadPhotos();
   }
 
-  loadMembers(){
-    // this.memberService.getMembers().subscribe(members => {
-    //   this.members = members;
-    // });
 
-    this.memberService.getMembers(this.pageNumber, this.pageSize).subscribe(response => {
-      this.members = response.result;
-      this.pagination = response.pagination;
+  loadPhotos(){
+    this.photosService.getPhotos().subscribe(photos => {
+      this.photos = photos;
     });
-  }
-  
-  pageChanged(event: any){
-    this.pageNumber = event.page;
-    this.loadMembers();
   }
 
 

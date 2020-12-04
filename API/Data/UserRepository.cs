@@ -38,6 +38,11 @@ namespace API.Data
                     
         }
 
+        public async Task<IEnumerable<PhotoMemeDto>> GetPhotosByIdAsync()
+        {
+            return await _context.Photos.ProjectTo<PhotoMemeDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.Users
@@ -74,5 +79,7 @@ namespace API.Data
         {
             _context.Entry(user).State = EntityState.Modified; //adds flag to entity that it has been modified
         }
+
+       
     }
 }

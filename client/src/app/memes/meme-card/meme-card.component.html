@@ -1,10 +1,10 @@
-<div class="card mb-4" *ngFor="let photo of member.photos" >
-    <div class="card-header">Category: {{photo?.description}} 
+<div class="card mb-4" >
+    <div class="card-header">Category: {{photos?.description}} 
     </div>
     <div class="card-img-wrapper" >
         <ng-container>
 
-        <img src="{{photo?.url || '/client/src/assets/img/user.png'}}" routerLink="/memes/{{member?.username}}"  alt="{{member?.username}}" class="card-img-top">
+        <img src="{{photos?.url || '/client/src/assets/img/user.png'}}" class="card-img-top">
     </ng-container>
 </div>
     <div class="card-body p-1">
@@ -12,7 +12,7 @@
             <div class="d-flex">
             <li class="list-inline-item "><p>100 points</p></li>
             <li class="list-inline-item mr-auto"><p>90 comments</p></li>
-            <li class="list-inline-item "><p>Posted by: {{member?.username | titlecase}}</p></li>
+            <li class="list-inline-item "><p>Posted by:{{photos?.nickname}}</p></li>
         </div>
            <ul class="list-inline d-flex animate member-icons ml-2">
             <ng-container>
@@ -20,7 +20,7 @@
                <li class="list-inline-item "><button class="btn btn-danger"><i class="fa fa-thumbs-down"></i></button></li>
                <li class="list-inline-item mr-auto"><button class="btn btn-primary" routerLink="/memes/comments">
                 <i class="fa fa-comments"></i></button></li>
-               <li class="list-inline-item mr-2"><button class="btn btn-warning"  routerLink="/detail/{{member?.username}}">
+               <li class="list-inline-item mr-2"><button class="btn btn-warning"  routerLink="/detail">
                 <i class="fa fa-user"></i></button></li>
             </ng-container>
             </ul>
