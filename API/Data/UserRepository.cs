@@ -36,12 +36,15 @@ namespace API.Data
                     .ToListAsync();
         }
 
-        public async Task<PagedList<PhotoMemeDto>> GetPhotosByIdAsync(UserParams userParams)
+        public async Task<PagedList<PhotoMemeDto>> GetPhotosAsync(UserParams userParams)
         {
             var query = _context.Photos
             .ProjectTo<PhotoMemeDto>(_mapper.ConfigurationProvider)
+            .OrderByDescending(x => x.Id)
             .AsNoTracking();
-            return await PagedList<PhotoMemeDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+
+            return await PagedList<PhotoMemeDto>
+            .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)
@@ -57,12 +60,7 @@ namespace API.Data
             .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
-        // public async Task<Photo> GetDescriptionOfPhotoAsync(string description)
-        // {
-        //     return await _context.Photos
-        //     .Include(p => p.Url)
-        //     .SingleOrDefaultAsync(x => x.Description == description);
-        // }
+    
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
