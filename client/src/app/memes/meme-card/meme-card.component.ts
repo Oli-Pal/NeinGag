@@ -5,6 +5,7 @@ import { Photo } from 'src/app/_models/photo';
 import { MembersService } from 'src/app/_services/members.service';
 import { AccountService } from 'src/app/_services/account.service';
 import { take } from 'rxjs/operators';
+import { User } from 'src/app/_models/user';
 
 
 @Component({
@@ -15,10 +16,19 @@ import { take } from 'rxjs/operators';
 export class MemeCardComponent implements OnInit {
   @Input() photos: Photo;
   @Input() member: Member;
+  user: User;
 
     constructor(private accountService: AccountService,
        private memberService: MembersService,
-        private toastr: ToastrService) { }
+        private toastr: ToastrService) {
+          this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
+            //debugger;
+            this.user = user;
+           // this.user.id = this.member.id;
+           //debugger;
+            //this.user.id = this.member.id;
+          });
+         }
 
         
 
@@ -27,8 +37,8 @@ export class MemeCardComponent implements OnInit {
 
   sendLike(photoId: number){
     
-    //this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.. = user);
-    this.memberService.sendLike(this.member.id, photoId).subscribe(data => {
+ 
+    this.memberService.sendLike(this.user.id, photoId).subscribe(data => {
 
       this.toastr.success('You have upvoted this meme')
       
