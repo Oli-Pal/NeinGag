@@ -36,14 +36,14 @@ namespace API.Data
                     .ToListAsync();
         }
 
-        public async Task<PagedList<PhotoMemeDto>> GetPhotosAsync(UserParams userParams)
+        public async Task<PagedList<PhotoDto>> GetPhotosAsync(UserParams userParams)
         {
             var query = _context.Photos
-            .ProjectTo<PhotoMemeDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
             .OrderByDescending(x => x.Id)
             .AsNoTracking();
 
-            return await PagedList<PhotoMemeDto>
+            return await PagedList<PhotoDto>
             .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
