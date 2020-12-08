@@ -133,5 +133,27 @@ namespace API.Controllers
 
             return BadRequest("Failed to delete the photo");
         }
+
+
+        [HttpPost("{id}/like/{photoId}")]
+        public async Task<IActionResult> LikeUser(int id, int photoId)
+        {
+            var like = await _userRepository.GetLike(id, photoId);
+            if(like != null)
+                return BadRequest("You already liked that photo");
+            if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
+                return NotFound();
+
+            like = new Like
+            {
+                LikerId = id,
+                LikeeId = photoId
+            };
+
+            _userRepository.Add<Like>(like);
+            if (await _userRepository.SaveAllAsync())
+                return Ok();
+            return BadRequest("Failed to like");
+        }
     }
 }

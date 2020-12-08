@@ -79,6 +79,28 @@ namespace API.Data
             _context.Entry(user).State = EntityState.Modified; //adds flag to entity that it has been modified
         }
 
+        //Likeeee
+        public async Task<Like> GetLike(int userId, int photoId)
+        {
+            return await _context.Likes.FirstOrDefaultAsync(u => u.LikerId == userId && u.LikeeId == photoId);
+        }
+
+        public async Task<Photo> GetPhotoByIdAsync(int id)
+        {
+            return await _context.Photos
+            .FindAsync(id);
+        }
+
+                public void Add<T>(T entity) where T : class
+        {
+            _context.Add(entity);
+        }
+
+        public void Delete<T>(T entity) where T : class
+        {
+            _context.Remove(entity);
+        }
+
        
     }
 }

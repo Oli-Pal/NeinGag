@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Entities
@@ -16,5 +17,7 @@ namespace API.Entities
         public AppUser AppUser { get; set; }
 
         public int AppUserId { get; set; }
+
+        public ICollection<Like> Likers { get; set; }
     }
 }
