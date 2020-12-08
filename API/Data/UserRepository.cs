@@ -43,8 +43,31 @@ namespace API.Data
             .OrderByDescending(x => x.Id)
             .AsNoTracking();
 
+//             var users = _context.Users.Include(p => p.Photos)
+//                 .OrderByDescending(x => x.LastActive).AsQueryable();
+//             users = users.Where(x => x.Id != userParams.UserId);
+// //like
+//             if(userParams.Likees)
+//             {
+                
+//                 var userLikees = await GetUserLikes(userParams.UserId);
+//                 users = users.Where(u => userLikees.Contains(u.Id));
+//             }
+            
+
             return await PagedList<PhotoDto>
             .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+
+            
+        }
+
+        public async Task<IEnumerable<int>> GetUserLikes(int id)
+        {
+            var user = await _context.Users
+                .Include(x => x.Likees)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            return user.Likees.Where(u => u.LikerId == id).Select(i => i.LikeeId);
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)

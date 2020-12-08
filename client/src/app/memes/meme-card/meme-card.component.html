@@ -11,12 +11,12 @@
         <h6 class="card-title ">
             <div class="d-flex">
             <li class="list-inline-item "><p>100 points</p></li>
-            <li class="list-inline-item mr-auto"><p>90 comments</p></li>
+            <li class="list-inline-item mr-auto"><p>1 comments</p></li>
             <li class="list-inline-item "><p>Posted by:{{photos?.nickname}}</p></li>
         </div>
            <ul class="list-inline d-flex animate member-icons ml-2">
             <ng-container>
-               <li class="list-inline-item "><button class="btn btn-success"><i class="fa fa-thumbs-up"></i></button></li>
+               <li class="list-inline-item "><button  class="btn btn-success" (click)="sendLike(photos.id)"><i class="fa fa-thumbs-up"></i></button></li>
                <li class="list-inline-item "><button class="btn btn-danger"><i class="fa fa-thumbs-down"></i></button></li>
                <li class="list-inline-item mr-auto"><button class="btn btn-primary" routerLink="/memes/comments">
                 <i class="fa fa-comments"></i></button></li>

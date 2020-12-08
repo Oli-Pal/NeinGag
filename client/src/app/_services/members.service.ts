@@ -30,6 +30,12 @@ export class MembersService {
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
 
+  getMemberById(id: number) {
+    const member = this.members.find(x => x.id === id);
+    if (member !== undefined) { return of(member); }
+    return this.http.get<Member>(this.baseUrl + 'users/' + id);
+  }
+
   setDescription(model: any){
     return this.http.post(this.baseUrl + 'add-photo/completed', model).pipe(
       map(() => {
@@ -43,5 +49,9 @@ export class MembersService {
 
   deletePhoto(photoId: number) {
     return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId);
+  }
+
+  sendLike(id: number, photoId: number){
+    return this.http.post(this.baseUrl + 'users/' + id + '/like/' + photoId, {})
   }
 }
