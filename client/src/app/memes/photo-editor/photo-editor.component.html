@@ -20,7 +20,7 @@
 
         <h3>Upload queue</h3>
         <p>Queue length: {{ uploader?.queue?.length }}</p>
-
+        <input type="text" (keyup)="onKey($event)" name="Description" placeholder="Write your description here">
         <table class="table">
             <thead>
             <tr>

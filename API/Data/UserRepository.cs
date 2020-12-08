@@ -60,7 +60,6 @@ namespace API.Data
             .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
-    
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
@@ -78,7 +77,6 @@ namespace API.Data
         {
             _context.Entry(user).State = EntityState.Modified; //adds flag to entity that it has been modified
         }
-
        
     }
 }

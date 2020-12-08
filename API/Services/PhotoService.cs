@@ -4,7 +4,6 @@ using API.Interfaces;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace API.Services

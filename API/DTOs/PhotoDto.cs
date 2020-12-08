@@ -8,7 +8,7 @@ namespace API.DTOs
 
         public string Description { get; set; }
 
-         public string Nickname{ get; set; }
+        public string Nickname{ get; set; }
         
     }
 }

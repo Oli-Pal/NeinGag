@@ -54,29 +54,14 @@ namespace API.Controllers
             return await _userRepository.GetMemberAsync(username);
         }
 
-        // [HttpPut]
-        // public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
-        // {
-
-        //     var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
-
-        //     _mapper.Map(memberUpdateDto, user);
-
-        //     _userRepository.Update(user);
-
-        //     if (await _userRepository.SaveAllAsync()) return NoContent();
-
-        //     return BadRequest("Failed to update user");
-        // }
-
         [HttpPost("add-photo")]
-        public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
+        public async Task<ActionResult<PhotoDto>> AddPhoto([FromForm] PhotoUpdateDto photoUpdateDto)
         {
+            
             var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
           
-            // var desc = await _userRepository.GetDescriptionOfPhotoAsync();
-           
-            var result = await _photoService.AddPhotoAsync(file);
+
+            var result = await _photoService.AddPhotoAsync(photoUpdateDto.File);
 
             if (result.Error != null) return BadRequest(result.Error.Message);
 
@@ -85,7 +70,7 @@ namespace API.Controllers
                 
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId,
-                // Description = desc.Description
+                Description = photoUpdateDto.Description
             };
 
             user.Photos.Add(photo);
@@ -99,19 +84,7 @@ namespace API.Controllers
             return BadRequest("Problem addding photo");
         }
 
-        // [HttpPut("set-main-photo/{photoId}")]
-        // public async Task<ActionResult> SetMainPhoto(int photoId)
-        // {
-        //     var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
-
-        //     var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
-
-
-        //     if (await _userRepository.SaveAllAsync()) return NoContent();
-
-        //     return BadRequest("Failed to set main photo");
-        // }
-
+    
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(int photoId)
         {
