@@ -40,8 +40,11 @@ namespace API.Data
         {
             var query = _context.Photos
             .ProjectTo<PhotoMemeDto>(_mapper.ConfigurationProvider)
+            .OrderByDescending(x => x.Id)
             .AsNoTracking();
-            return await PagedList<PhotoMemeDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+
+            return await PagedList<PhotoMemeDto>
+            .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)
