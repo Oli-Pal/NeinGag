@@ -6,6 +6,7 @@ using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -38,9 +39,11 @@ namespace API.Controllers
         }
 
         [HttpGet("photos")]
-        public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPhotos()
+        public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPhotos([FromQuery]UserParams userParams)
         {
-            var photos = await _userRepository.GetPhotosAsync();
+            var photos = await _userRepository.GetPhotosAsync(userParams);
+
+            Response.AddPaginationHeader(photos.CurrentPage, photos.PageSize, photos.TotalCount, photos.TotalCount);
 
             return Ok(photos);
         }
