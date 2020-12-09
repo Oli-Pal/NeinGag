@@ -3,4 +3,6 @@ export interface Photo {
     description: string;
     url: string;
     nickname: string;
+    likers: number;
+    amountOfLikes: number;
 }

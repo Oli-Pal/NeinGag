@@ -70,6 +70,17 @@ namespace API.Data
             return user.Likees.Where(u => u.LikerId == id).Select(i => i.LikeeId);
         }
 
+    //photolikes - zwracanie listy uzytkownikow ktorzy lubia zdjecie
+            public async Task<IEnumerable<int>> GetPhotoLikes(int id)
+        {
+            var user = await _context.Photos
+                .Include(x => x.Likers)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            return user.Likers.Where(u => u.LikeeId == id).Select(i => i.LikerId);
+        }
+
+
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.Users
@@ -110,6 +121,7 @@ namespace API.Data
 
         public async Task<Photo> GetPhotoByIdAsync(int id)
         {
+            
             return await _context.Photos
             .FindAsync(id);
         }

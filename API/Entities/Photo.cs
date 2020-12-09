@@ -19,5 +19,7 @@ namespace API.Entities
         public int AppUserId { get; set; }
 
         public ICollection<Like> Likers { get; set; }
+
+        public int AmountOfLikes{ get; set; } = 0;
     }
 }
