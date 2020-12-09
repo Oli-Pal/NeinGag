@@ -26,7 +26,9 @@ namespace API.Entities
 
         public ICollection<Photo> Photos { get; set; }
 
-      
+        //polubione zdjęcia
+        public ICollection<UserLike> LikedPhotos{ get; set; }
+        
 
         
         // public int GetAge(){
