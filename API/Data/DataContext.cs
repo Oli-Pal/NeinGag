@@ -12,24 +12,27 @@ namespace API.Data
 
         public DbSet<AppUser> Users { get; set; }  //<> class that we want to create 
         public DbSet<Photo> Photos { get; set; }
-        public DbSet<Like> Likes { get; set; }
+
+        public DbSet<UserLike> Likes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Like>()
-                .HasKey(k => new {k.LikerId, k.LikeeId});
+            base.OnModelCreating(builder);
 
-            builder.Entity<Like>()
-                .HasOne(u => u.Likee)
-                .WithMany(u => u.Likers)
-                .HasForeignKey(u => u.LikeeId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<UserLike>()
+            .HasKey(k => new {k.SourceUserId, k.LikedPhotoId});
 
-            builder.Entity<Like>()
-                .HasOne(u => u.Liker)
-                .WithMany(u => u.Likees)
-                .HasForeignKey(u => u.LikerId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<UserLike>()
+            .HasOne(s => s.SourceUser)
+            .WithMany(l => l.LikedPhotos)
+            .HasForeignKey(s => s.SourceUserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<UserLike>()
+            .HasOne(s => s.LikedPhoto)
+            .WithMany(l => l.LikedByUsers)
+            .HasForeignKey(s => s.LikedPhotoId)
+            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

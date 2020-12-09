@@ -43,31 +43,8 @@ namespace API.Data
             .OrderByDescending(x => x.Id)
             .AsNoTracking();
 
-//             var users = _context.Users.Include(p => p.Photos)
-//                 .OrderByDescending(x => x.LastActive).AsQueryable();
-//             users = users.Where(x => x.Id != userParams.UserId);
-// //like
-//             if(userParams.Likees)
-//             {
-                
-//                 var userLikees = await GetUserLikes(userParams.UserId);
-//                 users = users.Where(u => userLikees.Contains(u.Id));
-//             }
-            
-
             return await PagedList<PhotoDto>
             .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
-
-            
-        }
-
-        public async Task<IEnumerable<int>> GetUserLikes(int id)
-        {
-            var user = await _context.Users
-                .Include(x => x.Likees)
-                .FirstOrDefaultAsync(u => u.Id == id);
-
-            return user.Likees.Where(u => u.LikerId == id).Select(i => i.LikeeId);
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)
@@ -100,29 +77,6 @@ namespace API.Data
         {
             _context.Entry(user).State = EntityState.Modified; //adds flag to entity that it has been modified
         }
-
-        //Likeeee
-        public async Task<Like> GetLike(int userId, int photoId)
-        {
-            return await _context.Likes.FirstOrDefaultAsync(u => u.LikerId == userId && u.LikeeId == photoId);
-        }
-
-        public async Task<Photo> GetPhotoByIdAsync(int id)
-        {
-            return await _context.Photos
-            .FindAsync(id);
-        }
-
-                public void Add<T>(T entity) where T : class
-        {
-            _context.Add(entity);
-        }
-
-        public void Delete<T>(T entity) where T : class
-        {
-            _context.Remove(entity);
-        }
-
        
     }
 }
