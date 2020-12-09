@@ -51,6 +51,21 @@ namespace API.Data.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("API.Entities.Like", b =>
+                {
+                    b.Property<int>("LikerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("LikeeId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("LikerId", "LikeeId");
+
+                    b.HasIndex("LikeeId");
+
+                    b.ToTable("Likes");
+                });
+
             modelBuilder.Entity("API.Entities.Photo", b =>
                 {
                     b.Property<int>("Id")
@@ -76,19 +91,23 @@ namespace API.Data.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("API.Entities.UserLike", b =>
+            modelBuilder.Entity("API.Entities.Like", b =>
                 {
-                    b.Property<int>("SourceUserId")
-                        .HasColumnType("INTEGER");
+                    b.HasOne("API.Entities.Photo", "Likee")
+                        .WithMany("Likers")
+                        .HasForeignKey("LikeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Property<int>("LikedPhotoId")
-                        .HasColumnType("INTEGER");
+                    b.HasOne("API.Entities.AppUser", "Liker")
+                        .WithMany("Likees")
+                        .HasForeignKey("LikerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.HasKey("SourceUserId", "LikedPhotoId");
+                    b.Navigation("Likee");
 
-                    b.HasIndex("LikedPhotoId");
-
-                    b.ToTable("Likes");
+                    b.Navigation("Liker");
                 });
 
             modelBuilder.Entity("API.Entities.Photo", b =>
@@ -102,35 +121,16 @@ namespace API.Data.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("API.Entities.UserLike", b =>
-                {
-                    b.HasOne("API.Entities.Photo", "LikedPhoto")
-                        .WithMany("LikedByUsers")
-                        .HasForeignKey("LikedPhotoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Entities.AppUser", "SourceUser")
-                        .WithMany("LikedPhotos")
-                        .HasForeignKey("SourceUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("LikedPhoto");
-
-                    b.Navigation("SourceUser");
-                });
-
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
-                    b.Navigation("LikedPhotos");
+                    b.Navigation("Likees");
 
                     b.Navigation("Photos");
                 });
 
             modelBuilder.Entity("API.Entities.Photo", b =>
                 {
-                    b.Navigation("LikedByUsers");
+                    b.Navigation("Likers");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,7 +2,7 @@
 
 namespace API.Data.Migrations
 {
-    public partial class LikeEntityAdded : Migration
+    public partial class AddedLikeEntity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,30 +10,30 @@ namespace API.Data.Migrations
                 name: "Likes",
                 columns: table => new
                 {
-                    SourceUserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    LikedPhotoId = table.Column<int>(type: "INTEGER", nullable: false)
+                    LikerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    LikeeId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Likes", x => new { x.SourceUserId, x.LikedPhotoId });
+                    table.PrimaryKey("PK_Likes", x => new { x.LikerId, x.LikeeId });
                     table.ForeignKey(
-                        name: "FK_Likes_Photos_LikedPhotoId",
-                        column: x => x.LikedPhotoId,
+                        name: "FK_Likes_Photos_LikeeId",
+                        column: x => x.LikeeId,
                         principalTable: "Photos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Likes_Users_SourceUserId",
-                        column: x => x.SourceUserId,
+                        name: "FK_Likes_Users_LikerId",
+                        column: x => x.LikerId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Likes_LikedPhotoId",
+                name: "IX_Likes_LikeeId",
                 table: "Likes",
-                column: "LikedPhotoId");
+                column: "LikeeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
