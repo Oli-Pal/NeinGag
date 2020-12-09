@@ -29,23 +29,13 @@ export class MembersService {
     if (member !== undefined) { return of(member); }
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
-
+  
   getMemberById(id: number) {
     const member = this.members.find(x => x.id === id);
     if (member !== undefined) { return of(member); }
     return this.http.get<Member>(this.baseUrl + 'users/' + id);
   }
 
-  setDescription(model: any){
-    return this.http.post(this.baseUrl + 'add-photo/completed', model).pipe(
-      map(() => {
-         localStorage.setItem('description', JSON.stringify(model)) 
-         if (model != null) {
-          console.log('ddddddd');
-        }
-      })
-    );
-  }
 
   deletePhoto(photoId: number) {
     return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId);
