@@ -54,4 +54,8 @@ export class MembersService {
   sendLike(id: number, photoId: number){
     return this.http.post(this.baseUrl + 'users/' + id + '/like/' + photoId, {})
   }
+
+  getNumberOfPhotoLikes(id: number){
+    return this.http.get(this.baseUrl + 'users/' + id + '/likes/',{})
+  }
 }

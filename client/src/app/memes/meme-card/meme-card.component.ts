@@ -56,4 +56,10 @@ export class MemeCardComponent implements OnInit {
       this.toastr.error(error);
     });
   }
+
+  // 		// getNumberOfPhotoLikes(id: number){
+  //   let totalLikes: number;
+  //   this.memberService.getNumberOfPhotoLikes(id).subscribe(data => totalLikes = this.photos.amountOfLikes)
+    
+  // } //memecardcomp
 }

@@ -159,7 +159,7 @@ namespace API.Controllers
             return BadRequest("Failed to like");
         }
 
-        [HttpPost("{id}/likes")]
+        [HttpGet("{id}/likes")]
         public async Task<IActionResult> GetNumberOfPhotoLikes(int id)
         {
             var x = await _userRepository.GetNumberOfPhotoLikes(id);
