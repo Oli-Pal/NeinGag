@@ -72,9 +72,6 @@ namespace API.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AmountOfLikes")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("AppUserId")
                         .HasColumnType("INTEGER");
 

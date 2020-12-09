@@ -29,8 +29,13 @@ namespace API.Interfaces
 
         void Add<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
+<<<<<<< HEAD
+=======
 
         Task<IEnumerable<int>> GetPhotoLikes(int id);
-        Task<int> GetNumberOfPhotoLikes(int id);
+<<<<<<< HEAD
+>>>>>>> parent of 391f19b... komicik
+=======
+>>>>>>> parent of 391f19b... komicik
     }
 }

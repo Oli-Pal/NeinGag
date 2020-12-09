@@ -70,6 +70,8 @@ namespace API.Data
             return user.Likees.Where(u => u.LikerId == id).Select(i => i.LikeeId);
         }
 
+<<<<<<< HEAD
+=======
     //photolikes - zwracanie listy uzytkownikow ktorzy lubia zdjecie
             public async Task<IEnumerable<int>> GetPhotoLikes(int id)
         {
@@ -80,14 +82,8 @@ namespace API.Data
             return user.Likers.Where(u => u.LikeeId == id).Select(i => i.LikerId);
         }
 
-             public async Task<int> GetNumberOfPhotoLikes(int id)
-        {
-            var likes = await _context.Likes.Where(x => x.LikeeId == id).ToListAsync();
 
-            return likes.Count;
-        }
-
-
+>>>>>>> parent of 391f19b... komicik
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.Users
@@ -128,7 +124,6 @@ namespace API.Data
 
         public async Task<Photo> GetPhotoByIdAsync(int id)
         {
-            
             return await _context.Photos
             .FindAsync(id);
         }
@@ -142,6 +137,14 @@ namespace API.Data
         {
             _context.Remove(entity);
         }
+
+        public async Task<int> GetNumberOfPhotoLikes(int id)
+        {
+            var likes = await _context.Likes.Where(x => x.LikeeId == id).ToListAsync();
+
+            return likes.Count;
+        } //userRepo
+		
 
        
     }

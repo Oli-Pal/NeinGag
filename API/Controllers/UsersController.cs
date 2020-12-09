@@ -77,7 +77,6 @@ namespace API.Controllers
             // var desc = await _userRepository.GetDescriptionOfPhotoAsync();
            
             var result = await _photoService.AddPhotoAsync(file);
-            
 
             if (result.Error != null) return BadRequest(result.Error.Message);
 
@@ -87,7 +86,6 @@ namespace API.Controllers
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId,
                 // Description = desc.Description
-                //Likers
             };
 
             user.Photos.Add(photo);
@@ -136,11 +134,10 @@ namespace API.Controllers
             return BadRequest("Failed to delete the photo");
         }
 
-        // /api/users/ ---
+
         [HttpPost("{id}/like/{photoId}")]
         public async Task<IActionResult> LikeUser(int id, int photoId)
         {
-            //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
             var like = await _userRepository.GetLike(id, photoId);
             if(like != null)
                 return BadRequest("You already liked that photo");
@@ -157,14 +154,6 @@ namespace API.Controllers
             if (await _userRepository.SaveAllAsync())
                 return Ok();
             return BadRequest("Failed to like");
-        }
-
-        [HttpPost("{id}/likes")]
-        public async Task<IActionResult> GetNumberOfPhotoLikes(int id)
-        {
-            var x = await _userRepository.GetNumberOfPhotoLikes(id);
-            
-            return Ok(x);
         }
     }
 }

@@ -19,7 +19,13 @@ namespace API.Entities
         public int AppUserId { get; set; }
 
         public ICollection<Like> Likers { get; set; }
+<<<<<<< HEAD
+=======
 
-        //public int AmountOfLikes{ get; set; } = 0;
+        public int AmountOfLikes{ get; set; } = 0;
+<<<<<<< HEAD
+>>>>>>> parent of 391f19b... komicik
+=======
+>>>>>>> parent of 391f19b... komicik
     }
 }

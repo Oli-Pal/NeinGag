@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using API.Entities;
-
 namespace API.DTOs
 {
     public class PhotoDto
@@ -13,8 +10,13 @@ namespace API.DTOs
 
          public string Nickname{ get; set; }
         
+
         public ICollection<Like> Likers { get; set; }
 
-        //public int AmountOfLikes{ get; set; }
+        public int AmountOfLikes{ get; set; }
+<<<<<<< HEAD
+>>>>>>> parent of 391f19b... komicik
+=======
+>>>>>>> parent of 391f19b... komicik
     }
 }
