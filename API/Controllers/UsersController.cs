@@ -54,14 +54,30 @@ namespace API.Controllers
             return await _userRepository.GetMemberAsync(username);
         }
 
+        // [HttpPut]
+        // public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
+        // {
+
+        //     var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+
+        //     _mapper.Map(memberUpdateDto, user);
+
+        //     _userRepository.Update(user);
+
+        //     if (await _userRepository.SaveAllAsync()) return NoContent();
+
+        //     return BadRequest("Failed to update user");
+        // }
+
         [HttpPost("add-photo")]
-        public async Task<ActionResult<PhotoDto>> AddPhoto([FromForm] PhotoUpdateDto photoUpdateDto)
+        public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
         {
-            
             var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
           
-
-            var result = await _photoService.AddPhotoAsync(photoUpdateDto.File);
+            // var desc = await _userRepository.GetDescriptionOfPhotoAsync();
+           
+            var result = await _photoService.AddPhotoAsync(file);
+            
 
             if (result.Error != null) return BadRequest(result.Error.Message);
 
@@ -70,7 +86,8 @@ namespace API.Controllers
                 
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId,
-                Description = photoUpdateDto.Description
+                // Description = desc.Description
+                //Likers
             };
 
             user.Photos.Add(photo);
@@ -84,7 +101,19 @@ namespace API.Controllers
             return BadRequest("Problem addding photo");
         }
 
-    
+        // [HttpPut("set-main-photo/{photoId}")]
+        // public async Task<ActionResult> SetMainPhoto(int photoId)
+        // {
+        //     var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+
+        //     var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+
+
+        //     if (await _userRepository.SaveAllAsync()) return NoContent();
+
+        //     return BadRequest("Failed to set main photo");
+        // }
+
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(int photoId)
         {
@@ -105,6 +134,29 @@ namespace API.Controllers
             if (await _userRepository.SaveAllAsync()) return Ok();
 
             return BadRequest("Failed to delete the photo");
+        }
+
+
+        [HttpPost("{id}/like/{photoId}")]
+        public async Task<IActionResult> LikeUser(int id, int photoId)
+        {
+            //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
+            var like = await _userRepository.GetLike(id, photoId);
+            if(like != null)
+                return BadRequest("You already liked that photo");
+            if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
+                return NotFound();
+
+            like = new Like
+            {
+                LikerId = id,
+                LikeeId = photoId
+            };
+
+            _userRepository.Add<Like>(like);
+            if (await _userRepository.SaveAllAsync())
+                return Ok();
+            return BadRequest("Failed to like");
         }
     }
 }
