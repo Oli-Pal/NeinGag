@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using API.Entities;
+
 namespace API.DTOs
 {
     public class PhotoDto
