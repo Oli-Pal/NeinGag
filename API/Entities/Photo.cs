@@ -18,8 +18,7 @@ namespace API.Entities
 
         public int AppUserId { get; set; }
 
-        //polubienia przez użytkowników
-        public ICollection<UserLike> LikedByUsers { get; set; }
+    
         
     }
 }
