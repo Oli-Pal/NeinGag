@@ -17,18 +17,18 @@ import { environment } from 'src/environments/environment';
 export class PhotoEditorComponent implements OnInit {
   @Input() member: Member;
   uploader: FileUploader;
+  photoDesc: any;
   hasBaseDropzoneOver = false;
   baseUrl = environment.apiUrl;
   user: User;
   photo: Photo;
-  photoDescription = '';
+
   constructor(private accountService: AccountService, private memberService: MembersService) { 
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
   }
 
   ngOnInit(): void {
     this.initializeUploader();
-    
   }
 
   fileOverBase(e: any) {
@@ -42,7 +42,7 @@ export class PhotoEditorComponent implements OnInit {
       this.member.photos = this.member.photos.filter(x => x.id !== photoId);
     });
   }
-  
+
   initializeUploader() {
     this.uploader = new FileUploader({
       url: this.baseUrl + 'users/add-photo',
@@ -51,27 +51,20 @@ export class PhotoEditorComponent implements OnInit {
       allowedFileType: ['image'],
       removeAfterUpload: true,
       autoUpload: false,
-      maxFileSize: 10 * 1024 * 1024,
+      maxFileSize: 10 * 1024 * 1024
     });
 
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;
-      
     }
+
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {
         const photo = JSON.parse(response);
-        this.member?.photos?.push(photo);
-        
+        this.member.photos.push(photo);
       }
-    };
-
-    this.uploader.onBeforeUploadItem = (file) => {
-      this.uploader.options.additionalParameter = { description: this.photoDescription }
     };
   }
   
-  onKey(event: any) {
-    this.photoDescription = event.target.value;
-  }
+
 }

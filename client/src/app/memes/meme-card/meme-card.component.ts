@@ -6,10 +6,8 @@ import { MembersService } from 'src/app/_services/members.service';
 import { AccountService } from 'src/app/_services/account.service';
 import { take } from 'rxjs/operators';
 import { User } from 'src/app/_models/user';
-<<<<<<< HEAD
-=======
-
->>>>>>> 44ca31b4c7f1c1d188a2004d911b7f250bc56552
+import { PhotoEditorComponent } from '../photo-editor/photo-editor.component';
+import { PhotosService } from 'src/app/_services/photos.service';
 
 
 @Component({
@@ -22,36 +20,39 @@ export class MemeCardComponent implements OnInit {
   @Input() member: Member;
   user: User;
 
+  //numberOfLikes: number = this.photos.likers;
+
     constructor(private accountService: AccountService,
        private memberService: MembersService,
         private toastr: ToastrService) {
           this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
+            //debugger;
             this.user = user;
+           // this.user.id = this.member.id;
+           //debugger;
+            //this.user.id = this.member.id;
           });
          }
-<<<<<<< HEAD
 
-=======
->>>>>>> 44ca31b4c7f1c1d188a2004d911b7f250bc56552
+  // likeButtonClick(){
+  //   this.numberOfLikes++;
+  // }
+  // dislikeButtonClick(){
+  //   this.numberOfLikes--;
+  // }
         
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   sendLike(photoId: number){
-<<<<<<< HEAD
     
- 
     this.memberService.sendLike(this.user.id, photoId).subscribe(data => {
 
-      this.photos.amountOfLikes;
       this.toastr.success('You have upvoted this meme')
+     // this.likeButtonClick();
       
     }, error => {
-=======
-    this.memberService.sendLike(this.user.id, photoId).subscribe(() => {
-      this.toastr.success('You have upvoted this meme');
-      }, error => {
->>>>>>> 44ca31b4c7f1c1d188a2004d911b7f250bc56552
       this.toastr.error(error);
     });
   }

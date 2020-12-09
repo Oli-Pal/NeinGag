@@ -19,9 +19,11 @@ namespace API.Interfaces
 
         Task<IEnumerable<MemberDto>> GetMembersAsync();
         Task<MemberDto> GetMemberAsync(string username);
+
         Task<PagedList<PhotoDto>> GetPhotosAsync(UserParams userParams);
-        
-         Task<Like> GetLike(int userId, int photoId);
+    
+        //likeee
+        Task<Like> GetLike(int userId, int photoId);
 
         Task<Photo> GetPhotoByIdAsync(int id);
 

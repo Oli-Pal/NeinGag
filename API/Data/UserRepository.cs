@@ -43,8 +43,22 @@ namespace API.Data
             .OrderByDescending(x => x.Id)
             .AsNoTracking();
 
+//             var users = _context.Users.Include(p => p.Photos)
+//                 .OrderByDescending(x => x.LastActive).AsQueryable();
+//             users = users.Where(x => x.Id != userParams.UserId);
+// //like
+//             if(userParams.Likees)
+//             {
+                
+//                 var userLikees = await GetUserLikes(userParams.UserId);
+//                 users = users.Where(u => userLikees.Contains(u.Id));
+//             }
+            
+
             return await PagedList<PhotoDto>
             .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+
+            
         }
 
         public async Task<IEnumerable<int>> GetUserLikes(int id)
@@ -87,6 +101,7 @@ namespace API.Data
             .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
+    
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
@@ -105,7 +120,7 @@ namespace API.Data
             _context.Entry(user).State = EntityState.Modified; //adds flag to entity that it has been modified
         }
 
-//Likeeee
+        //Likeeee
         public async Task<Like> GetLike(int userId, int photoId)
         {
             return await _context.Likes.FirstOrDefaultAsync(u => u.LikerId == userId && u.LikeeId == photoId);
@@ -127,5 +142,7 @@ namespace API.Data
         {
             _context.Remove(entity);
         }
+
+       
     }
 }
