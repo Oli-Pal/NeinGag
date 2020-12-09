@@ -80,6 +80,13 @@ namespace API.Data
             return user.Likers.Where(u => u.LikeeId == id).Select(i => i.LikerId);
         }
 
+             public async Task<int> GetNumberOfPhotoLikes(int id)
+        {
+            var likes = await _context.Likes.Where(x => x.LikeeId == id).ToListAsync();
+
+            return likes.Count;
+        }
+
 
         public async Task<AppUser> GetUserByIdAsync(int id)
         {

@@ -4,5 +4,4 @@ export interface Photo {
     url: string;
     nickname: string;
     likers: number;
-    amountOfLikes: number;
 }

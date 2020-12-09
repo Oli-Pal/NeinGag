@@ -20,6 +20,6 @@ namespace API.Entities
 
         public ICollection<Like> Likers { get; set; }
 
-        public int AmountOfLikes{ get; set; } = 0;
+        //public int AmountOfLikes{ get; set; } = 0;
     }
 }

@@ -31,5 +31,6 @@ namespace API.Interfaces
         void Delete<T>(T entity) where T : class;
 
         Task<IEnumerable<int>> GetPhotoLikes(int id);
+        Task<int> GetNumberOfPhotoLikes(int id);
     }
 }

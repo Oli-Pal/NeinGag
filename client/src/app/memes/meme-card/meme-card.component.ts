@@ -49,7 +49,6 @@ export class MemeCardComponent implements OnInit {
     
     this.memberService.sendLike(this.user.id, photoId).subscribe(data => {
 
-      this.photos.amountOfLikes;
       this.toastr.success('You have upvoted this meme')
      // this.likeButtonClick();
       

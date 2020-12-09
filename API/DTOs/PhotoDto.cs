@@ -15,6 +15,6 @@ namespace API.DTOs
         
         public ICollection<Like> Likers { get; set; }
 
-        public int AmountOfLikes{ get; set; }
+        //public int AmountOfLikes{ get; set; }
     }
 }
