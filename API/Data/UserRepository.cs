@@ -47,15 +47,6 @@ namespace API.Data
             .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
-        public async Task<IEnumerable<int>> GetUserLikes(int id)
-        {
-            var user = await _context.Users
-                .Include(x => x.Likees)
-                .FirstOrDefaultAsync(u => u.Id == id);
-
-            return user.Likees.Where(u => u.LikerId == id).Select(i => i.LikeeId);
-        }
-
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.Users
@@ -86,32 +77,6 @@ namespace API.Data
         {
             _context.Entry(user).State = EntityState.Modified; //adds flag to entity that it has been modified
         }
-<<<<<<< HEAD
-=======
-
-        //Likeeee
-        public async Task<Like> GetLike(int userId, int photoId)
-        {
-            return await _context.Likes.FirstOrDefaultAsync(u => u.LikerId == userId && u.LikeeId == photoId);
-        }
-
-        public async Task<Photo> GetPhotoByIdAsync(int id)
-        {
-            return await _context.Photos
-            .FindAsync(id);
-        }
-
-                public void Add<T>(T entity) where T : class
-        {
-            _context.Add(entity);
-        }
-
-        public void Delete<T>(T entity) where T : class
-        {
-            _context.Remove(entity);
-        }
-
->>>>>>> parent of 85b574c... modifikacjom
        
     }
 }
