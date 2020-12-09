@@ -107,7 +107,7 @@ namespace API.Controllers
             return BadRequest("Failed to delete the photo");
         }
 
-        // /api/users/ ---
+         // /api/users/ ---
         [HttpPost("{id}/like/{photoId}")]
         public async Task<IActionResult> LikeUser(int id, int photoId)
         {

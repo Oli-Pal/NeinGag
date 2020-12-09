@@ -1,8 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { ToastRef, ToastrService } from 'ngx-toastr';
 import { Member } from 'src/app/_models/member';
 import { Photo } from 'src/app/_models/photo';
 import { MembersService } from 'src/app/_services/members.service';
+import { AccountService } from 'src/app/_services/account.service';
+import { take } from 'rxjs/operators';
+import { User } from 'src/app/_models/user';
+
+
 
 @Component({
   selector: 'app-meme-card',
@@ -11,19 +16,26 @@ import { MembersService } from 'src/app/_services/members.service';
 })
 export class MemeCardComponent implements OnInit {
   @Input() photos: Photo;
-    constructor(private memberService: MembersService, private toastr: ToastrService) { }
+  @Input() member: Member;
+  user: User;
 
-  ngOnInit(): void {
-  }
+  //numberOfLikes: number = this.photos.likers;
+
+    constructor(private accountService: AccountService,
+       private memberService: MembersService,
+        private toastr: ToastrService) {
+          this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
+            this.user = user;
+          });
+         }
+        
+
+  ngOnInit(): void {}
 
   sendLike(photoId: number){
-    
-    this.memberService.sendLike(this.user.id, photoId).subscribe(data => {
-
-      this.toastr.success('You have upvoted this meme')
-     // this.likeButtonClick();
-      
-    }, error => {
+    this.memberService.sendLike(this.user.id, photoId).subscribe(() => {
+      this.toastr.success('You have upvoted this meme');
+      }, error => {
       this.toastr.error(error);
     });
   }
