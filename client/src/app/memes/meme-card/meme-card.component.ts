@@ -19,6 +19,7 @@ export class MemeCardComponent implements OnInit {
   @Input() photos: Photo;
   @Input() member: Member;
   user: User;
+  likes: number;
 
   //numberOfLikes: number = this.photos.likers;
 
@@ -43,23 +44,29 @@ export class MemeCardComponent implements OnInit {
         
 
   ngOnInit(): void {
+    this.getLikes();
   }
 
   sendLike(photoId: number){
-    
     this.memberService.sendLike(this.user.id, photoId).subscribe(data => {
 
       this.toastr.success('You have upvoted this meme')
-     // this.likeButtonClick();
+      this.getLikes();
       
     }, error => {
-      this.toastr.error(error);
+      this.toastr.error("You already upvoted this meme");
     });
   }
 
-  // 		// getNumberOfPhotoLikes(id: number){
-  //   let totalLikes: number;
-  //   this.memberService.getNumberOfPhotoLikes(id).subscribe(data => totalLikes = this.photos.amountOfLikes)
+  getLikes(){
+    this.memberService.getNumberOfPhotoLikes(this.photos.id).subscribe((data) => {
+      this.likes = data;
+    });
+  }
+
+  // 	getNumberOfPhotoLikes(id: number){
+  //     let totalLikes: number;
+  //     this.memberService.getNumberOfPhotoLikes(id).subscribe(data => totalLikes)
     
   // } //memecardcomp
 }

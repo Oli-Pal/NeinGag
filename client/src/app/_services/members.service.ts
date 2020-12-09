@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Member } from '../_models/member';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -36,11 +36,11 @@ export class MembersService {
     return this.http.get<Member>(this.baseUrl + 'users/' + id);
   }
 
-  setDescription(model: any){
+  setDescription(model: any) {
     return this.http.post(this.baseUrl + 'add-photo/completed', model).pipe(
       map(() => {
-         localStorage.setItem('description', JSON.stringify(model)) 
-         if (model != null) {
+        localStorage.setItem('description', JSON.stringify(model))
+        if (model != null) {
           console.log('ddddddd');
         }
       })
@@ -51,11 +51,13 @@ export class MembersService {
     return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId);
   }
 
-  sendLike(id: number, photoId: number){
+  sendLike(id: number, photoId: number) {
     return this.http.post(this.baseUrl + 'users/' + id + '/like/' + photoId, {})
   }
 
-  getNumberOfPhotoLikes(id: number){
-    return this.http.get(this.baseUrl + 'users/' + id + '/likes/',{})
+  getNumberOfPhotoLikes(id: number): Observable<number> {
+    return this.http.get<number>(this.baseUrl + 'users/' + id + '/likes/', { observe: 'response' }).pipe(map((response) => {
+      return response.body;
+    }))
   }
 }
