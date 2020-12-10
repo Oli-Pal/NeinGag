@@ -56,7 +56,7 @@ export class MemeCardComponent implements OnInit {
       this.getLikes();
       
     }, error => {
-      this.toastr.error("You already upvoted this meme");
+      this.toastr.error(error);
     });
   }
 
@@ -67,7 +67,7 @@ export class MemeCardComponent implements OnInit {
       this.getDisLikes();
       
     }, error => {
-      this.toastr.error("You already downvoted this meme");
+      this.toastr.error(error);
     });
   }
 

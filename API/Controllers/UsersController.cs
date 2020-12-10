@@ -142,8 +142,13 @@ namespace API.Controllers
         {
             //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
             var like = await _userRepository.GetLike(id, photoId);
+            var dislike = await _userRepository.GetDisLike(id, photoId);
             if(like != null)
                 return BadRequest("You already liked that photo");
+
+            if(dislike != null)
+                return BadRequest("You can't like and dislike things simultaneously :<");
+
             if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
                 return NotFound();
 
@@ -173,8 +178,12 @@ namespace API.Controllers
         {
             //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
             var dislike = await _userRepository.GetDisLike(id, photoId);
+            var like = await _userRepository.GetLike(id, photoId);
             if(dislike != null)
                 return BadRequest("You already disliked that photo");
+            if(like != null)
+                return BadRequest("You can't like and dislike things simultaneously :<");
+
             if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
                 return NotFound();
 
