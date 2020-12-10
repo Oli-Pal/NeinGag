@@ -82,7 +82,6 @@ namespace API.Data
             return user.Likers.Where(u => u.LikedId == id).Select(i => i.LikerId);
         }
 
-<<<<<<< HEAD
              public async Task<int> GetNumberOfPhotoLikes(int id)
         {
             var likes = await _context.Likes.Where(x => x.LikedId == id).ToListAsync();
@@ -127,7 +126,6 @@ namespace API.Data
             return await _context.DisLikes.FirstOrDefaultAsync(u => u.DisLikerId == userId && u.DisLikedId == photoId);
         }
 //--------------------------------------
-=======
             public async Task<IEnumerable<PhotoDto>> GetUserPhotosAsync(string username)
         {
             return await _context.Photos
@@ -139,7 +137,6 @@ namespace API.Data
 
             
         }
->>>>>>> origin/BackupWorkingBranch
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.Users
