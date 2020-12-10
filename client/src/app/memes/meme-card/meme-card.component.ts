@@ -46,6 +46,7 @@ export class MemeCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLikes();
+    this.getDisLikes();
   }
 
   sendLike(photoId: number){
