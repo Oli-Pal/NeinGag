@@ -81,6 +81,6 @@ export class MemeCardComponent implements OnInit {
       this.dislikes = data;
     });
   }
-
+  
 
 }

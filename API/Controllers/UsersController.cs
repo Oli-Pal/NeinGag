@@ -144,7 +144,7 @@ namespace API.Controllers
             var like = await _userRepository.GetLike(id, photoId);
             var dislike = await _userRepository.GetDisLike(id, photoId);
             if(like != null)
-                return BadRequest("You already liked that photo");
+                _userRepository.Delete<Like>(like);
 
             if(dislike != null)
                 return BadRequest("You can't like and dislike things simultaneously :<");
@@ -152,13 +152,14 @@ namespace API.Controllers
             if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
                 return NotFound();
 
+            if(like == null){
             like = new Like
             {
                 LikerId = id,
                 LikedId = photoId
             };
 
-            _userRepository.Add<Like>(like);
+            _userRepository.Add<Like>(like);}
             if (await _userRepository.SaveAllAsync())
                 return Ok();
             return BadRequest("Failed to like");
@@ -180,20 +181,21 @@ namespace API.Controllers
             var dislike = await _userRepository.GetDisLike(id, photoId);
             var like = await _userRepository.GetLike(id, photoId);
             if(dislike != null)
-                return BadRequest("You already disliked that photo");
+                _userRepository.Delete<DisLike>(dislike);
             if(like != null)
                 return BadRequest("You can't like and dislike things simultaneously :<");
 
             if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
                 return NotFound();
 
-            dislike = new DisLike
+            if(dislike == null){
+                dislike = new DisLike
             {
                 DisLikerId = id,
                 DisLikedId = photoId
             };
 
-            _userRepository.Add<DisLike>(dislike);
+            _userRepository.Add<DisLike>(dislike);}
             if (await _userRepository.SaveAllAsync())
                 return Ok();
             return BadRequest("Failed to like");
@@ -206,5 +208,36 @@ namespace API.Controllers
             
             return Ok(x);
         }
+
+        //UnLike systeeem
+
+        // [HttpPost("{id}/unlike/{photoId}")]
+        // public async Task<IActionResult> UnLikeUser(int id, int photoId)
+        // {
+        //     //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
+        //     var like = await _userRepository.GetLike(id, photoId);
+        //     var dislike = await _userRepository.GetDisLike(id, photoId);
+        //     if(like != null){
+        //     _userRepository.Delete<Like>(like);
+        //     }
+
+        //     if(dislike != null){
+        //     _userRepository.Delete<DisLike>(dislike);
+        //     }
+
+        //     if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
+        //         return NotFound();
+
+        //     // like = new Like
+        //     // {
+        //     //     LikerId = id,
+        //     //     LikedId = photoId
+        //     // };
+
+            
+        //     if (await _userRepository.SaveAllAsync())
+        //         return Ok();
+        //     return BadRequest("Failed");
+        // }
     }
 }
