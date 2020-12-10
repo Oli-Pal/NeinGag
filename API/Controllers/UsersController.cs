@@ -61,15 +61,14 @@ namespace API.Controllers
         }
 
 
-        [HttpPost("add-photo")]
-        public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
+       [HttpPost("add-photo")]
+        public async Task<ActionResult<PhotoDto>> AddPhoto([FromForm] PhotoUpdateDto photoUpdateDto)
         {
+            
             var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
           
-            // var desc = await _userRepository.GetDescriptionOfPhotoAsync();
-           
-            var result = await _photoService.AddPhotoAsync(file);
-            
+
+            var result = await _photoService.AddPhotoAsync(photoUpdateDto.File);
 
             if (result.Error != null) return BadRequest(result.Error.Message);
 
@@ -78,8 +77,7 @@ namespace API.Controllers
                 
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId,
-                // Description = desc.Description
-                //Likers
+                Description = photoUpdateDto.Description
             };
 
             user.Photos.Add(photo);
@@ -92,7 +90,6 @@ namespace API.Controllers
 
             return BadRequest("Problem addding photo");
         }
-
 
 
         [HttpDelete("delete-photo/{photoId}")]
