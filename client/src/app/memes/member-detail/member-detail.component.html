@@ -8,7 +8,8 @@
       <h5 class="d-inline ">{{member?.nickname}}</h5>
       &nbsp;
       <strong class="float-right ">Member Since: {{member?.created | date: 'dd-MM-yyyy'}}</strong>
-      
+      <tabset>
+        <tab heading="Memes uploaded">
       <div *ngFor="let memphotos of photos">
 
         <div class="card mb-4" >
@@ -39,7 +40,9 @@
           </div>
       </div>
       </div>
-   
+      </tab>
+      <tab heading="Most Liked Memes"></tab>
+    </tabset>
     </div>
     </div>
     </div>
