@@ -47,6 +47,17 @@ namespace API.Data
             .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
+            public async Task<IEnumerable<PhotoDto>> GetUserPhotosAsync(string username)
+        {
+            return await _context.Photos
+            .Where(p => p.AppUser.UserName == username)
+            .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();;
+            
+            
+
+            
+        }
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.Users

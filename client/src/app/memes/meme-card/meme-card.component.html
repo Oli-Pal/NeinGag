@@ -1,5 +1,5 @@
 <div class="card mb-4" >
-    <div class="card-header">Category: {{photos?.description}} 
+    <div class="card-header">Description: {{photos?.description}} 
     </div>
     <div class="card-img-wrapper" >
         <ng-container>
@@ -20,7 +20,7 @@
                <li class="list-inline-item "><button class="btn btn-danger"><i class="fa fa-thumbs-down"></i></button></li>
                <li class="list-inline-item mr-auto"><button class="btn btn-primary" routerLink="/comments">
                 <i class="fa fa-comments"></i></button></li>
-               <li class="list-inline-item mr-2"><button class="btn btn-warning"  routerLink="/detail">
+               <li class="list-inline-item mr-2"><button  [routerLink]="['/detail/', this.member?.username]" class="btn btn-warning" >
                 <i class="fa fa-user"></i></button></li>
             </ng-container>
             </ul>

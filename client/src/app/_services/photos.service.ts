@@ -20,11 +20,9 @@ export class PhotosService {
     let params = new HttpParams();
     if(page !== null && itemsPerPage !== null){
       params = params.append('pageNumber', page.toString());
-      
       params = params.append('pageSize', itemsPerPage.toString());
     }
 
-    //if (this.photos.length > 0) {return of(this.photos);}
     return this.http.get<Photo[]>(this.baseUrl + 'users/photos', {observe: 'response', params}).pipe(
         map(response =>{
           this.paginatedResult.result = response.body;
@@ -33,12 +31,16 @@ export class PhotosService {
           }
           return this.paginatedResult;
         })
-      
-
-      // map(photos => {
-      //   this.photos = photos;
-      //   return photos;
-      // })
     );
+  }
+
+  getMemberPhotos(username: string) {
+    if (this.photos.length > 0) { return of(this.photos); }
+    return this.http.get<Photo[]>(this.baseUrl + 'users/photos/' + username).pipe(
+      map(photos => {
+        this.photos = photos;
+        return photos;
+      })
+    )
   }
 }

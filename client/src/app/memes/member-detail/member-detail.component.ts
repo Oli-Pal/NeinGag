@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from 'src/app/_models/member';
+import { Photo } from 'src/app/_models/photo';
 import { MembersService } from 'src/app/_services/members.service';
+import { PhotosService } from 'src/app/_services/photos.service';
 
 @Component({
   selector: 'app-member-detail',
@@ -10,18 +12,31 @@ import { MembersService } from 'src/app/_services/members.service';
 })
 export class MemberDetailComponent implements OnInit {
   member: Member;
-
-
-  constructor(private memberService: MembersService, private route: ActivatedRoute) { }
+  @Input() members: Member[];
+  photos: Photo[];
+  constructor(private memberService: MembersService, private route: ActivatedRoute,
+     private photosService: PhotosService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadMember();
-
+    this.loadMemberPhotos();
+    
+    
+  
   }
   loadMember(){
     this.memberService.getMember(this.route.snapshot.paramMap.get('username'))
     .subscribe(member => {
       this.member = member;
+      
     });
   }
+    loadMemberPhotos(){
+      this.photosService.getMemberPhotos(this.route.snapshot.paramMap.get('username'))
+      .subscribe(photos => {
+        this.photos = photos;
+         
+      });
+  }
+
 }

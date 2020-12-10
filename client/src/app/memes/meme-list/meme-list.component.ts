@@ -11,7 +11,7 @@ import { PhotosService } from 'src/app/_services/photos.service';
   styleUrls: ['./meme-list.component.css']
 })
 export class MemeListComponent implements OnInit {
-  members: Member[];
+  member: Member;
   photos: Photo[];
   pagination: Pagination;
   pageNumber = 1; //chwilowka
