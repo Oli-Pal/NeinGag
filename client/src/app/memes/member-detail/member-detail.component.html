@@ -9,16 +9,15 @@
       &nbsp;
       <strong class="float-right ">Member Since: {{member?.created | date: 'dd-MM-yyyy'}}</strong>
       <tabset>
-        <tab heading="Memes uploaded">
+        <tab heading="Memes uploaded" >
       <div *ngFor="let memphotos of photos">
-
         <div class="card mb-4" >
           <div class="card-header">Description: {{memphotos?.description}} 
           </div>
           <div class="card-img-wrapper" >
               <ng-container>
       
-                <img class="userPhotos card-img-top " src="{{memphotos?.url}}" alt="">
+                <img class="userPhotos card-img-top " src="{{memphotos?.url }}" alt="">
           </ng-container>
       </div>
           <div class="card-body p-1">
