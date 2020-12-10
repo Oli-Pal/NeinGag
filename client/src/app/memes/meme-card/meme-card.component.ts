@@ -54,7 +54,7 @@ export class MemeCardComponent implements OnInit {
 
       this.toastr.success('You have upvoted this meme')
       this.getLikes();
-      
+      this.getDisLikes();
     }, error => {
       this.toastr.error(error);
     });
@@ -65,7 +65,7 @@ export class MemeCardComponent implements OnInit {
 
       this.toastr.success('You have downvoted this meme')
       this.getDisLikes();
-      
+      this.getLikes();
     }, error => {
       this.toastr.error(error);
     });
