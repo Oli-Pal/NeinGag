@@ -21,6 +21,7 @@ namespace API.Interfaces
         Task<MemberDto> GetMemberAsync(string username);
 
         Task<PagedList<PhotoDto>> GetPhotosAsync(UserParams userParams);
+<<<<<<< HEAD
     
         //likeee
         Task<Like> GetLike(int userId, int photoId);
@@ -35,5 +36,8 @@ namespace API.Interfaces
          Task<DisLike> GetDisLike(int userId, int photoId);
         Task<IEnumerable<int>> GetPhotoDisLikes(int id);
         Task<int> GetNumberOfPhotoDisLikes(int id);
+=======
+        Task<IEnumerable<PhotoDto>> GetUserPhotosAsync(string username);
+>>>>>>> origin/BackupWorkingBranch
     }
 }

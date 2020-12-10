@@ -1,52 +1,50 @@
 <div class="container  mt-5">
   <div class="row">
-    <div class="col-4">
-      <div class="card">
-        <img class="card-img-top img-thumbnail" src="../../../../../assets/img/user.png" alt="{{member?.nickname}}">
-        <div class="card-body">
-          <div>
-            <strong>Age:</strong>
-            <p>{{member?.age}}</p>
+    <div class="col-2"></div>
+    <div class="col-6">
+      <div class="border">
+      <img class="border d-inline border-left border-danger rounded-circle" src="../../../../../assets/img/user.png" alt="{{member?.nickname}}">
+      
+      <h5 class="d-inline ">{{member?.nickname}}</h5>
+      &nbsp;
+      <strong class="float-right ">Member Since: {{member?.created | date: 'dd-MM-yyyy'}}</strong>
+      <tabset>
+        <tab heading="Memes uploaded" >
+      <div *ngFor="let memphotos of photos">
+        <div class="card mb-4" >
+          <div class="card-header">Description: {{memphotos?.description}} 
           </div>
-          <div>
-            <strong>Last Active:</strong>
-            <p>{{member?.lastActive}}</p>
-          </div>
-          <div>
-            <strong>Member Since:</strong>
-            <p>{{member?.created | date: 'mediumDate'}}</p>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="btn-group d-flex">
-            <button class="btn btn-primary w-100">Donate</button>
-            <button class="btn btn-success w-100">Message</button>
-          </div>
-        </div>
+          <div class="card-img-wrapper" >
+              <ng-container>
+      
+                <img class="userPhotos card-img-top " src="{{memphotos?.url }}" alt="">
+          </ng-container>
       </div>
-    </div>
-    <div class="col-8 ">
-      <div class="tab-pannel">
-        <tabset class="member-tabset">
-        <tab heading="About ">
-          <h4>Description:</h4>
-          <p>ddddd</p>
-          <h4>Looking For:</h4>
-          <p>dddddd</p>
-        </tab>
-        <tab heading="Interests">
-          <h4>Interests</h4>
-          <p>dddddd</p>
-        </tab>
-        <tab heading="Messages">
-          <p *ngFor="let photo of member.photos">
-            <img src="{{photo.url}}" alt="DDDDDDd">
-          </p>
-          
-        </tab>
-
-        </tabset>
+          <div class="card-body p-1">
+              <h6 class="card-title ">
+                  <div class="d-flex">
+                  <li class="list-inline-item "><p>100 points</p></li>
+                  <li class="list-inline-item mr-auto"><p>90 comments</p></li>
+              </div>
+                 <ul class="list-inline d-flex animate member-icons ml-2">
+                  <ng-container>
+                     <li class="list-inline-item "><button class="btn btn-success"><i class="fa fa-thumbs-up"></i></button></li>
+                     <li class="list-inline-item "><button class="btn btn-danger"><i class="fa fa-thumbs-down"></i></button></li>
+                     <li class="list-inline-item mr-auto"><button class="btn btn-primary" routerLink="/comments">
+                      <i class="fa fa-comments"></i></button></li>
+                  </ng-container>
+                  </ul>
+                
+              </h6>
+          </div>
       </div>
+      </div>
+      </tab>
+      <tab heading="Most Liked Memes"></tab>
+    </tabset>
     </div>
-  </div>
-</div>
+    </div>
+    </div>
+    <div class="col-4"></div>
+    </div>
+  

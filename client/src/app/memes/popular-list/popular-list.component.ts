@@ -6,12 +6,13 @@ import { MembersService } from 'src/app/_services/members.service';
 import { PhotosService } from 'src/app/_services/photos.service';
 
 @Component({
-  selector: 'app-meme-list',
-  templateUrl: './meme-list.component.html',
-  styleUrls: ['./meme-list.component.css']
+  selector: 'app-popular-list',
+  templateUrl: './popular-list.component.html',
+  styleUrls: ['./popular-list.component.css']
 })
-export class MemeListComponent implements OnInit {
-  member: Member;
+export class PopularListComponent implements OnInit {
+
+  members: Member[];
   photos: Photo[];
   pagination: Pagination;
   pageNumber = 1; //chwilowka
@@ -36,5 +37,4 @@ export class MemeListComponent implements OnInit {
     this.pageNumber = event.page;
     this.loadPhotos();
   }
-
 }

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+<<<<<<< HEAD
 import { ToastRef, ToastrService } from 'ngx-toastr';
 import { Member } from 'src/app/_models/member';
 import { Photo } from 'src/app/_models/photo';
@@ -9,6 +10,14 @@ import { User } from 'src/app/_models/user';
 import { PhotoEditorComponent } from '../photo-editor/photo-editor.component';
 import { PhotosService } from 'src/app/_services/photos.service';
 
+=======
+import { take } from 'rxjs/operators';
+import { Member } from 'src/app/_models/member';
+import { Photo } from 'src/app/_models/photo';
+import { User } from 'src/app/_models/user';
+import { AccountService } from 'src/app/_services/account.service';
+import { MembersService } from 'src/app/_services/members.service';
+>>>>>>> origin/BackupWorkingBranch
 
 @Component({
   selector: 'app-meme-card',
@@ -17,6 +26,7 @@ import { PhotosService } from 'src/app/_services/photos.service';
 })
 export class MemeCardComponent implements OnInit {
   @Input() photos: Photo;
+<<<<<<< HEAD
   @Input() member: Member;
   user: User;
   likes: number;
@@ -79,8 +89,26 @@ export class MemeCardComponent implements OnInit {
   getDisLikes(){
     this.memberService.getNumberOfPhotoDisLikes(this.photos.id).subscribe((data) => {
       this.dislikes = data;
+=======
+  member: Member;
+  user: User;
+
+  constructor(private accountService: AccountService, private memberService: MembersService) { 
+    this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+  }
+
+  ngOnInit(): void {
+    this.loadMember();
+  }
+
+  loadMember(){
+    this.memberService.getMember(this.photos.nickname.toLowerCase()).subscribe((member) => {
+      this.member = member;
+>>>>>>> origin/BackupWorkingBranch
     });
   }
   
+
+
 
 }

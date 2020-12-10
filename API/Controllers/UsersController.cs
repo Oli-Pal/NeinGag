@@ -37,7 +37,7 @@ namespace API.Controllers
             
             return Ok(users);
         }
-
+        [AllowAnonymous]
         [HttpGet("photos")]
         public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPhotos([FromQuery]UserParams userParams)
         {
@@ -45,6 +45,12 @@ namespace API.Controllers
 
             Response.AddPaginationHeader(photos.CurrentPage, photos.PageSize, photos.TotalCount, photos.TotalCount);
 
+            return Ok(photos);
+        }
+         [HttpGet("photos/{username}")]
+        public async Task<ActionResult<IEnumerable<PhotoDto>>> GetUserPhotos(string username)
+        {
+            var photos = await _userRepository.GetUserPhotosAsync(username);
             return Ok(photos);
         }
         
