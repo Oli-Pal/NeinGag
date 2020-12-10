@@ -33,7 +33,7 @@ export class MemberDetailComponent implements OnInit {
       .subscribe(photos => {
         this.photos = photos;
         //odswiezanie memberow po wybraniu innego
-        if(!localStorage.getItem('cos')) { 
+        if(!localStorage.getItem('cos')) {
           localStorage.setItem('cos', 'no reload');
           location.reload();
         } else {

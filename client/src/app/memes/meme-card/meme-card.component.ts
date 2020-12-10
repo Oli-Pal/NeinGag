@@ -15,7 +15,7 @@ import { User } from 'src/app/_models/user';
 })
 export class MemeCardComponent implements OnInit {
   @Input() photos: Photo;
-  @Input() member: Member;
+  member: Member;
   user: User;
   likes: number;
   dislikes: number;
@@ -23,23 +23,12 @@ export class MemeCardComponent implements OnInit {
        private memberService: MembersService,
         private toastr: ToastrService) {
           this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
-            //debugger;
             this.user = user;
-           // this.user.id = this.member.id;
-           //debugger;
-            //this.user.id = this.member.id;
           });
          }
 
-  // likeButtonClick(){
-  //   this.numberOfLikes++;
-  // }
-  // dislikeButtonClick(){
-  //   this.numberOfLikes--;
-  // }
-        
-
   ngOnInit(): void {
+    this.loadMember();
     this.getLikes();
     this.getDisLikes();
     
@@ -75,7 +64,11 @@ export class MemeCardComponent implements OnInit {
     });
   }
 
-
+  loadMember(){
+    this.memberService.getMember(this.photos.nickname.toLowerCase()).subscribe((member) => {
+      this.member = member;
+    });
+  }
 
 
 }
