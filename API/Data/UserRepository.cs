@@ -61,13 +61,15 @@ namespace API.Data
             
         }
 
+
+//Likeeee ---------------------------------------------
         public async Task<IEnumerable<int>> GetUserLikes(int id)
         {
             var user = await _context.Users
                 .Include(x => x.Likees)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
-            return user.Likees.Where(u => u.LikerId == id).Select(i => i.LikeeId);
+            return user.Likees.Where(u => u.LikerId == id).Select(i => i.LikedId);
         }
 
     //photolikes - zwracanie listy uzytkownikow ktorzy lubia zdjecie
@@ -77,17 +79,53 @@ namespace API.Data
                 .Include(x => x.Likers)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
-            return user.Likers.Where(u => u.LikeeId == id).Select(i => i.LikerId);
+            return user.Likers.Where(u => u.LikedId == id).Select(i => i.LikerId);
         }
 
              public async Task<int> GetNumberOfPhotoLikes(int id)
         {
-            var likes = await _context.Likes.Where(x => x.LikeeId == id).ToListAsync();
+            var likes = await _context.Likes.Where(x => x.LikedId == id).ToListAsync();
 
             return likes.Count;
         }
+  
+        public async Task<Like> GetLike(int userId, int photoId)
+        {
+            return await _context.Likes.FirstOrDefaultAsync(u => u.LikerId == userId && u.LikedId == photoId);
+        }
+//--------------------------------------
+//DISLikeeee ---------------------------------------------
+        public async Task<IEnumerable<int>> GetUserDisLikes(int id)
+        {
+            var user = await _context.Users
+                .Include(x => x.DisLikees)
+                .FirstOrDefaultAsync(u => u.Id == id);
 
+            return user.DisLikees.Where(u => u.DisLikerId == id).Select(i => i.DisLikedId);
+        }
 
+    //photolikes - zwracanie listy uzytkownikow ktorzy lubia zdjecie
+            public async Task<IEnumerable<int>> GetPhotoDisLikes(int id)
+        {
+            var user = await _context.Photos
+                .Include(x => x.DisLikers)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            return user.DisLikers.Where(u => u.DisLikedId == id).Select(i => i.DisLikerId);
+        }
+
+             public async Task<int> GetNumberOfPhotoDisLikes(int id)
+        {
+            var dislikes = await _context.DisLikes.Where(x => x.DisLikedId == id).ToListAsync();
+
+            return dislikes.Count;
+        }
+  
+        public async Task<DisLike> GetDisLike(int userId, int photoId)
+        {
+            return await _context.DisLikes.FirstOrDefaultAsync(u => u.DisLikerId == userId && u.DisLikedId == photoId);
+        }
+//--------------------------------------
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.Users
@@ -120,12 +158,7 @@ namespace API.Data
             _context.Entry(user).State = EntityState.Modified; //adds flag to entity that it has been modified
         }
 
-        //Likeeee
-        public async Task<Like> GetLike(int userId, int photoId)
-        {
-            return await _context.Likes.FirstOrDefaultAsync(u => u.LikerId == userId && u.LikeeId == photoId);
-        }
-
+      
         public async Task<Photo> GetPhotoByIdAsync(int id)
         {
             

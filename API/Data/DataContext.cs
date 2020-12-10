@@ -13,16 +13,17 @@ namespace API.Data
         public DbSet<AppUser> Users { get; set; }  //<> class that we want to create 
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Like> Likes { get; set; }
+        public DbSet<DisLike> DisLikes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Like>()
-                .HasKey(k => new {k.LikerId, k.LikeeId});
+                .HasKey(k => new {k.LikerId, k.LikedId});
 
             builder.Entity<Like>()
-                .HasOne(u => u.Likee)
+                .HasOne(u => u.Liked)
                 .WithMany(u => u.Likers)
-                .HasForeignKey(u => u.LikeeId)
+                .HasForeignKey(u => u.LikedId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Like>()
@@ -30,6 +31,23 @@ namespace API.Data
                 .WithMany(u => u.Likees)
                 .HasForeignKey(u => u.LikerId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
+            builder.Entity<DisLike>()
+                .HasKey(k => new {k.DisLikerId, k.DisLikedId});
+
+            builder.Entity<DisLike>()
+                .HasOne(u => u.DisLiked)
+                .WithMany(u => u.DisLikers)
+                .HasForeignKey(u => u.DisLikedId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<DisLike>()
+                .HasOne(u => u.DisLiker)
+                .WithMany(u => u.DisLikees)
+                .HasForeignKey(u => u.DisLikerId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
+        
     }
 }

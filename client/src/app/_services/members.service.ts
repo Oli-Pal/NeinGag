@@ -55,8 +55,18 @@ export class MembersService {
     return this.http.post(this.baseUrl + 'users/' + id + '/like/' + photoId, {})
   }
 
+  sendDisLike(id: number, photoId: number) {
+    return this.http.post(this.baseUrl + 'users/' + id + '/dislike/' + photoId, {})
+  }
+
   getNumberOfPhotoLikes(id: number): Observable<number> {
     return this.http.get<number>(this.baseUrl + 'users/' + id + '/likes/', { observe: 'response' }).pipe(map((response) => {
+      return response.body;
+    }))
+  }
+
+  getNumberOfPhotoDisLikes(id: number): Observable<number> {
+    return this.http.get<number>(this.baseUrl + 'users/' + id + '/dislikes/', { observe: 'response' }).pipe(map((response) => {
       return response.body;
     }))
   }

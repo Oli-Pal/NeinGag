@@ -20,6 +20,7 @@ export class MemeCardComponent implements OnInit {
   @Input() member: Member;
   user: User;
   likes: number;
+  dislikes: number;
 
   //numberOfLikes: number = this.photos.likers;
 
@@ -58,15 +59,27 @@ export class MemeCardComponent implements OnInit {
     });
   }
 
+  sendDisLike(photoId: number){
+    this.memberService.sendDisLike(this.user.id, photoId).subscribe(data => {
+
+      this.toastr.success('You have downvoted this meme')
+      this.getDisLikes();
+      
+    }, error => {
+      this.toastr.error("You already downvoted this meme");
+    });
+  }
+
   getLikes(){
     this.memberService.getNumberOfPhotoLikes(this.photos.id).subscribe((data) => {
       this.likes = data;
     });
   }
+  getDisLikes(){
+    this.memberService.getNumberOfPhotoDisLikes(this.photos.id).subscribe((data) => {
+      this.dislikes = data;
+    });
+  }
 
-  // 	getNumberOfPhotoLikes(id: number){
-  //     let totalLikes: number;
-  //     this.memberService.getNumberOfPhotoLikes(id).subscribe(data => totalLikes)
-    
-  // } //memecardcomp
+
 }

@@ -150,7 +150,7 @@ namespace API.Controllers
             like = new Like
             {
                 LikerId = id,
-                LikeeId = photoId
+                LikedId = photoId
             };
 
             _userRepository.Add<Like>(like);
@@ -163,6 +163,37 @@ namespace API.Controllers
         public async Task<IActionResult> GetNumberOfPhotoLikes(int id)
         {
             var x = await _userRepository.GetNumberOfPhotoLikes(id);
+            
+            return Ok(x);
+        }
+        // ---------- dislikes -----------
+        // /api/users/ ---
+        [HttpPost("{id}/dislike/{photoId}")]
+        public async Task<IActionResult> DisLikeUser(int id, int photoId)
+        {
+            //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
+            var dislike = await _userRepository.GetDisLike(id, photoId);
+            if(dislike != null)
+                return BadRequest("You already disliked that photo");
+            if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
+                return NotFound();
+
+            dislike = new DisLike
+            {
+                DisLikerId = id,
+                DisLikedId = photoId
+            };
+
+            _userRepository.Add<DisLike>(dislike);
+            if (await _userRepository.SaveAllAsync())
+                return Ok();
+            return BadRequest("Failed to like");
+        }
+
+        [HttpGet("{id}/dislikes")]
+        public async Task<IActionResult> GetNumberOfPhotoDisLikes(int id)
+        {
+            var x = await _userRepository.GetNumberOfPhotoDisLikes(id);
             
             return Ok(x);
         }

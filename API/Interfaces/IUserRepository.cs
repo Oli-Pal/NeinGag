@@ -32,5 +32,8 @@ namespace API.Interfaces
 
         Task<IEnumerable<int>> GetPhotoLikes(int id);
         Task<int> GetNumberOfPhotoLikes(int id);
+         Task<DisLike> GetDisLike(int userId, int photoId);
+        Task<IEnumerable<int>> GetPhotoDisLikes(int id);
+        Task<int> GetNumberOfPhotoDisLikes(int id);
     }
 }
