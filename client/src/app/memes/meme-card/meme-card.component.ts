@@ -6,8 +6,6 @@ import { MembersService } from 'src/app/_services/members.service';
 import { AccountService } from 'src/app/_services/account.service';
 import { take } from 'rxjs/operators';
 import { User } from 'src/app/_models/user';
-import { PhotoEditorComponent } from '../photo-editor/photo-editor.component';
-import { PhotosService } from 'src/app/_services/photos.service';
 
 
 @Component({
@@ -21,9 +19,6 @@ export class MemeCardComponent implements OnInit {
   user: User;
   likes: number;
   dislikes: number;
-
-  //numberOfLikes: number = this.photos.likers;
-
     constructor(private accountService: AccountService,
        private memberService: MembersService,
         private toastr: ToastrService) {
@@ -47,14 +42,13 @@ export class MemeCardComponent implements OnInit {
   ngOnInit(): void {
     this.getLikes();
     this.getDisLikes();
+    
   }
 
   sendLike(photoId: number){
     this.memberService.sendLike(this.user.id, photoId).subscribe(data => {
-
-      this.toastr.success('You have upvoted this meme')
       this.getLikes();
-      
+      this.getDisLikes();
     }, error => {
       this.toastr.error(error);
     });
@@ -62,10 +56,8 @@ export class MemeCardComponent implements OnInit {
 
   sendDisLike(photoId: number){
     this.memberService.sendDisLike(this.user.id, photoId).subscribe(data => {
-
-      this.toastr.success('You have downvoted this meme')
+      this.getLikes();
       this.getDisLikes();
-      
     }, error => {
       this.toastr.error(error);
     });
@@ -74,6 +66,7 @@ export class MemeCardComponent implements OnInit {
   getLikes(){
     this.memberService.getNumberOfPhotoLikes(this.photos.id).subscribe((data) => {
       this.likes = data;
+      
     });
   }
   getDisLikes(){
@@ -81,7 +74,7 @@ export class MemeCardComponent implements OnInit {
       this.dislikes = data;
     });
   }
-  
+
 
 
 

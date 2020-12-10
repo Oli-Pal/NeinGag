@@ -125,7 +125,7 @@ namespace API.Controllers
                 _userRepository.Delete<Like>(like);
 
             if(dislike != null)
-                return BadRequest("You can't like and dislike things simultaneously :<");
+              _userRepository.Delete<DisLike>(dislike);
 
             if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
                 return NotFound();
@@ -161,7 +161,7 @@ namespace API.Controllers
             if(dislike != null)
                 _userRepository.Delete<DisLike>(dislike);
             if(like != null)
-                return BadRequest("You can't like and dislike things simultaneously :<");
+                _userRepository.Delete<Like>(like);
 
             if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
                 return NotFound();
