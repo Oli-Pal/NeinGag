@@ -15,6 +15,8 @@ namespace API.Data
         public DbSet<Like> Likes { get; set; }
         public DbSet<DisLike> DisLikes { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Like>()
@@ -46,6 +48,22 @@ namespace API.Data
                 .HasOne(u => u.DisLiker)
                 .WithMany(u => u.DisLikees)
                 .HasForeignKey(u => u.DisLikerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            builder.Entity<Comment>()
+                .HasKey(k => new {k.CommenterId, k.CommentedPhotoId});
+
+            builder.Entity<Comment>()
+                .HasOne(u => u.CommentedPhoto)
+                .WithMany(u => u.Commenters)
+                .HasForeignKey(u => u.CommentedPhotoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Comment>()
+                .HasOne(u => u.Commenter)
+                .WithMany(u => u.Commentees)
+                .HasForeignKey(u => u.CommenterId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
         

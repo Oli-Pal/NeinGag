@@ -29,6 +29,8 @@ namespace API.Entities
        // public ICollection<Like> Likers { get; set; } 
         public ICollection<Like> Likees { get; set; }
         public ICollection<DisLike> DisLikees { get; set; } 
+
+        public ICollection<Comment> Commentees { get; set; } 
         
 
         

@@ -55,18 +55,18 @@ namespace API.Controllers
             return Ok(photos);
         }
 
-        [HttpGet("photos/{id}/{username}")]
-        public async Task<ActionResult<PhotoDto>> GetUserSinglePhoto(int id, string username)
-        {
-            var photos = await _userRepository.GetUserSinglePhotoAsync(id, username);
-            return Ok(photos);
-        }
-
         
         [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
             return await _userRepository.GetMemberAsync(username);
+        }
+        //get do loadingu w detail meme
+        [HttpGet("get-photo/{id}")]
+        public async Task<ActionResult<PhotoDto>> GetPhotoByIdAsync(int id)
+        {
+            var photo = await _userRepository.GetPhotoByIdAsync(id);
+            return Ok(photo);
         }
 
 
@@ -123,7 +123,7 @@ namespace API.Controllers
             return BadRequest("Failed to delete the photo");
         }
 
-        // /api/users/ ---
+        // /api/users/idusera/like/idzdjecia ---
         [HttpPost("{id}/like/{photoId}")]
         public async Task<IActionResult> LikeUser(int id, int photoId)
         {
@@ -134,7 +134,7 @@ namespace API.Controllers
                 _userRepository.Delete<Like>(like);
 
             if(dislike != null)
-              _userRepository.Delete<DisLike>(dislike);
+                _userRepository.Delete<DisLike>(dislike);
 
             if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
                 return NotFound();
@@ -159,6 +159,8 @@ namespace API.Controllers
             
             return Ok(x);
         }
+    
+
         // ---------- dislikes -----------
         // /api/users/ ---
         [HttpPost("{id}/dislike/{photoId}")]
@@ -180,6 +182,7 @@ namespace API.Controllers
             {
                 DisLikerId = id,
                 DisLikedId = photoId
+                
             };
 
             _userRepository.Add<DisLike>(dislike);}
@@ -195,36 +198,40 @@ namespace API.Controllers
             
             return Ok(x);
         }
+    // COMMENTS
+        // /api/users/ ---
+        [HttpPost("{id}/comment/{photoId}")]
+        public async Task<IActionResult> CommentUser(int id, int photoId,[FromForm] CommentDto commentdto)
+        {
+            //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
+            var comment = await _userRepository.GetComment(id, photoId);
+            if(comment != null)
+                _userRepository.Delete<Comment>(comment);
+            if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
+                return NotFound();
 
-        //UnLike systeeem
+            if(comment == null){
+                comment = new Comment
+            {
+                CommenterId = id,
+                CommentedPhotoId = photoId,
+                ContentOf = commentdto.Content
+            };
 
-        // [HttpPost("{id}/unlike/{photoId}")]
-        // public async Task<IActionResult> UnLikeUser(int id, int photoId)
-        // {
-        //     //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
-        //     var like = await _userRepository.GetLike(id, photoId);
-        //     var dislike = await _userRepository.GetDisLike(id, photoId);
-        //     if(like != null){
-        //     _userRepository.Delete<Like>(like);
-        //     }
+            _userRepository.Add<Comment>(comment);}
+            if (await _userRepository.SaveAllAsync())
+                return Ok();
+            return BadRequest("Failed to like");
+        }
 
-        //     if(dislike != null){
-        //     _userRepository.Delete<DisLike>(dislike);
-        //     }
-
-        //     if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
-        //         return NotFound();
-
-        //     // like = new Like
-        //     // {
-        //     //     LikerId = id,
-        //     //     LikedId = photoId
-        //     // };
-
+        [HttpGet("{id}/comments")]
+        public async Task<IActionResult> GetNumberOfPhotoComments(int id)
+        {
+            var x = await _userRepository.GetNumberOfPhotoComments(id);
             
-        //     if (await _userRepository.SaveAllAsync())
-        //         return Ok();
-        //     return BadRequest("Failed");
-        // }
+            return Ok(x);
+        }
+
+       
     }
 }

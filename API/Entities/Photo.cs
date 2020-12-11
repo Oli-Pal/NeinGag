@@ -22,6 +22,8 @@ namespace API.Entities
 
         public ICollection<DisLike> DisLikers { get; set; }
 
+        public ICollection<Comment> Commenters { get; set; }
+
         //public int AmountOfLikes{ get; set; } = 0;
     }
 }

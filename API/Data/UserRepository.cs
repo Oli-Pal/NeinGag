@@ -132,20 +132,7 @@ namespace API.Data
             .Where(p => p.AppUser.UserName == username)
             .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
-            
         }
-
-        
-            public async Task<PhotoDto> GetUserSinglePhotoAsync(int id, string username)
-        {
-            return await _context.Photos
-            .Where(p => p.AppUser.UserName == username)
-            .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
-            .SingleOrDefaultAsync(x => x.Id == id);
-            
-            
-        }
-
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.Users
@@ -179,11 +166,13 @@ namespace API.Data
         }
 
       
-        public async Task<Photo> GetPhotoByIdAsync(int id)
+        public async Task<PhotoDto> GetPhotoByIdAsync(int id)
         {
             
             return await _context.Photos
-            .FindAsync(id);
+            .Where(x => x.Id == id)
+            .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
+            .SingleOrDefaultAsync();
         }
 
         public void Add<T>(T entity) where T : class
@@ -196,7 +185,36 @@ namespace API.Data
             _context.Remove(entity);
         }
 
+//COMMENTS ---------------------------------------------
+        public async Task<IEnumerable<int>> GetUserComments(int id)
+        {
+            var user = await _context.Users
+                .Include(x => x.Commentees)
+                .FirstOrDefaultAsync(u => u.Id == id);
 
+            return user.Commentees.Where(u => u.CommenterId == id).Select(i => i.CommentedPhotoId);
+        }
+
+            public async Task<IEnumerable<int>> GetPhotoComments(int id)
+        {
+            var user = await _context.Photos
+                .Include(x => x.Commenters)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            return user.Commenters.Where(u => u.CommentedPhotoId == id).Select(i => i.CommenterId);
+        }
+
+             public async Task<int> GetNumberOfPhotoComments(int id)
+        {
+            var likes = await _context.Comments.Where(x => x.CommentedPhotoId == id).ToListAsync();
+
+            return likes.Count;
+        }
+  
+        public async Task<Comment> GetComment(int userId, int photoId)
+        {
+            return await _context.Comments.FirstOrDefaultAsync(u => u.CommenterId == userId && u.CommentedPhotoId == photoId);
+        }
        
     }
 }
