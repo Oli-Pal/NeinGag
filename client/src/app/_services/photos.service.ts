@@ -43,4 +43,10 @@ export class PhotosService {
       })
     )
   }
+
+  getPhotoById(id: number) {
+    const photos = this.photos.find(x => x.id === id);
+    if (photos !== undefined) { return of(photos); }
+    return this.http.get<Photo>(this.baseUrl + 'users/get-photo/' + id);
+  }
 }

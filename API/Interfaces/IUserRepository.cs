@@ -25,7 +25,7 @@ namespace API.Interfaces
         //likeee
         Task<Like> GetLike(int userId, int photoId);
 
-        Task<Photo> GetPhotoByIdAsync(int id);
+        Task<PhotoDto> GetPhotoByIdAsync(int id);
 
         void Add<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;

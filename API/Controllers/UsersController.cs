@@ -59,6 +59,13 @@ namespace API.Controllers
         {
             return await _userRepository.GetMemberAsync(username);
         }
+        //get do loadingu w detail meme
+        [HttpGet("get-photo/{id}")]
+        public async Task<ActionResult<PhotoDto>> GetPhotoByIdAsync(int id)
+        {
+            var photo = await _userRepository.GetPhotoByIdAsync(id);
+            return Ok(photo);
+        }
 
 
        [HttpPost("add-photo")]
@@ -173,6 +180,7 @@ namespace API.Controllers
             {
                 DisLikerId = id,
                 DisLikedId = photoId
+                
             };
 
             _userRepository.Add<DisLike>(dislike);}
