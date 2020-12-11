@@ -131,12 +131,21 @@ namespace API.Data
             return await _context.Photos
             .Where(p => p.AppUser.UserName == username)
             .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();;
-            
-            
-
+            .ToListAsync();
             
         }
+
+        
+            public async Task<PhotoDto> GetUserSinglePhotoAsync(int id, string username)
+        {
+            return await _context.Photos
+            .Where(p => p.AppUser.UserName == username)
+            .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
+            .SingleOrDefaultAsync(x => x.Id == id);
+            
+            
+        }
+
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.Users
@@ -177,7 +186,7 @@ namespace API.Data
             .FindAsync(id);
         }
 
-                public void Add<T>(T entity) where T : class
+        public void Add<T>(T entity) where T : class
         {
             _context.Add(entity);
         }
