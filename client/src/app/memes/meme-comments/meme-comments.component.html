@@ -1,10 +1,13 @@
+<div class="row justify-content-center">
+<div class="col-3"></div>
+<div class="col-6">
 <div class="card mb-4" >
     <div class="card-header">Description: {{photos?.description}} 
     </div>
     <div class="card-img-wrapper" >
         <ng-container>
 
-        <img src="{{photos?.url || '/client/src/assets/img/user.png'}}"  class="card-img-top">
+        <img src="{{photos?.url}}"  class="">
     </ng-container>
 </div>
     <div class="card-body p-1">
@@ -19,9 +22,7 @@
            <ul class="list-inline d-flex animate member-icons ml-2">
             <ng-container>
                <li class="list-inline-item "><button  class="btn btn-success" (click)="sendLike(photos.id)"><i class="fa fa-thumbs-up"></i></button></li>
-               <li class="list-inline-item "><button class="btn btn-danger" (click)="sendDisLike(photos.id)"><i class="fa fa-thumbs-down"></i></button></li>
-               <li class="list-inline-item mr-auto"><button class="btn btn-primary" [routerLink]="['/comments/', this.photos?.id]">
-                <i class="fa fa-comments"></i></button></li>
+               <li class="list-inline-item mr-auto"><button class="btn btn-danger" (click)="sendDisLike(photos.id)"><i class="fa fa-thumbs-down"></i></button></li>
                <li class="list-inline-item mr-2"><button  [routerLink]="['/detail/', this.member?.username]" class="btn btn-warning" >
                 <i class="fa fa-user"></i></button></li>
             </ng-container>
@@ -29,4 +30,7 @@
           
         </h6>
     </div>
+</div>
+</div>
+<div class="col-3"></div>
 </div>

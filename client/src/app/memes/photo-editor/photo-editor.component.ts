@@ -72,7 +72,6 @@ export class PhotoEditorComponent implements OnInit {
   }
   
   onKey(event: any) {
-    debugger;
     this.photoDescription = event.target.value;
   }
 }
