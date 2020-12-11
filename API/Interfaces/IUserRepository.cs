@@ -36,5 +36,12 @@ namespace API.Interfaces
         Task<IEnumerable<int>> GetPhotoDisLikes(int id);
         Task<int> GetNumberOfPhotoDisLikes(int id);
         Task<IEnumerable<PhotoDto>> GetUserPhotosAsync(string username);
+
+        //comment
+        Task<IEnumerable<int>> GetUserComments(int id);
+        Task<IEnumerable<int>> GetPhotoComments(int id);
+        Task<int> GetNumberOfPhotoComments(int id);
+        Task<Comment> GetComment(int userId, int photoId);
+        
     }
 }

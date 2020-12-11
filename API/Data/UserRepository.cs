@@ -187,7 +187,36 @@ namespace API.Data
             _context.Remove(entity);
         }
 
+//COMMENTS ---------------------------------------------
+        public async Task<IEnumerable<int>> GetUserComments(int id)
+        {
+            var user = await _context.Users
+                .Include(x => x.Commentees)
+                .FirstOrDefaultAsync(u => u.Id == id);
 
+            return user.Commentees.Where(u => u.CommenterId == id).Select(i => i.CommentedPhotoId);
+        }
+
+            public async Task<IEnumerable<int>> GetPhotoComments(int id)
+        {
+            var user = await _context.Photos
+                .Include(x => x.Commenters)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            return user.Commenters.Where(u => u.CommentedPhotoId == id).Select(i => i.CommenterId);
+        }
+
+             public async Task<int> GetNumberOfPhotoComments(int id)
+        {
+            var likes = await _context.Comments.Where(x => x.CommentedPhotoId == id).ToListAsync();
+
+            return likes.Count;
+        }
+  
+        public async Task<Comment> GetComment(int userId, int photoId)
+        {
+            return await _context.Comments.FirstOrDefaultAsync(u => u.CommenterId == userId && u.CommentedPhotoId == photoId);
+        }
        
     }
 }

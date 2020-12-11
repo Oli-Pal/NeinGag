@@ -27,7 +27,7 @@ const routes: Routes = [
       {path: 'edit', component: MemberEditComponent},
       {path: 'messages', component: MessagesComponent},
       {path: 'add-photo', component: PhotoEditorComponent},
-      {path: 'comments', component: MemeCommentsComponent}
+      {path: 'comments/:id', component: MemeCommentsComponent}
     ]
   },
   {path: 'memes', component: MemeListComponent},

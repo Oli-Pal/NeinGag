@@ -20,7 +20,7 @@
             <ng-container>
                <li class="list-inline-item "><button  class="btn btn-success" (click)="sendLike(photos.id)"><i class="fa fa-thumbs-up"></i></button></li>
                <li class="list-inline-item "><button class="btn btn-danger" (click)="sendDisLike(photos.id)"><i class="fa fa-thumbs-down"></i></button></li>
-               <li class="list-inline-item mr-auto"><button class="btn btn-primary" routerLink="/memes/comments">
+               <li class="list-inline-item mr-auto"><button class="btn btn-primary" [routerLink]="['/comments/', this.photos?.id]">
                 <i class="fa fa-comments"></i></button></li>
                <li class="list-inline-item mr-2"><button  [routerLink]="['/detail/', this.member?.username]" class="btn btn-warning" >
                 <i class="fa fa-user"></i></button></li>
