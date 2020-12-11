@@ -191,7 +191,7 @@ namespace API.Controllers
     // COMMENTS
         // /api/users/ ---
         [HttpPost("{id}/comment/{photoId}")]
-        public async Task<IActionResult> CommentUser(int id, int photoId)
+        public async Task<IActionResult> CommentUser(int id, int photoId,[FromForm] CommentDto commentdto)
         {
             //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
             var comment = await _userRepository.GetComment(id, photoId);
@@ -204,7 +204,8 @@ namespace API.Controllers
                 comment = new Comment
             {
                 CommenterId = id,
-                CommentedPhotoId = photoId
+                CommentedPhotoId = photoId,
+                Content = commentdto.Content
             };
 
             _userRepository.Add<Comment>(comment);}

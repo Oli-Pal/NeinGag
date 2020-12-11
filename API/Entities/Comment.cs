@@ -6,5 +6,7 @@ namespace API.Entities
         public int CommentedPhotoId { get; set; }
         public AppUser Commenter { get; set; }
         public Photo CommentedPhoto { get; set; }
+        
+        public string Content { get; set; }
     }
 }
