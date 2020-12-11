@@ -32,18 +32,21 @@ export class MemeCommentsComponent implements OnInit {
        this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
          this.user = user;
        });
-       
+      
 
       }
 
       ngOnInit(): void {
+       //this.loadPhoto();
        let id:string = this.route.snapshot.paramMap.get('id')
        this.photosService.getPhotoById(+id).subscribe(photos => {
          this.photos = photos;
-         this.loadMember();
          this.getLikes();
          this.getDisLikes();
+         this.loadMember();
        });
+        
+       
       }
 
       // loadPhoto(){

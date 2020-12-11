@@ -47,12 +47,14 @@ namespace API.Controllers
 
             return Ok(photos);
         }
-         [HttpGet("photos/{username}")]
+        
+        [HttpGet("photos/{username}")]
         public async Task<ActionResult<IEnumerable<PhotoDto>>> GetUserPhotos(string username)
         {
             var photos = await _userRepository.GetUserPhotosAsync(username);
             return Ok(photos);
         }
+
         
         [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
