@@ -205,7 +205,7 @@ namespace API.Controllers
             {
                 CommenterId = id,
                 CommentedPhotoId = photoId,
-                Content = commentdto.Content
+                ContentOf = commentdto.Content
             };
 
             _userRepository.Add<Comment>(comment);}

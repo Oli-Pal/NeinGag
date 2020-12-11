@@ -7,6 +7,6 @@ namespace API.Entities
         public AppUser Commenter { get; set; }
         public Photo CommentedPhoto { get; set; }
         
-        public string Content { get; set; }
+        public string ContentOf { get; set; }
     }
 }
