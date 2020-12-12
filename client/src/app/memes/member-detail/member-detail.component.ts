@@ -14,6 +14,7 @@ export class MemberDetailComponent implements OnInit {
   member: Member;
   @Input() members: Member[];
   photos: Photo[];
+  @Input() photoss: Photo;
   constructor(private memberService: MembersService, private route: ActivatedRoute,
      private photosService: PhotosService, private router: Router) { }
 

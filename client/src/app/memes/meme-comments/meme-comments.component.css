@@ -5,3 +5,20 @@ img{
     margin-right: auto;
     display: block;
 }
+
+.textarea-container{
+    display: flex;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+.area{
+    resize: none;
+    color:black;
+    width: 80%;
+   
+}
+
+.post, .cancel{
+    width: 10%;
+}
