@@ -16,8 +16,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./meme-comments.component.css']
 })
 export class MemeCommentsComponent implements OnInit {
-  @Input()
-  photos: Photo;
+  @Input() photos: Photo;
   member: Member;
   user: User;
   likes: number;

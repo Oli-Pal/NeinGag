@@ -47,6 +47,16 @@ namespace API.Data
             .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
+         public async Task<PagedList<PhotoDto>> GetPopularPhotosAsync(UserParams userParams)
+        {
+            var query = _context.Photos
+            .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
+            .OrderByDescending(x => (x.Likers.Count - x.DisLikers.Count));
+
+            return await PagedList<PhotoDto>
+            .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+        }
+
 
 //Likeeee ---------------------------------------------
         public async Task<IEnumerable<int>> GetUserLikes(int id)

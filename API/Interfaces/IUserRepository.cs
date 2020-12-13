@@ -21,6 +21,7 @@ namespace API.Interfaces
         Task<MemberDto> GetMemberAsync(string username);
 
         Task<PagedList<PhotoDto>> GetPhotosAsync(UserParams userParams);
+        Task<PagedList<PhotoDto>> GetPopularPhotosAsync(UserParams userParams);
     
         //likeee
         Task<Like> GetLike(int userId, int photoId);
