@@ -205,20 +205,20 @@ namespace API.Controllers
         {
             //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
             var comment = await _userRepository.GetComment(id, photoId);
-            if(comment != null)
-                _userRepository.Delete<Comment>(comment);
+            // if(comment != null)
+            //     _userRepository.Delete<Comment>(comment);
             if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
                 return NotFound();
 
-            if(comment == null){
-                comment = new Comment
+            
+                comment = new Commentt
             {
                 CommenterId = id,
                 CommentedPhotoId = photoId,
                 ContentOf = commentdto.Content
             };
 
-            _userRepository.Add<Comment>(comment);}
+            _userRepository.Add<Commentt>(comment);
             if (await _userRepository.SaveAllAsync())
                 return Ok();
             return BadRequest("Failed to like");

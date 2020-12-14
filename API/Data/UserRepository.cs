@@ -189,19 +189,19 @@ namespace API.Data
         public async Task<IEnumerable<int>> GetUserComments(int id)
         {
             var user = await _context.Users
-                .Include(x => x.Commentees)
+                .Include(x => x.Comments)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
-            return user.Commentees.Where(u => u.CommenterId == id).Select(i => i.CommentedPhotoId);
+            return user.Comments.Where(u => u.CommenterId == id).Select(i => i.CommentedPhotoId);
         }
 
             public async Task<IEnumerable<int>> GetPhotoComments(int id)
         {
             var user = await _context.Photos
-                .Include(x => x.Commenters)
+                .Include(x => x.Comments)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
-            return user.Commenters.Where(u => u.CommentedPhotoId == id).Select(i => i.CommenterId);
+            return user.Comments.Where(u => u.CommentedPhotoId == id).Select(i => i.CommenterId);
         }
 
              public async Task<int> GetNumberOfPhotoComments(int id)
@@ -211,7 +211,7 @@ namespace API.Data
             return likes.Count;
         }
   
-        public async Task<Comment> GetComment(int userId, int photoId)
+        public async Task<Commentt> GetComment(int userId, int photoId)
         {
             return await _context.Comments.FirstOrDefaultAsync(u => u.CommenterId == userId && u.CommentedPhotoId == photoId);
         }

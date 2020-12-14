@@ -51,20 +51,26 @@ namespace API.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("API.Entities.Comment", b =>
+            modelBuilder.Entity("API.Entities.Commentt", b =>
                 {
-                    b.Property<int>("CommenterId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CommentedPhotoId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("CommenterId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("ContentOf")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("CommenterId", "CommentedPhotoId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CommentedPhotoId");
+
+                    b.HasIndex("CommenterId");
 
                     b.ToTable("Comments");
                 });
@@ -124,18 +130,18 @@ namespace API.Data.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("API.Entities.Comment", b =>
+            modelBuilder.Entity("API.Entities.Commentt", b =>
                 {
                     b.HasOne("API.Entities.Photo", "CommentedPhoto")
-                        .WithMany("Commenters")
+                        .WithMany("Comments")
                         .HasForeignKey("CommentedPhotoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Entities.AppUser", "Commenter")
-                        .WithMany("Commentees")
+                        .WithMany("Comments")
                         .HasForeignKey("CommenterId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CommentedPhoto");
@@ -194,7 +200,7 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
-                    b.Navigation("Commentees");
+                    b.Navigation("Comments");
 
                     b.Navigation("DisLikees");
 
@@ -205,7 +211,7 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Photo", b =>
                 {
-                    b.Navigation("Commenters");
+                    b.Navigation("Comments");
 
                     b.Navigation("DisLikers");
 

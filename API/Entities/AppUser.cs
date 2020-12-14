@@ -30,7 +30,7 @@ namespace API.Entities
         public ICollection<Like> Likees { get; set; }
         public ICollection<DisLike> DisLikees { get; set; } 
 
-        public ICollection<Comment> Commentees { get; set; } 
+        public ICollection<Commentt> Comments { get; set; } 
         
 
         

@@ -15,7 +15,7 @@ namespace API.Data
         public DbSet<Like> Likes { get; set; }
         public DbSet<DisLike> DisLikes { get; set; }
 
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Commentt> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -51,20 +51,19 @@ namespace API.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
 
-            builder.Entity<Comment>()
-                .HasKey(k => new {k.CommenterId, k.CommentedPhotoId});
+            builder.Entity<Commentt>()
+                .HasKey(x => new {x.Id});
 
-            builder.Entity<Comment>()
+            builder.Entity<Commentt>()
                 .HasOne(u => u.CommentedPhoto)
-                .WithMany(u => u.Commenters)
-                .HasForeignKey(u => u.CommentedPhotoId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .WithMany(u => u.Comments)
+                .HasForeignKey(u => u.CommentedPhotoId);
 
-            builder.Entity<Comment>()
+
+            builder.Entity<Commentt>()
                 .HasOne(u => u.Commenter)
-                .WithMany(u => u.Commentees)
-                .HasForeignKey(u => u.CommenterId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .WithMany(u => u.Comments)
+                .HasForeignKey(u => u.CommenterId);
         }
         
     }
