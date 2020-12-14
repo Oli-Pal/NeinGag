@@ -34,6 +34,24 @@ export class PhotosService {
     );
   }
 
+  getPopularPhotos(page?: number, itemsPerPage?:number){
+    let params = new HttpParams();
+    if(page !== null && itemsPerPage !== null){
+      params = params.append('pageNumber', page.toString());
+      params = params.append('pageSize', itemsPerPage.toString());
+    }
+
+    return this.http.get<Photo[]>(this.baseUrl + 'users/popular-photos', {observe: 'response', params}).pipe(
+        map(response =>{
+          this.paginatedResult.result = response.body;
+          if(response.headers.get('Pagination') !== null){
+            this.paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+          }
+          return this.paginatedResult;
+        })
+    );
+  }
+
   getMemberPhotos(username: string) {
     if (this.photos.length > 0) { return of(this.photos); }
     return this.http.get<Photo[]>(this.baseUrl + 'users/photos/' + username).pipe(
@@ -41,8 +59,10 @@ export class PhotosService {
         this.photos = photos;
         return photos;
       })
-    )
+    );
   }
+
+  
 
   getPhotoById(id: number) {
     const photos = this.photos.find(x => x.id === id);

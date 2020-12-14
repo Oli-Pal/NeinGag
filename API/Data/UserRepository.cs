@@ -43,22 +43,18 @@ namespace API.Data
             .OrderByDescending(x => x.Id)
             .AsNoTracking();
 
-//             var users = _context.Users.Include(p => p.Photos)
-//                 .OrderByDescending(x => x.LastActive).AsQueryable();
-//             users = users.Where(x => x.Id != userParams.UserId);
-// //like
-//             if(userParams.Likees)
-//             {
-                
-//                 var userLikees = await GetUserLikes(userParams.UserId);
-//                 users = users.Where(u => userLikees.Contains(u.Id));
-//             }
-            
+            return await PagedList<PhotoDto>
+            .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+        }
+
+         public async Task<PagedList<PhotoDto>> GetPopularPhotosAsync(UserParams userParams)
+        {
+            var query = _context.Photos
+            .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
+            .OrderByDescending(x => (x.Likers.Count - x.DisLikers.Count));
 
             return await PagedList<PhotoDto>
             .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
-
-            
         }
 
 
@@ -213,7 +209,8 @@ namespace API.Data
   
         public async Task<Commentt> GetComment(int userId, int photoId)
         {
-            return await _context.Comments.FirstOrDefaultAsync(u => u.CommenterId == userId && u.CommentedPhotoId == photoId);
+            return await _context.Comments
+            .FirstOrDefaultAsync(u => u.CommenterId == userId && u.CommentedPhotoId == photoId);
         }
 
         public async Task<Commentt> GetCommentById(int id)

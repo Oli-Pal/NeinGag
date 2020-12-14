@@ -30,7 +30,7 @@
                   <ng-container>
                      <li class="list-inline-item "><button class="btn btn-success"><i class="fa fa-thumbs-up"></i></button></li>
                      <li class="list-inline-item "><button class="btn btn-danger"><i class="fa fa-thumbs-down"></i></button></li>
-                     <li class="list-inline-item mr-auto"><button class="btn btn-primary" routerLink="/comments">
+                     <li class="list-inline-item mr-auto"><button class="btn btn-primary" [routerLink]="['/comments/', this.memphotos?.id]">
                       <i class="fa fa-comments"></i></button></li>
                   </ng-container>
                   </ul>

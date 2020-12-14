@@ -11,8 +11,7 @@ import { PhotosService } from 'src/app/_services/photos.service';
   styleUrls: ['./popular-list.component.css']
 })
 export class PopularListComponent implements OnInit {
-
-  members: Member[];
+  member: Member;
   photos: Photo[];
   pagination: Pagination;
   pageNumber = 1; //chwilowka
@@ -21,12 +20,12 @@ export class PopularListComponent implements OnInit {
   constructor(private memberService: MembersService, private photosService: PhotosService) { }
 
   ngOnInit(): void {
-    this.loadPhotos();
+    this.loadPopularPhotos();
   }
 
 
-  loadPhotos(){
-    this.photosService.getPhotos(this.pageNumber, this.pageSize)
+  loadPopularPhotos(){
+    this.photosService.getPopularPhotos(this.pageNumber, this.pageSize)
     .subscribe(photos => {
       this.photos = photos.result;
       this.pagination = photos.pagination;
@@ -35,6 +34,7 @@ export class PopularListComponent implements OnInit {
 
   pageChanged(event: any){
     this.pageNumber = event.page;
-    this.loadPhotos();
+    this.loadPopularPhotos();
   }
+
 }

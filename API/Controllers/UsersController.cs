@@ -48,6 +48,17 @@ namespace API.Controllers
             return Ok(photos);
         }
         
+         [AllowAnonymous]
+        [HttpGet("popular-photos")]
+        public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPopularPhotos([FromQuery]UserParams userParams)
+        {
+            var photos = await _userRepository.GetPopularPhotosAsync(userParams);
+
+            Response.AddPaginationHeader(photos.CurrentPage, photos.PageSize, photos.TotalCount, photos.TotalCount);
+
+            return Ok(photos);
+        }
+        
         [HttpGet("photos/{username}")]
         public async Task<ActionResult<IEnumerable<PhotoDto>>> GetUserPhotos(string username)
         {
@@ -201,7 +212,7 @@ namespace API.Controllers
     // COMMENTS
         // /api/users/ ---
         [HttpPost("{id}/comment/{photoId}")]
-        public async Task<IActionResult> CommentUser(int id, int photoId,[FromForm] CommentDto commentdto)
+        public async Task<ActionResult<IEnumerable<CommentDto>>> CommentUser(int id, int photoId, [FromForm] CommentDto commentDto)
         {
             //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
             var comment = await _userRepository.GetComment(id, photoId);
@@ -213,23 +224,23 @@ namespace API.Controllers
             
                 comment = new Commentt
             {
-                Id = commentdto.Id,
+                Id = commentDto.Id,
                 CommenterId = id,
                 CommentedPhotoId = photoId,
-                ContentOf = commentdto.Content
+                ContentOf = commentDto.Content
             };
 
             _userRepository.Add<Commentt>(comment);
             if (await _userRepository.SaveAllAsync())
                 return Ok();
-            return BadRequest("Failed to like");
+            
+            return BadRequest("Failed to add comment");
         }
 
         [HttpGet("{id}/comments")]
         public async Task<IActionResult> GetNumberOfPhotoComments(int id)
         {
             var x = await _userRepository.GetNumberOfPhotoComments(id);
-            
             return Ok(x);
         }
 
@@ -240,6 +251,9 @@ namespace API.Controllers
             
             return Ok(x);
         }
+    }
+}
+
 
         // [HttpGet("{userId}/commentbyidies/{photoId}")]
         // public async Task<IActionResult> GetComment(int userId, int photoId)
@@ -248,7 +262,4 @@ namespace API.Controllers
             
         //     return Ok(x);
         // }
-
-       
-    }
-}
+ 

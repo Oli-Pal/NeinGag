@@ -16,13 +16,12 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./meme-comments.component.css']
 })
 export class MemeCommentsComponent implements OnInit {
-  @Input()
-  photos: Photo;
+  @Input() photos: Photo;
   member: Member;
   user: User;
-  //photo: Photo[];
   likes: number;
   dislikes: number;
+  
 
 
 
@@ -37,7 +36,6 @@ export class MemeCommentsComponent implements OnInit {
       }
 
       ngOnInit(): void {
-       //this.loadPhoto();
        let id:string = this.route.snapshot.paramMap.get('id')
        this.photosService.getPhotoById(+id).subscribe(photos => {
          this.photos = photos;
@@ -45,19 +43,8 @@ export class MemeCommentsComponent implements OnInit {
          this.getDisLikes();
          this.loadMember();
        });
-        
-       
       }
 
-      // loadPhoto(){
-      //   let id:string = this.route.snapshot.paramMap.get('id')
-      //   this.photosService.getPhotoById(+id)
-      //   .subscribe(photos => this.photos = photos)
-      //   return this.photos.id;
-
-      // }
-
-    
       sendLike(photoId: number){
         this.memberService.sendLike(this.user.id, photoId).subscribe(data => {
           this.getLikes();

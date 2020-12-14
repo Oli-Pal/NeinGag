@@ -20,10 +20,10 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { MemeCardComponent } from './memes/meme-card/meme-card.component';
 import { MemeCommentsComponent } from './memes/meme-comments/meme-comments.component';
 import { MemberDetailComponent } from './memes/member-detail/member-detail.component';
-import { MemeDetailComponent } from './memes/meme-detail/meme-detail.component';
 import { MemberEditComponent } from './memes/member-edit/member-edit.component';
 import { PhotoEditorComponent } from './memes/photo-editor/photo-editor.component';
 import { PopularListComponent } from './memes/popular-list/popular-list.component';
+import { CommentsAddedComponent } from './memes/comments-added/comments-added.component';
 
 @NgModule({
   declarations: [
@@ -39,10 +39,10 @@ import { PopularListComponent } from './memes/popular-list/popular-list.componen
     MemeCardComponent,
     MemeCommentsComponent,
     MemberDetailComponent,
-    MemeDetailComponent,
     MemberEditComponent,
     PhotoEditorComponent,
-    PopularListComponent
+    PopularListComponent,
+    CommentsAddedComponent
   ],
   imports: [
     BrowserModule,

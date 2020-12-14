@@ -5,3 +5,25 @@ img{
     margin-right: auto;
     display: block;
 }
+
+.avtar{
+    width: 10%;
+    margin-right: 5px;
+}
+
+.textarea-container{
+    display: flex;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+.area{
+    resize: none;
+    color:black;
+    width: 70%;
+   
+}
+
+.post, .cancel{
+    width: 10%;
+}
