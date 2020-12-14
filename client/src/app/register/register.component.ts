@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
     return (control: AbstractControl) => {
       return control?.value === control?.parent?.controls[matchTo].value
         ? null : {isMatching: true}
-    }
+    };
   }
 
   register() {
@@ -47,11 +47,10 @@ export class RegisterComponent implements OnInit {
       this.cancelRegister.emit(false);
     }, error => {
       this.validationErrors = error;
-    })
+    });
   }
 
   cancel() {
     this.cancelRegister.emit(false);
   }
-
 }
