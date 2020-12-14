@@ -192,7 +192,7 @@ namespace API.Data
                 .Include(x => x.Comments)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
-            return user.Comments.Where(u => u.CommenterId == id).Select(i => i.CommentedPhotoId);
+            return user.Comments.Where(u => u.CommenterId == id).Select(i => i.Id);
         }
 
             public async Task<IEnumerable<int>> GetPhotoComments(int id)
@@ -201,7 +201,7 @@ namespace API.Data
                 .Include(x => x.Comments)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
-            return user.Comments.Where(u => u.CommentedPhotoId == id).Select(i => i.CommenterId);
+            return user.Comments.Where(u => u.CommentedPhotoId == id).Select(i => i.Id);
         }
 
              public async Task<int> GetNumberOfPhotoComments(int id)
@@ -214,6 +214,11 @@ namespace API.Data
         public async Task<Commentt> GetComment(int userId, int photoId)
         {
             return await _context.Comments.FirstOrDefaultAsync(u => u.CommenterId == userId && u.CommentedPhotoId == photoId);
+        }
+
+        public async Task<Commentt> GetCommentById(int id)
+        {
+            return await _context.Comments.FirstOrDefaultAsync(u => u.Id == id);
         }
        
     }

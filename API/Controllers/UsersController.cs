@@ -213,6 +213,7 @@ namespace API.Controllers
             
                 comment = new Commentt
             {
+                Id = commentdto.Id,
                 CommenterId = id,
                 CommentedPhotoId = photoId,
                 ContentOf = commentdto.Content
@@ -231,6 +232,22 @@ namespace API.Controllers
             
             return Ok(x);
         }
+
+        [HttpGet("{id}/commentById")]
+        public async Task<IActionResult> GetCommentById(int id)
+        {
+            var x = await _userRepository.GetCommentById(id);
+            
+            return Ok(x);
+        }
+
+        // [HttpGet("{userId}/commentbyidies/{photoId}")]
+        // public async Task<IActionResult> GetComment(int userId, int photoId)
+        // {
+        //     var x = await _userRepository.GetComment(userId, photoId);
+            
+        //     return Ok(x);
+        // }
 
        
     }
