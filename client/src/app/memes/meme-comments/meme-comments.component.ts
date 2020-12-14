@@ -21,8 +21,8 @@ export class MemeCommentsComponent implements OnInit {
   user: User;
   likes: number;
   dislikes: number;
-  
-
+  contentOf: string;
+  //newComment: any = {};
 
 
   constructor(private accountService: AccountService,
@@ -81,6 +81,15 @@ export class MemeCommentsComponent implements OnInit {
         
         this.memberService.getMember(this.photos.nickname.toLowerCase()).subscribe((member) => {
           this.member = member;
+        });
+      }
+
+      comment(contentOf: string) {
+        this.memberService.comment(this.user.id, this.photos.id, contentOf).subscribe((data) =>{
+          this.contentOf = 'asd';
+          this.toastr.success('Comment added');
+        },error => {
+          this.toastr.error('Comment not added');
         });
       }
 

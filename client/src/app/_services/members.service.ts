@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Member } from '../_models/member';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Message } from '../_models/comment';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,12 @@ export class MembersService {
 
   sendDisLike(id: number, photoId: number) {
     return this.http.post(this.baseUrl + 'users/' + id + '/dislike/' + photoId, {});
+  }
+
+  comment(id: number, photoId: number, contentOf: string) {
+    return this.http.post(this.baseUrl + 'users/' + id + '/comment/' + photoId, {
+      contentOf
+    });
   }
 
   getNumberOfPhotoLikes(id: number): Observable<number> {

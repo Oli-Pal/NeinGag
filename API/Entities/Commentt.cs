@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+
 namespace API.Entities
 {
-    public class Comment
+    public class Commentt
     {
+        public int Id { get; set; }
         public int CommenterId { get; set; }
         public int CommentedPhotoId { get; set; }
         public AppUser Commenter { get; set; }

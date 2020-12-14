@@ -42,7 +42,8 @@ namespace API.Interfaces
         Task<IEnumerable<int>> GetUserComments(int id);
         Task<IEnumerable<int>> GetPhotoComments(int id);
         Task<int> GetNumberOfPhotoComments(int id);
-        Task<Comment> GetComment(int userId, int photoId);
+        Task<Commentt> GetComment(int userId, int photoId);
+        Task<Commentt> GetCommentById(int id);
         
     }
 }

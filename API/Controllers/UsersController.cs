@@ -217,33 +217,48 @@ namespace API.Controllers
             //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
             var comment = await _userRepository.GetComment(id, photoId);
             // if(comment != null)
-            //     _userRepository.Add<Comment>(comment);
+            //     _userRepository.Delete<Comment>(comment);
             if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
                 return NotFound();
 
-                comment = new Comment
+            
+                comment = new Commentt
             {
+                Id = commentDto.Id,
                 CommenterId = id,
                 CommentedPhotoId = photoId,
-                ContentOf = commentDto.Content
+                ContentOf = commentDto.ContentOf
             };
 
-            _userRepository.Add<Comment>(comment);
-            if (await _userRepository.SaveAllAsync()){
+            _userRepository.Add<Commentt>(comment);
+            if (await _userRepository.SaveAllAsync())
                 return Ok();
-            }
+            
             return BadRequest("Failed to add comment");
         }
 
         [HttpGet("{id}/comments")]
         public async Task<IActionResult> GetNumberOfPhotoComments(int id)
         {
-            var x = await _userRepository
-            .GetNumberOfPhotoComments(id);
-            
+            var x = await _userRepository.GetNumberOfPhotoComments(id);
             return Ok(x);
         }
 
-       
+        [HttpGet("{id}/commentById")]
+        public async Task<IActionResult> GetCommentById(int id)
+        {
+            var x = await _userRepository.GetCommentById(id);
+            
+            return Ok(x);
+        }
     }
 }
+
+
+        // [HttpGet("{userId}/commentbyidies/{photoId}")]
+        // public async Task<IActionResult> GetComment(int userId, int photoId)
+        // {
+        //     var x = await _userRepository.GetComment(userId, photoId);
+            
+        //     return Ok(x);
+        // }
