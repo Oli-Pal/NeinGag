@@ -29,19 +29,22 @@
             </ul>
         </h6>
     </div>
-    <div class="card-footer p-1">
-    <form>
-    <div class="textarea-container  form-group">
-        <img class="avtar rounded-circle" src="{{user?.photoUrl}}" alt="">
-        <textarea class="area form-control" type="text" placeholder="Write your comments..." rows="2"></textarea>
-            <button class="btn btn-success post" type="submit"> Post </button>
-            <button class="btn btn-danger cancel" type="button">Cancel</button>
-        </div>
-    </form>
-    <!-- <div *ngFor="let members of member">
-        <app-comments-added [members]="member"  ></app-comments-added>
-    </div> -->
-    <app-comments-added ></app-comments-added>
+    <div class="card-footer">
+        <form #messageForm="ngForm" (ngSubmit)="messageForm.valid && comment(contentOf)" autocomplete="off">
+            <div class="input-group">
+                <input 
+                    name="ContentOf"
+                    required
+                    [(ngModel)]="contentOf"
+                    type="text" 
+                    class="form-control input-sm" 
+                    placeholder="Comment">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" [disabled]="!messageForm.valid" type="submit">Send
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 </div>

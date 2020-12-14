@@ -227,7 +227,7 @@ namespace API.Controllers
                 Id = commentDto.Id,
                 CommenterId = id,
                 CommentedPhotoId = photoId,
-                ContentOf = commentDto.Content
+                ContentOf = commentDto.ContentOf
             };
 
             _userRepository.Add<Commentt>(comment);
@@ -262,4 +262,3 @@ namespace API.Controllers
             
         //     return Ok(x);
         // }
- 

@@ -70,5 +70,7 @@ export class MemeCardComponent implements OnInit {
     });
   }
 
+  
+
 
 }
