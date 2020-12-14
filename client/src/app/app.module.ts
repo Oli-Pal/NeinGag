@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { MemeListComponent } from './memes/meme-list/meme-list.component';
@@ -24,6 +24,7 @@ import { MemberEditComponent } from './memes/member-edit/member-edit.component';
 import { PhotoEditorComponent } from './memes/photo-editor/photo-editor.component';
 import { PopularListComponent } from './memes/popular-list/popular-list.component';
 import { CommentsAddedComponent } from './memes/comments-added/comments-added.component';
+import { InputTextComponent } from './_forms/input-text/input-text.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { CommentsAddedComponent } from './memes/comments-added/comments-added.co
     MemberEditComponent,
     PhotoEditorComponent,
     PopularListComponent,
-    CommentsAddedComponent
+    CommentsAddedComponent,
+    InputTextComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,8 @@ import { CommentsAddedComponent } from './memes/comments-added/comments-added.co
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
