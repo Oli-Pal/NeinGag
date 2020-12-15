@@ -181,50 +181,7 @@ namespace API.Data
             _context.Remove(entity);
         }
 
-//COMMENTS ---------------------------------------------
-        public async Task<IEnumerable<int>> GetUserComments(int id)
-        {
-            var user = await _context.Users
-                .Include(x => x.Comments)
-                .FirstOrDefaultAsync(u => u.Id == id);
 
-            return user.Comments.Where(u => u.CommenterId == id).Select(i => i.Id);
-        }
-
-            public async Task<IEnumerable<int>> GetPhotoComments(int id)
-        {
-            var user = await _context.Photos
-                .Include(x => x.Comments)
-                .FirstOrDefaultAsync(u => u.Id == id);
-
-            return user.Comments.Where(u => u.CommentedPhotoId == id).Select(i => i.Id);
-        }
-
-             public async Task<int> GetNumberOfPhotoComments(int id)
-        {
-            var likes = await _context.Comments.Where(x => x.CommentedPhotoId == id).ToListAsync();
-
-            return likes.Count;
-        }
-  
-        public async Task<Commentt> GetComment(int userId, int photoId)
-        {
-            return await _context.Comments
-            .FirstOrDefaultAsync(u => u.CommenterId == userId && u.CommentedPhotoId == photoId);
-        }
-
-        public async Task<Commentt> GetCommentById(int id)
-        {
-            return await _context.Comments.FirstOrDefaultAsync(u => u.Id == id);
-        }
-
-         public async Task<IEnumerable<CommentDto>> GetCommentsAsync(int id)
-        {
-            return await _context.Comments
-                    .Where(p => p.CommentedPhotoId == id)
-            .ProjectTo<CommentDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
-        }
        
     }
 }
