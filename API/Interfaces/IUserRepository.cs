@@ -44,6 +44,8 @@ namespace API.Interfaces
         Task<int> GetNumberOfPhotoComments(int id);
         Task<Commentt> GetComment(int userId, int photoId);
         Task<Commentt> GetCommentById(int id);
+
+        Task<IEnumerable<CommentDto>> GetCommentsAsync(int id);
         
     }
 }

@@ -217,6 +217,14 @@ namespace API.Data
         {
             return await _context.Comments.FirstOrDefaultAsync(u => u.Id == id);
         }
+
+         public async Task<IEnumerable<CommentDto>> GetCommentsAsync(int id)
+        {
+            return await _context.Comments
+                    .Where(p => p.CommentedPhotoId == id)
+            .ProjectTo<CommentDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+        }
        
     }
 }

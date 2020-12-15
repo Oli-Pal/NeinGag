@@ -237,7 +237,7 @@ namespace API.Controllers
             return BadRequest("Failed to add comment");
         }
 
-        [HttpGet("{id}/comments")]
+        [HttpGet("{id}/commentNr")]
         public async Task<IActionResult> GetNumberOfPhotoComments(int id)
         {
             var x = await _userRepository.GetNumberOfPhotoComments(id);
@@ -248,6 +248,14 @@ namespace API.Controllers
         public async Task<IActionResult> GetCommentById(int id)
         {
             var x = await _userRepository.GetCommentById(id);
+            
+            return Ok(x);
+        }
+
+        [HttpGet("{id}/comments")]
+        public async Task<ActionResult<IEnumerable<CommentDto>>> GetCommentsAsync(int id)
+        {
+            var x = await _userRepository.GetCommentsAsync(id);
             
             return Ok(x);
         }
