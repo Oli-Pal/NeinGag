@@ -10,5 +10,5 @@ export interface Member {
     lastActive: Date;
     country: string;
     photos: Photo[];
-    comments: string;
+    comments: Comment[];
   }

@@ -55,7 +55,6 @@ export class MembersService {
 
   addComment(id: number, photoId: number, contentOf: string) {
     const form = new FormData();
-    debugger;
     form.append("contentOf", contentOf);
     return this.http.post<Comment>(this.baseUrl + 'comment/' + id + '/' + photoId, form);
   }

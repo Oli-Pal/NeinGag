@@ -107,7 +107,8 @@ export class MemeCommentsComponent implements OnInit {
       this.memberService.addComment(this.user.id,this.photos.id, this.contentOf).subscribe(comment =>{
         this.comments.push(comment);
         this.messageForm.reset();
-      })
+        this.getComments();
+      });
     }
     
 
