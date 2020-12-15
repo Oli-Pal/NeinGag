@@ -212,7 +212,7 @@ namespace API.Controllers
     // COMMENTS
         // /api/users/ ---
         [HttpPost("{id}/comment/{photoId}")]
-        public async Task<ActionResult<IEnumerable<CommentDto>>> CommentUser(int id, int photoId, [FromForm] CommentDto commentDto)
+        public async Task<ActionResult<IEnumerable<CommentDto>>> CommentUser(int id, int photoId, [FromQuery] CommentDto commentDto)
         {
             //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
             var comment = await _userRepository.GetComment(id, photoId);
@@ -250,6 +250,13 @@ namespace API.Controllers
             var x = await _userRepository.GetCommentById(id);
             
             return Ok(x);
+        }
+
+        [HttpGet("{photoId}/comments")]
+        public async Task<ActionResult<IEnumerable<Commentt>>>  GetCommentsOfPhoto(int photoId)
+        {
+            var comments = await _userRepository.GetPhotoComments(photoId);
+            return Ok(comments);
         }
     }
 }

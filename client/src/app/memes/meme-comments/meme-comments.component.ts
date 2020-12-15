@@ -1,6 +1,6 @@
 
 import { Component, Input, OnInit } from '@angular/core';
-import { ToastRef, ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { Member } from 'src/app/_models/member';
 import { Photo } from 'src/app/_models/photo';
 import { MembersService } from 'src/app/_services/members.service';
@@ -9,6 +9,7 @@ import { PhotosService } from 'src/app/_services/photos.service';
 import { take } from 'rxjs/operators';
 import { User } from 'src/app/_models/user';
 import { ActivatedRoute } from '@angular/router';
+import { Comment } from 'src/app/_models/comment';
 
 @Component({
   selector: 'app-meme-comments',
@@ -19,10 +20,12 @@ export class MemeCommentsComponent implements OnInit {
   @Input() photos: Photo;
   member: Member;
   user: User;
+  com: Comment[];
   likes: number;
   dislikes: number;
-  contentOf: string;
-  //newComment: any = {};
+  newComment: any = {};
+ 
+  
 
 
   constructor(private accountService: AccountService,
@@ -36,7 +39,7 @@ export class MemeCommentsComponent implements OnInit {
       }
 
       ngOnInit(): void {
-       let id:string = this.route.snapshot.paramMap.get('id')
+       let id: string = this.route.snapshot.paramMap.get('id');
        this.photosService.getPhotoById(+id).subscribe(photos => {
          this.photos = photos;
          this.getLikes();
@@ -84,13 +87,19 @@ export class MemeCommentsComponent implements OnInit {
         });
       }
 
-      comment(contentOf: string) {
-        this.memberService.comment(this.user.id, this.photos.id, contentOf).subscribe((data) =>{
-          this.contentOf = 'asd';
+      sendComment() {
+        debugger;
+        this.memberService.comment(this.user.id, this.photos.id, this.newComment)
+        .subscribe((comment: Comment) =>{
+          //this.com.unshift(comment);
+          this.newComment.contentOf = '';
           this.toastr.success('Comment added');
-        },error => {
+        }, error => {
           this.toastr.error('Comment not added');
         });
       }
 
+      // onKey(event: any) {
+      //   this.comment = event.target.value;
+      // }
 }

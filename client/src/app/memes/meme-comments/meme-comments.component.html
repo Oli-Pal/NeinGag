@@ -1,52 +1,49 @@
 <div class="row justify-content-center">
-<div class="col-3"></div>
-<div class="col-6">
-<div class="card mb-4" >
-    <div class="card-header">Description: {{photos?.description}} 
-    </div>
-    <div class="card-img-wrapper" >
-        <ng-container>
-
-        <img src="{{photos?.url}}"  class="">
-    </ng-container>
-</div>
-    <div class="card-body p-1">
-        <h6 class="card-title ">
-            <div class="d-flex">
-            <li class="list-inline-item "><p>{{likes}} ups</p></li>
-            <li class="list-inline-item "><p>{{dislikes}} downs</p></li>
-            <li class="list-inline-item "><p>| {{likes - dislikes}} points |</p></li>
-            <li class="list-inline-item mr-auto"><p>1 comments</p></li>
-            <li class="list-inline-item "><p>Posted by:{{photos?.nickname}}</p></li>
+    <div class="col-3"></div>
+    <div class="col-6">
+    <div class="card mb-4" >
+        <div class="card-header">Description: {{photos?.description}} 
         </div>
-           <ul class="list-inline d-flex animate member-icons ml-2">
+        <div class="card-img-wrapper" >
             <ng-container>
-               <li class="list-inline-item "><button  class="btn btn-success" (click)="sendLike(photos.id)"><i class="fa fa-thumbs-up"></i></button></li>
-               <li class="list-inline-item mr-auto"><button class="btn btn-danger" (click)="sendDisLike(photos.id)"><i class="fa fa-thumbs-down"></i></button></li>
-               <li class="list-inline-item mr-2"><button  [routerLink]="['/detail/', this.member?.username]" class="btn btn-warning" >
-                <i class="fa fa-user"></i></button></li>
-            </ng-container>
-            </ul>
-        </h6>
+    
+            <img src="{{photos?.url}}"  class="">
+        </ng-container>
     </div>
-    <div class="card-footer">
-        <form #messageForm="ngForm" (ngSubmit)="messageForm.valid && comment(contentOf)" autocomplete="off">
-            <div class="input-group">
-                <input 
-                    name="ContentOf"
-                    required
-                    [(ngModel)]="contentOf"
-                    type="text" 
-                    class="form-control input-sm" 
-                    placeholder="Comment">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" [disabled]="!messageForm.valid" type="submit">Send
-                    </button>
-                </div>
+        <div class="card-body p-1">
+            <h6 class="card-title ">
+                <div class="d-flex">
+                <li class="list-inline-item "><p>{{likes}} ups</p></li>
+                <li class="list-inline-item "><p>{{dislikes}} downs</p></li>
+                <li class="list-inline-item "><p>| {{likes - dislikes}} points |</p></li>
+                <li class="list-inline-item mr-auto"><p>1 comments</p></li>
+                <li class="list-inline-item "><p>Posted by:{{photos?.nickname}}</p></li>
+            </div>
+               <ul class="list-inline d-flex animate member-icons ml-2">
+                <ng-container>
+                   <li class="list-inline-item "><button  class="btn btn-success" (click)="sendLike(photos.id)"><i class="fa fa-thumbs-up"></i></button></li>
+                   <li class="list-inline-item mr-auto"><button class="btn btn-danger" (click)="sendDisLike(photos.id)"><i class="fa fa-thumbs-down"></i></button></li>
+                   <li class="list-inline-item mr-2"><button  [routerLink]="['/detail/', this.member?.username]" class="btn btn-warning" >
+                    <i class="fa fa-user"></i></button></li>
+                </ng-container>
+                </ul>
+            </h6>
+        </div>
+        <div class="card-footer p-1">
+        <form #commentForm="ngForm" (ngSubmit)="sendComment()">
+        <div class="textarea-container  form-group">
+            <img class="avtar rounded-circle" src="{{user?.photoUrl}}" alt="">
+            <textarea class="area form-control" name="contentOf" [ngModel]="newComment.contentOf" type="text" placeholder="Write your comments..." rows="2"></textarea>
+                <button class="btn btn-success post"  type="submit"> Post </button>
+                <button class="btn btn-danger cancel" type="button">Cancel</button>
             </div>
         </form>
+        <!-- <div *ngFor="let members of member">
+            <app-comments-added [members]="member"  ></app-comments-added>
+        </div> -->
+        <app-comments-added ></app-comments-added>
+        </div>
     </div>
-</div>
-</div>
-<div class="col-3"></div>
-</div>
+    </div>
+    <div class="col-3"></div>
+    </div>

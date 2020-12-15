@@ -1,6 +1,4 @@
-
-
-export interface Message{
+export interface Comment{
     id: number;
     contentOf: string;
     commenterId: number;

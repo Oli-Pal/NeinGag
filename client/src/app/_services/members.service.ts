@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Member } from '../_models/member';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Message } from '../_models/comment';
 
 @Injectable({
   providedIn: 'root'
@@ -56,8 +55,10 @@ export class MembersService {
     });
   }
 
+
   getNumberOfPhotoLikes(id: number): Observable<number> {
-    return this.http.get<number>(this.baseUrl + 'users/' + id + '/likes/', { observe: 'response' }).pipe(map((response) => {
+    return this.http.get<number>(this.baseUrl + 'users/' + id + '/likes/', { observe: 'response' })
+    .pipe(map((response) => {
       return response.body;
     }));
   }

@@ -211,7 +211,11 @@ namespace API.Data
         {
             return await _context.Comments
             .FirstOrDefaultAsync(u => u.CommenterId == userId && u.CommentedPhotoId == photoId);
+            
         }
+
+       
+
 
         public async Task<Commentt> GetCommentById(int id)
         {
