@@ -51,11 +51,9 @@ export class MembersService {
     return this.http.post(this.baseUrl + 'users/' + id + '/dislike/' + photoId, {});
   }
 
-  comment(id: number, photoId: number, contentOf: string) {
-    return this.http.post(this.baseUrl + 'comment/' + id + '/' + photoId, {
-      
-
-
+  addComment(id: number, photoId: number, contentOf: string) {
+    return this.http.post<Comment>(this.baseUrl + 'comment/' + id + '/' + photoId, {
+      ContentOf:  contentOf
     });
   }
 

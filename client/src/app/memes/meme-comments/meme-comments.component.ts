@@ -1,5 +1,5 @@
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ToastRef, ToastrService } from 'ngx-toastr';
 import { Member } from 'src/app/_models/member';
 import { Photo } from 'src/app/_models/photo';
@@ -11,6 +11,7 @@ import { User } from 'src/app/_models/user';
 import { ActivatedRoute } from '@angular/router';
 import { Pagination } from 'src/app/_models/pagination';
 import { Comment } from 'src/app/_models/comment';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-meme-comments',
@@ -18,9 +19,10 @@ import { Comment } from 'src/app/_models/comment';
   styleUrls: ['./meme-comments.component.css']
 })
 export class MemeCommentsComponent implements OnInit {
+  @ViewChild('messageForm') messageForm: NgForm;
   @Input() photos: Photo;
   member: Member;
-  comments: Comment[];
+  @Input() comments: Comment[];
   pagination: Pagination;
   user: User;
   likes: number;
@@ -49,7 +51,7 @@ export class MemeCommentsComponent implements OnInit {
          this.getLikes();
          this.getDisLikes();
          this.loadMember();
-         this.getComments(this.photos.id)
+         this.getComments()
        });
       }
 
@@ -92,14 +94,20 @@ export class MemeCommentsComponent implements OnInit {
         });
       }
 
-      getComments(id: number){
+      getComments(){
         this.memberService.getComments(this.photos.id,this.pageNumber,this.pageSize).subscribe(response => {
           this.comments = response.result;
           this.pagination = response.pagination;
         })
-
-      
-
       }
+
+      addComment(){
+        // debugger;
+      this.memberService.addComment(this.user.id,this.photos.id, this.contentOf).subscribe(comment =>{
+        this.comments.push(comment);
+        this.messageForm.reset();
+      })
+    }
+    
 
 }
