@@ -1,6 +1,6 @@
 
-import { Component, Input, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ToastRef, ToastrService } from 'ngx-toastr';
 import { Member } from 'src/app/_models/member';
 import { Photo } from 'src/app/_models/photo';
 import { MembersService } from 'src/app/_services/members.service';
@@ -9,7 +9,9 @@ import { PhotosService } from 'src/app/_services/photos.service';
 import { take } from 'rxjs/operators';
 import { User } from 'src/app/_models/user';
 import { ActivatedRoute } from '@angular/router';
+import { Pagination } from 'src/app/_models/pagination';
 import { Comment } from 'src/app/_models/comment';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-meme-comments',
@@ -17,15 +19,20 @@ import { Comment } from 'src/app/_models/comment';
   styleUrls: ['./meme-comments.component.css']
 })
 export class MemeCommentsComponent implements OnInit {
+  @ViewChild('messageForm') messageForm: NgForm;
   @Input() photos: Photo;
   member: Member;
+  @Input() comments: Comment[];
+  pagination: Pagination;
   user: User;
   com: Comment[];
   likes: number;
   dislikes: number;
-  newComment: any = {};
- 
-  
+  contentOf: string;
+  container: 'comments';
+  pageNumber = 1;
+  pageSize = 99;
+  //newComment: any = {};
 
 
   constructor(private accountService: AccountService,
@@ -45,6 +52,7 @@ export class MemeCommentsComponent implements OnInit {
          this.getLikes();
          this.getDisLikes();
          this.loadMember();
+         this.getComments()
        });
       }
 
@@ -87,19 +95,20 @@ export class MemeCommentsComponent implements OnInit {
         });
       }
 
-      sendComment() {
-        debugger;
-        this.memberService.comment(this.user.id, this.photos.id, this.newComment)
-        .subscribe((comment: Comment) =>{
-          //this.com.unshift(comment);
-          this.newComment.contentOf = '';
-          this.toastr.success('Comment added');
-        }, error => {
-          this.toastr.error('Comment not added');
-        });
+      getComments(){
+        this.memberService.getComments(this.photos.id,this.pageNumber,this.pageSize).subscribe(response => {
+          this.comments = response.result;
+          this.pagination = response.pagination;
+        })
       }
 
-      // onKey(event: any) {
-      //   this.comment = event.target.value;
-      // }
+      addComment(){
+        // debugger;
+      this.memberService.addComment(this.user.id,this.photos.id, this.contentOf).subscribe(comment =>{
+        this.comments.push(comment);
+        this.messageForm.reset();
+      })
+    }
+    
+
 }
