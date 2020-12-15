@@ -5,13 +5,14 @@ import { Member } from '../_models/member';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Comment } from '../_models/comment';
-
+import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 @Injectable({
   providedIn: 'root'
 })
 export class MembersService {
   baseUrl = environment.apiUrl;
   members: Member[] = [];
+  comments: Comment[] = [];
   
 
   constructor(private http: HttpClient) { }
@@ -52,8 +53,17 @@ export class MembersService {
 
   comment(id: number, photoId: number, contentOf: string) {
     return this.http.post(this.baseUrl + 'comment/' + id + '/' + photoId, {
-      contentOf
+      
+
+
     });
+  }
+
+  getComments(id: number, pageNumber, pageSize) {
+    let params = getPaginationHeaders(pageNumber, pageSize);
+    //params = params.append('Container', container);
+    return getPaginatedResult<Comment[]>(this.baseUrl + 'comment/' + id, params, this.http);
+    
   }
 
   getNumberOfPhotoLikes(id: number): Observable<number> {

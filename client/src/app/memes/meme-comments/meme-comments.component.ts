@@ -9,6 +9,8 @@ import { PhotosService } from 'src/app/_services/photos.service';
 import { take } from 'rxjs/operators';
 import { User } from 'src/app/_models/user';
 import { ActivatedRoute } from '@angular/router';
+import { Pagination } from 'src/app/_models/pagination';
+import { Comment } from 'src/app/_models/comment';
 
 @Component({
   selector: 'app-meme-comments',
@@ -18,10 +20,15 @@ import { ActivatedRoute } from '@angular/router';
 export class MemeCommentsComponent implements OnInit {
   @Input() photos: Photo;
   member: Member;
+  comments: Comment[];
+  pagination: Pagination;
   user: User;
   likes: number;
   dislikes: number;
   contentOf: string;
+  container: 'comments';
+  pageNumber = 1;
+  pageSize = 99;
   //newComment: any = {};
 
 
@@ -42,6 +49,7 @@ export class MemeCommentsComponent implements OnInit {
          this.getLikes();
          this.getDisLikes();
          this.loadMember();
+         this.getComments(this.photos.id)
        });
       }
 
@@ -84,13 +92,14 @@ export class MemeCommentsComponent implements OnInit {
         });
       }
 
-      comment(contentOf: string) {
-        this.memberService.comment(this.user.id, this.photos.id, contentOf).subscribe((data) =>{
-          this.contentOf = 'asd';
-          this.toastr.success('Comment added');
-        },error => {
-          this.toastr.error('Comment not added');
-        });
+      getComments(id: number){
+        this.memberService.getComments(this.photos.id,this.pageNumber,this.pageSize).subscribe(response => {
+          this.comments = response.result;
+          this.pagination = response.pagination;
+        })
+
+      
+
       }
 
 }
