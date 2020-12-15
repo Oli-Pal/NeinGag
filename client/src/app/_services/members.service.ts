@@ -15,6 +15,7 @@ export class MembersService {
   members: Member[] = [];
   comments: Comment[] = [];
   
+  
 
   constructor(private http: HttpClient) { }
 
@@ -53,9 +54,10 @@ export class MembersService {
   }
 
   addComment(id: number, photoId: number, contentOf: string) {
-    return this.http.post<Comment>(this.baseUrl + 'comment/' + id + '/' + photoId, {
-      ContentOf:  contentOf
-    });
+    const form = new FormData();
+    debugger;
+    form.append("contentOf", contentOf);
+    return this.http.post<Comment>(this.baseUrl + 'comment/' + id + '/' + photoId, form);
   }
 
   getComments(id: number, pageNumber, pageSize) {
