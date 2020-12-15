@@ -34,7 +34,7 @@ namespace API.Controllers
 
         // COMMENTS
         // /api/comment/ ---
-        [HttpPost("{id}/comment/{photoId}")]
+        [HttpPost("{id}/{photoId}")]
         public async Task<ActionResult<IEnumerable<CommentDto>>> CommentUser(int id, int photoId, [FromForm] CommentDto commentDto)
         {
             //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
@@ -60,14 +60,14 @@ namespace API.Controllers
             return BadRequest("Failed to add comment");
         }
 
-        [HttpGet("{id}/commentNr")]
+        [HttpGet("{id}/number")]
         public async Task<IActionResult> GetNumberOfPhotoComments(int id)
         {
             var x = await _commentRepository.GetNumberOfPhotoComments(id);
             return Ok(x);
         }
 
-        [HttpGet("{id}/commentById")]
+        [HttpGet("{id}/ById")]
         public async Task<IActionResult> GetCommentById(int id)
         {
             var x = await _commentRepository.GetCommentById(id);
@@ -75,7 +75,7 @@ namespace API.Controllers
             return Ok(x);
         }
 
-        [HttpGet("{id}/comments")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<CommentDto>>> GetCommentsAsync(int id)
         {
             var x = await _commentRepository.GetCommentsAsync(id);

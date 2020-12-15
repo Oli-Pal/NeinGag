@@ -1,8 +1,9 @@
 
 
-export interface Message{
+export interface Comment{
     id: number;
-    contentOf: string;
     commenterId: number;
     commentedPhotoId: number;
+    contentOf: string;
+    
 }

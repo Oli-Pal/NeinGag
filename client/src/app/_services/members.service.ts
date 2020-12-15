@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Member } from '../_models/member';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Message } from '../_models/comment';
+import { Comment } from '../_models/comment';
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +51,7 @@ export class MembersService {
   }
 
   comment(id: number, photoId: number, contentOf: string) {
-    return this.http.post(this.baseUrl + 'users/' + id + '/comment/' + photoId, {
+    return this.http.post(this.baseUrl + 'comment/' + id + '/' + photoId, {
       contentOf
     });
   }
