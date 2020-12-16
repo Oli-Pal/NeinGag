@@ -22,6 +22,7 @@ export class MemeCommentsComponent implements OnInit {
   @ViewChild('messageForm') messageForm: NgForm;
   @Input() photos: Photo;
   member: Member;
+  memb: Member[];
   @Input() comments: Comment[];
   pagination: Pagination;
   user: User;
@@ -91,8 +92,8 @@ export class MemeCommentsComponent implements OnInit {
     
       loadMember(){
         
-        this.memberService.getMember(this.photos.nickname.toLowerCase()).subscribe((member) => {
-          this.member = member;
+        this.memberService.getMembers().subscribe((member) => {
+          this.memb = member;
         });
       }
 
