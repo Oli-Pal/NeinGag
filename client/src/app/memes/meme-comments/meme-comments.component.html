@@ -51,7 +51,9 @@
     </div>
     </div>
 
-    <p *ngFor="let comment of comments">{{comment?.contentOf}}</p>
+    <p *ngFor="let comment of comments">{{comment?.contentOf}}
+        <li class="list-inline-item mr-auto"><button class="btn btn-danger" (click)="deleteComment(comment.id, comment.commenterId)"><i class="fa fa-trash"></i></button></li>
+    </p>
 </div>
 </div>
 <div class="col-3"></div>

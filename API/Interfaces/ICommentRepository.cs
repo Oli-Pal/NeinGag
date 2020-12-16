@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
 using API.Helpers;
+using CloudinaryDotNet.Actions;
 
 namespace API.Interfaces
 {
@@ -16,5 +17,6 @@ namespace API.Interfaces
         Task<Commentt> GetCommentById(int id);
 
         Task<IEnumerable<CommentDto>> GetCommentsAsync(int id);
+
     }
 }

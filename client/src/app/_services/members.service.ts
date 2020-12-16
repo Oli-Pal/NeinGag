@@ -59,6 +59,10 @@ export class MembersService {
     return this.http.post<Comment>(this.baseUrl + 'comment/' + id + '/' + photoId, form);
   }
 
+  deleteComment(id: number, commenterId: number) {
+    return this.http.delete(this.baseUrl + 'comment/delete/' + id + '/' + commenterId);
+  }
+
   getComments(id: number, pageNumber, pageSize) {
     let params = getPaginationHeaders(pageNumber, pageSize);
     //params = params.append('Container', container);

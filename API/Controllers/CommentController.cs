@@ -82,5 +82,24 @@ namespace API.Controllers
             
             return Ok(x);
         }
+
+
+        [HttpDelete("delete/{id}/{commenterId}")]
+        public async Task<ActionResult<Commentt>> DeleteComment(int id, int commenterId)
+        {
+           var user = await _userRepository.GetUserByIdAsync(commenterId);
+
+            //var comment = user.Comments.FirstOrDefault(x => x.Id == id);
+
+            var comment = await _commentRepository.GetCommentById(id);
+            if (comment == null) return NotFound();
+
+            //user.Comments.Remove(comment);
+            _userRepository.Delete<Commentt>(comment);
+
+            if (await _userRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to delete comment");
+        }
     }
 }

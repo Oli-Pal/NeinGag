@@ -49,6 +49,7 @@ export class MemeCommentsComponent implements OnInit {
        let id: string = this.route.snapshot.paramMap.get('id');
        this.photosService.getPhotoById(+id).subscribe(photos => {
          this.photos = photos;
+         
          this.getLikes();
          this.getDisLikes();
          this.loadMember();
@@ -110,6 +111,15 @@ export class MemeCommentsComponent implements OnInit {
         this.getComments();
       });
     }
+
+    deleteComment(id: number, commenterId: number) {
+      if(this.user.id == commenterId){
+        this.memberService.deleteComment(id, this.user.id).subscribe(() => {
+          this.comments = this.comments.filter(x => x.id !== id);
+        });
+      } else 
+          this.toastr.error("You cannot delete this comment");
     
+  }
 
 }
