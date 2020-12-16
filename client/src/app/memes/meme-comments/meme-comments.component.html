@@ -54,7 +54,7 @@
     
     <div *ngFor="let comment of comments">
         <ng-container *ngIf="member?.id == comment?.commenterId">
-
+        <img src="{{member?.photoUrl}}" alt="">
         <p>{{member?.username}}: {{comment?.contentOf}}</p>
         <li class="list-inline-item mr-auto"><button class="btn btn-danger" (click)="deleteComment(comment.id, comment.commenterId)"><i class="fa fa-trash"></i></button></li>
     
