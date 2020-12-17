@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {  Component, ElementRef, OnInit } from '@angular/core';
 import { User } from './_models/user';
 import { AccountService } from './_services/account.service';
 
@@ -7,13 +7,14 @@ import { AccountService } from './_services/account.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit  {
   users: any;
 
-  constructor( private accountService: AccountService) {}
+  constructor( private accountService: AccountService, private elementRef: ElementRef) {}
 
   ngOnInit(): void {
     this.setCurrentUser();
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = 'black';
   }
 
   setCurrentUser(){

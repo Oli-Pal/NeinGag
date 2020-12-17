@@ -54,6 +54,7 @@ export class MemeCommentsComponent implements OnInit {
          this.getDisLikes();
          this.loadMember();
          this.getComments();
+         this.loadOneMember();
        });
       }
 
@@ -121,4 +122,9 @@ export class MemeCommentsComponent implements OnInit {
     
   }
 
+  loadOneMember(){
+    this.memberService.getMember(this.photos.nickname.toLowerCase()).subscribe((member) => {
+      this.member = member;
+    });
+  }
 }
