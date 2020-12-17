@@ -22,19 +22,23 @@
           <tabset [justified]="true">
             <tab heading="Your Memes">
               <div class="d-flex flex-column p-2">
-                <div *ngFor="let photo of photos" class="align-self-stretch">
-                    <app-meme-card [photos]="photo"  ></app-meme-card>
-                </div>
+                  <div *ngFor="let photo of photos" class="align-self-stretch">
+                      <ng-container *ngIf="member?.id == photo?.appUserId">
+                        <app-meme-card [photos]="photo" ></app-meme-card>
+                      </ng-container>
+                  </div>
                 </div>
             </tab>
-            <tab heading="Your Likes">
-              Short Labeled Justified content
-            </tab>
-            <tab heading="Your Comments">
-              Long Labeled Justified content
+            <tab heading="Liked Memes"></tab>
+            <tab heading="Commented Memes">
+
+              <div *ngFor="let comment of comments" class="align-self-stretch">
+                <ng-container *ngIf="member?.id == comment?.commenterId">
+                  <app-meme-card [photos]="photo" ></app-meme-card>
+                </ng-container>
+              </div>
             </tab>
           </tabset>
-        
         </div>
       </div>
     </div>

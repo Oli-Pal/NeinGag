@@ -31,6 +31,7 @@ namespace API.Controllers
             _mapper = mapper;
             _userRepository = userRepository;
             _commentRepository = commentRepository;
+            _photoService = photoService;
         }
 
         // COMMENTS

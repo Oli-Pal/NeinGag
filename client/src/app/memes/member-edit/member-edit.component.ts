@@ -1,13 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { take } from 'rxjs/operators';
+
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ToastRef, ToastrService } from 'ngx-toastr';
 import { Member } from 'src/app/_models/member';
 import { Photo } from 'src/app/_models/photo';
-import { User } from 'src/app/_models/user';
-import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
-import { Pagination } from 'src/app/_models/pagination';
+import { AccountService } from 'src/app/_services/account.service';
 import { PhotosService } from 'src/app/_services/photos.service';
-
+import { take } from 'rxjs/operators';
+import { User } from 'src/app/_models/user';
+import { ActivatedRoute } from '@angular/router';
+import { Pagination } from 'src/app/_models/pagination';
+import { Comment } from 'src/app/_models/comment';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-member-edit',
@@ -16,20 +20,35 @@ import { PhotosService } from 'src/app/_services/photos.service';
 })
 export class MemberEditComponent implements OnInit {
   member: Member;
+  members: Member[];
+  comments: Comment[];
+  comment: Comment;
   user: User;
   photos: Photo[];
+  photo: Photo;
   pagination: Pagination;
   pageNumber = 1; 
   pageSize = 5; 
+  likes: number;
+  dislikes: number;
+  contentOf: string;
+  container: 'comments';
+  toastr: any;
  
-  constructor(private accountService: AccountService, private memberService: MembersService, private photosService: PhotosService) { 
+  constructor(private accountService: AccountService, private memberService: MembersService, private photosService: PhotosService,private route: ActivatedRoute) { 
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
   }
 
   ngOnInit(): void {
-    this.loadMember();
-    this.loadPhotos();
+    let id: string = this.route.snapshot.paramMap.get('id');
+    this.photosService.getPhotoById(+id).subscribe(photos => {
+      this.photo = photos;
+      this.loadPhotos();
+      this.loadMember();
+    
+    });
   }
+
 
   loadMember(){
     this.memberService.getMember(this.user.username).subscribe(member => {
