@@ -7,16 +7,16 @@
         <div class="card-img-wrapper" >
             <ng-container>
     
-            <img src="{{photos?.url}}"  class="">
+            <img src="{{photos?.url}}"  class="meme">
         </ng-container>
     </div>
         <div class="card-body p-1">
             <h6 class="card-title ">
                 <div class="d-flex">
-                <li class="list-inline-item "><p>{{likes}} ups</p></li>
+                <li class="list-inline-item "><p>{{likes}} ups |</p></li>
                 <li class="list-inline-item "><p>{{dislikes}} downs</p></li>
                 <li class="list-inline-item "><p>| {{likes - dislikes}} points |</p></li>
-                <li class="list-inline-item mr-auto"><p>1 comments</p></li>
+                <li class="list-inline-item mr-auto"><p>{{comments.length}} comments</p></li>
                 <li class="list-inline-item "><p>Posted by:{{photos?.nickname}}</p></li>
             </div>
                <ul class="list-inline d-flex animate member-icons ml-2">
@@ -32,31 +32,41 @@
        
     <div class="card-footer">
         <form #messageForm="ngForm" (ngSubmit)="addComment()" autocomplete="off">
-            <div class="input-group">
-                <input 
+            <div class="textarea-container form-group">
+                <img class="avtar rounded-circle" src="{{user?.photoUrl}}" alt="">
+                <textarea 
                     name="ContentOf"
                     required
                     [(ngModel)]="contentOf"
                     type="text" 
-                    class="form-control input-sm" 
-                    placeholder="Comment">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" [disabled]="!messageForm.valid" type="submit">Send
+                    class="area form-control" 
+                    placeholder="Write your comments..." 
+                    rows="2"></textarea>
+                
+                    <button class="btn btn-success post" [disabled]="!messageForm.valid" type="submit">Post
                     </button>
-                </div>
+                    <button class="btn btn-danger cancel"(click)="messageForm.reset()" type="button">Cancel</button>
             </div>
         </form>
-       
-        <app-comments-added ></app-comments-added>
-    </div>
-    </div>
-<div *ngFor="let member of memb">
+  
     
+<div *ngFor="let member of memb">
     <div *ngFor="let comment of comments">
         <ng-container *ngIf="member?.id == comment?.commenterId">
-        <img src="{{member?.photoUrl}}" alt="">
-        <p>{{member?.username}}: {{comment?.contentOf}}</p>
-        <li class="list-inline-item mr-auto"><button class="btn btn-danger" (click)="deleteComment(comment.id, comment.commenterId)"><i class="fa fa-trash"></i></button></li>
+        <div class="container-all">
+            <div class="container-img">
+        <img class="rounded-circle" src="{{member?.photoUrl}}" alt="">
+        </div>
+        <div class="container-content">
+        <h5 class="">{{member?.nickname}}</h5>
+        <p class="">{{comment?.contentOf}}</p>
+        
+    </div>
+    <ng-container *ngIf="user?.id == comment?.commenterId">
+        <button class="btn btn-danger delete" (click)="deleteComment(comment.id, comment.commenterId)">
+            <i class="fa fa-trash"></i></button>
+        </ng-container>
+    </div>
     
 </ng-container>
 </div>
@@ -64,5 +74,7 @@
     
 </div>
 </div>
+</div>
 <div class="col-3"></div>
 
+</div>

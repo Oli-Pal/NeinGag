@@ -6,6 +6,7 @@ import { MembersService } from 'src/app/_services/members.service';
 import { AccountService } from 'src/app/_services/account.service';
 import { take } from 'rxjs/operators';
 import { User } from 'src/app/_models/user';
+import { Comment } from 'src/app/_models/comment';
 
 
 @Component({
@@ -16,9 +17,12 @@ import { User } from 'src/app/_models/user';
 export class MemeCardComponent implements OnInit {
   @Input() photos: Photo;
   member: Member;
+  @Input() comments: Comment[];
   user: User;
   likes: number;
   dislikes: number;
+  pageNumber = 1;
+  pageSize = 99;
     constructor(private accountService: AccountService,
        private memberService: MembersService,
         private toastr: ToastrService) {
@@ -31,6 +35,7 @@ export class MemeCardComponent implements OnInit {
     this.loadMember();
     this.getLikes();
     this.getDisLikes();
+    this.getComments();
     
   }
 
@@ -70,7 +75,12 @@ export class MemeCardComponent implements OnInit {
     });
   }
 
-  
+  getComments(){
+    this.memberService.getComments(this.photos.id, this.pageNumber, this.pageSize).subscribe(response => {
+      this.comments = response.result;
+   
+    });
+  }
 
 
 }

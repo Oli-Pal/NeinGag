@@ -23,7 +23,6 @@ import { MemberDetailComponent } from './memes/member-detail/member-detail.compo
 import { MemberEditComponent } from './memes/member-edit/member-edit.component';
 import { PhotoEditorComponent } from './memes/photo-editor/photo-editor.component';
 import { PopularListComponent } from './memes/popular-list/popular-list.component';
-import { CommentsAddedComponent } from './memes/comments-added/comments-added.component';
 import { InputTextComponent } from './_forms/input-text/input-text.component';
 
 @NgModule({
@@ -43,7 +42,6 @@ import { InputTextComponent } from './_forms/input-text/input-text.component';
     MemberEditComponent,
     PhotoEditorComponent,
     PopularListComponent,
-    CommentsAddedComponent,
     InputTextComponent
   ],
   imports: [

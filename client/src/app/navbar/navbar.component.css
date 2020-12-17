@@ -1,3 +1,9 @@
 .dropdown-toggle, .dropdown-item{
 cursor: pointer;
 }
+
+
+.navbar{
+background-color: #000000;
+padding-bottom: 10px;
+}

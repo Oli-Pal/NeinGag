@@ -33,7 +33,6 @@ export class MemeCommentsComponent implements OnInit {
   container: 'comments';
   pageNumber = 1;
   pageSize = 99;
-  //newComment: any = {};
 
 
   constructor(private accountService: AccountService,
@@ -54,7 +53,7 @@ export class MemeCommentsComponent implements OnInit {
          this.getLikes();
          this.getDisLikes();
          this.loadMember();
-         this.getComments()
+         this.getComments();
        });
       }
 
@@ -107,7 +106,7 @@ export class MemeCommentsComponent implements OnInit {
       addComment(){
         // debugger;
       this.memberService.addComment(this.user.id,this.photos.id, this.contentOf).subscribe(comment =>{
-        this.comments.push(comment);
+        this.comments.unshift(comment);
         this.messageForm.reset();
         this.getComments();
       });
@@ -118,8 +117,7 @@ export class MemeCommentsComponent implements OnInit {
         this.memberService.deleteComment(id, this.user.id).subscribe(() => {
           this.comments = this.comments.filter(x => x.id !== id);
         });
-      } else 
-          this.toastr.error("You cannot delete this comment");
+      }
     
   }
 
