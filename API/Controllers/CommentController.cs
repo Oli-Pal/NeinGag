@@ -23,8 +23,9 @@ namespace API.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly ICommentRepository _commentRepository;
+        private readonly IPhotoService _photoService;
         public CommentController(IUserRepository userRepository, IMapper mapper, 
-             ICommentRepository commentRepository)
+             ICommentRepository commentRepository, IPhotoService photoService)
         {
             
             _mapper = mapper;
@@ -41,7 +42,7 @@ namespace API.Controllers
             var comment = await _commentRepository.GetComment(id, photoId);
             // if(comment != null)
             //     _userRepository.Delete<Comment>(comment);
-            if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
+            if(await _photoService.GetPhotoByIdAsync(photoId) == null)
                 return NotFound();
 
             

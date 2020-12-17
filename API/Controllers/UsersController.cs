@@ -28,6 +28,7 @@ namespace API.Controllers
             _photoService = photoService;
             _mapper = mapper;
             _userRepository = userRepository;
+            _photoService = photoService;
         }
 
         [HttpGet]
@@ -37,27 +38,7 @@ namespace API.Controllers
             
             return Ok(users);
         }
-        [AllowAnonymous]
-        [HttpGet("photos")]
-        public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPhotos([FromQuery]UserParams userParams)
-        {
-            var photos = await _userRepository.GetPhotosAsync(userParams);
-
-            Response.AddPaginationHeader(photos.CurrentPage, photos.PageSize, photos.TotalCount, photos.TotalCount);
-
-            return Ok(photos);
-        }
         
-         [AllowAnonymous]
-        [HttpGet("popular-photos")]
-        public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPopularPhotos([FromQuery]UserParams userParams)
-        {
-            var photos = await _userRepository.GetPopularPhotosAsync(userParams);
-
-            Response.AddPaginationHeader(photos.CurrentPage, photos.PageSize, photos.TotalCount, photos.TotalCount);
-
-            return Ok(photos);
-        }
         
         [HttpGet("photos/{username}")]
         public async Task<ActionResult<IEnumerable<PhotoDto>>> GetUserPhotos(string username)
@@ -72,11 +53,112 @@ namespace API.Controllers
         {
             return await _userRepository.GetMemberAsync(username);
         }
-        //get do loadingu w detail meme
+  
+
+        // /api/users/idusera/like/idzdjecia ---
+        [HttpPost("{id}/like/{photoId}")]
+        public async Task<IActionResult> LikeUser(int id, int photoId)
+        {
+            //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
+            var like = await _userRepository.GetLike(id, photoId);
+            var dislike = await _userRepository.GetDisLike(id, photoId);
+            if(like != null)
+                _userRepository.Delete<Like>(like);
+
+            if(dislike != null)
+                _userRepository.Delete<DisLike>(dislike);
+
+            if(await _photoService.GetPhotoByIdAsync(photoId) == null)
+                return NotFound();
+
+            if(like == null){
+            like = new Like
+            {
+                LikerId = id,
+                LikedId = photoId
+            };
+
+            _userRepository.Add<Like>(like);}
+            if (await _userRepository.SaveAllAsync())
+                return Ok();
+            return BadRequest("Failed to like");
+        }
+
+        [HttpGet("{id}/likes")]
+        public async Task<IActionResult> GetNumberOfPhotoLikes(int id)
+        {
+            var x = await _userRepository.GetNumberOfPhotoLikes(id);
+            
+            return Ok(x);
+        }
+    
+
+        // ---------- dislikes -----------
+        // /api/users/ ---
+        [HttpPost("{id}/dislike/{photoId}")]
+        public async Task<IActionResult> DisLikeUser(int id, int photoId)
+        {
+            //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
+            var dislike = await _userRepository.GetDisLike(id, photoId);
+            var like = await _userRepository.GetLike(id, photoId);
+            if(dislike != null)
+                _userRepository.Delete<DisLike>(dislike);
+            if(like != null)
+                _userRepository.Delete<Like>(like);
+
+            if(await _photoService.GetPhotoByIdAsync(photoId) == null)
+                return NotFound();
+
+            if(dislike == null){
+                dislike = new DisLike
+            {
+                DisLikerId = id,
+                DisLikedId = photoId
+                
+            };
+
+            _userRepository.Add<DisLike>(dislike);}
+            if (await _userRepository.SaveAllAsync())
+                return Ok();
+            return BadRequest("Failed to like");
+        }
+
+        [HttpGet("{id}/dislikes")]
+        public async Task<IActionResult> GetNumberOfPhotoDisLikes(int id)
+        {
+            var x = await _userRepository.GetNumberOfPhotoDisLikes(id);
+            
+            return Ok(x);
+        }
+
+
+
+                [AllowAnonymous]
+        [HttpGet("photos")]
+        public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPhotos([FromQuery]UserParams userParams)
+        {
+            var photos = await _photoService.GetPhotosAsync(userParams);
+
+            Response.AddPaginationHeader(photos.CurrentPage, photos.PageSize, photos.TotalCount, photos.TotalCount);
+
+            return Ok(photos);
+        }
+        
+         [AllowAnonymous]
+        [HttpGet("popular-photos")]
+        public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPopularPhotos([FromQuery]UserParams userParams)
+        {
+            var photos = await _photoService.GetPopularPhotosAsync(userParams);
+
+            Response.AddPaginationHeader(photos.CurrentPage, photos.PageSize, photos.TotalCount, photos.TotalCount);
+
+            return Ok(photos);
+        }
+              //get do loadingu w detail meme
         [HttpGet("get-photo/{id}")]
         public async Task<ActionResult<PhotoDto>> GetPhotoByIdAsync(int id)
         {
-            var photo = await _userRepository.GetPhotoByIdAsync(id);
+            var photo = await _photoService.GetPhotoByIdAsync(id);
             return Ok(photo);
         }
 
@@ -133,91 +215,8 @@ namespace API.Controllers
 
             return BadRequest("Failed to delete the photo");
         }
-
-        // /api/users/idusera/like/idzdjecia ---
-        [HttpPost("{id}/like/{photoId}")]
-        public async Task<IActionResult> LikeUser(int id, int photoId)
-        {
-            //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
-            var like = await _userRepository.GetLike(id, photoId);
-            var dislike = await _userRepository.GetDisLike(id, photoId);
-            if(like != null)
-                _userRepository.Delete<Like>(like);
-
-            if(dislike != null)
-                _userRepository.Delete<DisLike>(dislike);
-
-            if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
-                return NotFound();
-
-            if(like == null){
-            like = new Like
-            {
-                LikerId = id,
-                LikedId = photoId
-            };
-
-            _userRepository.Add<Like>(like);}
-            if (await _userRepository.SaveAllAsync())
-                return Ok();
-            return BadRequest("Failed to like");
-        }
-
-        [HttpGet("{id}/likes")]
-        public async Task<IActionResult> GetNumberOfPhotoLikes(int id)
-        {
-            var x = await _userRepository.GetNumberOfPhotoLikes(id);
-            
-            return Ok(x);
-        }
     
-
-        // ---------- dislikes -----------
-        // /api/users/ ---
-        [HttpPost("{id}/dislike/{photoId}")]
-        public async Task<IActionResult> DisLikeUser(int id, int photoId)
-        {
-            //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
-            var dislike = await _userRepository.GetDisLike(id, photoId);
-            var like = await _userRepository.GetLike(id, photoId);
-            if(dislike != null)
-                _userRepository.Delete<DisLike>(dislike);
-            if(like != null)
-                _userRepository.Delete<Like>(like);
-
-            if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
-                return NotFound();
-
-            if(dislike == null){
-                dislike = new DisLike
-            {
-                DisLikerId = id,
-                DisLikedId = photoId
-                
-            };
-
-            _userRepository.Add<DisLike>(dislike);}
-            if (await _userRepository.SaveAllAsync())
-                return Ok();
-            return BadRequest("Failed to like");
-        }
-
-        [HttpGet("{id}/dislikes")]
-        public async Task<IActionResult> GetNumberOfPhotoDisLikes(int id)
-        {
-            var x = await _userRepository.GetNumberOfPhotoDisLikes(id);
-            
-            return Ok(x);
-        }
     
     }
 }
 
-
-        // [HttpGet("{userId}/commentbyidies/{photoId}")]
-        // public async Task<IActionResult> GetComment(int userId, int photoId)
-        // {
-        //     var x = await _userRepository.GetComment(userId, photoId);
-            
-        //     return Ok(x);
-        // }

@@ -36,26 +36,7 @@ namespace API.Data
                     .ToListAsync();
         }
 
-        public async Task<PagedList<PhotoDto>> GetPhotosAsync(UserParams userParams)
-        {
-            var query = _context.Photos
-            .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
-            .OrderByDescending(x => x.Id)
-            .AsNoTracking();
-
-            return await PagedList<PhotoDto>
-            .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
-        }
-
-         public async Task<PagedList<PhotoDto>> GetPopularPhotosAsync(UserParams userParams)
-        {
-            var query = _context.Photos
-            .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
-            .OrderByDescending(x => (x.Likers.Count - x.DisLikers.Count));
-
-            return await PagedList<PhotoDto>
-            .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
-        }
+        
 
 
 //Likeeee ---------------------------------------------
@@ -162,14 +143,7 @@ namespace API.Data
         }
 
       
-        public async Task<PhotoDto> GetPhotoByIdAsync(int id)
-        {
-            
-            return await _context.Photos
-            .Where(x => x.Id == id)
-            .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
-            .SingleOrDefaultAsync();
-        }
+
 
         public void Add<T>(T entity) where T : class
         {

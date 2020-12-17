@@ -19,7 +19,21 @@
       </div>
       <div class="col-8">
         <div class="tab-pannel">
-         
+          <tabset [justified]="true">
+            <tab heading="Your Memes">
+              <div class="d-flex flex-column p-2">
+                <div *ngFor="let photo of photos" class="align-self-stretch">
+                    <app-meme-card [photos]="photo"  ></app-meme-card>
+                </div>
+                </div>
+            </tab>
+            <tab heading="Your Likes">
+              Short Labeled Justified content
+            </tab>
+            <tab heading="Your Comments">
+              Long Labeled Justified content
+            </tab>
+          </tabset>
         
         </div>
       </div>

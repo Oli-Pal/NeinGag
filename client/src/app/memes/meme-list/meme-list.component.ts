@@ -14,8 +14,8 @@ export class MemeListComponent implements OnInit {
   member: Member;
   photos: Photo[];
   pagination: Pagination;
-  pageNumber = 1; //chwilowka
-  pageSize = 5; //chwilowka
+  pageNumber = 1; 
+  pageSize = 5; 
 
   constructor(private memberService: MembersService, private photosService: PhotosService) { }
 

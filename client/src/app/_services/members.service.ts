@@ -42,7 +42,7 @@ export class MembersService {
   }
 
   deletePhoto(photoId: number) {
-    return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId);
+    return this.http.delete(this.baseUrl + 'photos/delete-photo/' + photoId);
   }
 
   sendLike(id: number, photoId: number) {
