@@ -13,6 +13,7 @@ import { Pagination } from 'src/app/_models/pagination';
 import { Comment } from 'src/app/_models/comment';
 import { NgForm } from '@angular/forms';
 import { Like } from 'src/app/_models/like';
+declare let alertify: any;
 
 @Component({
   selector: 'app-member-edit',
@@ -40,14 +41,16 @@ export class MemberEditComponent implements OnInit {
  
   constructor(private accountService: AccountService, private memberService: MembersService, private photosService: PhotosService,private route: ActivatedRoute) { 
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+    this.memberService.getMember(this.user.username).subscribe(member => this.member = member);
+    this.loadMember();
   }
 
   ngOnInit(): void {
     let id: string = this.route.snapshot.paramMap.get('id');
     this.photosService.getPhotoById(+id).subscribe(photos => {
       this.photo = photos;
-      this.loadPhotos();
       this.loadMember();
+      this.loadPhotos();
       this.getUserComments();
       this.getAllLikes();
     
@@ -106,7 +109,35 @@ export class MemberEditComponent implements OnInit {
           this.commentsNoDuplicates.push(this.comments[i]);
         }   
     }
-    debugger;
   }
+  
+  deletePhoto(photoId: number) {
+    
+    //alert();
+      this.memberService.deletePhoto(photoId).subscribe(() => {
+        this.photos = this.photos.filter(x => x.id !== photoId);
+      });
+    }
+  // alert(){
+  //   alertify.confirm().setting({
+  //     'closable': true,
+  //     'message': 'Are you sure?'
+  //   }).show()
+  // }
+
+
+  
+  alert(){
+    
+    alertify.confirm('Confirm Message', function()
+    {
+       alertify.success('Ok')
+       return true;
+    }, function(){
+          alertify.error('Cancel')});
+          return false;
+  }
+ 
+  
  
 }

@@ -34,6 +34,8 @@
                   <div *ngFor="let photo of photos" class="align-self-stretch">
                       <ng-container *ngIf="member?.id == photo?.appUserId">
                         <app-meme-card [photos]="photo" ></app-meme-card>
+                        <p><button type="button" class="btn btn-danger btn-block" (click)="alert()" >Delete meme</button> </p>
+                        
                       </ng-container>
                   </div>
                 </div>
@@ -46,9 +48,11 @@
               </div>
                 <div *ngFor="let like of liked" class="align-self-stretch">
                   <div *ngFor="let photo of photos" class="align-self-stretch">
-                  <ng-container *ngIf="like?.likedId == photo.id">
-                    <app-meme-card [photos]="photo" ></app-meme-card>
-                  </ng-container>
+                    <ng-container *ngIf="like?.likedId == photo.id">
+                      <app-meme-card [photos]="photo" ></app-meme-card>
+                      
+                      
+                    </ng-container>
                   </div>
                 </div>
               </div>
