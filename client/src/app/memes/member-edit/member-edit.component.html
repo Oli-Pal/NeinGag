@@ -3,12 +3,16 @@
      
       <div class="col-4">
         <div class="card">
-          <img class="card-img-top img-thumbnail" src="{{|| '../../../../../assets/img/user.png" 
+          <img class="card-img-top img-thumbnail" src="{{member.photoUrl}}" 
           alt="{{member?.nickname}}">
           <div class="card-body">
             <div>
-              <strong>Age:</strong>
-              <p>{{member?.age}}</p>
+              <strong>Nickname:</strong>
+              <p>{{member?.nickname}}</p>
+            </div>
+            <div>
+              <strong>Member Since:</strong>
+              <p>{{member?.created}}</p>
             </div>
             <div>
               <strong>Last Active:</strong>
@@ -16,12 +20,17 @@
             </div>
           </div>
         </div>
+        
+
       </div>
       <div class="col-8">
-        <div class="tab-pannel">
+        <div class="tab-pannel" >
           <tabset [justified]="true">
             <tab heading="Your Memes">
               <div class="d-flex flex-column p-2">
+                <div class="alert alert-dismissible alert-primary">
+                <h3 style="text-align:center;">Here you can find all memes posted by you</h3>
+              </div>
                   <div *ngFor="let photo of photos" class="align-self-stretch">
                       <ng-container *ngIf="member?.id == photo?.appUserId">
                         <app-meme-card [photos]="photo" ></app-meme-card>
@@ -30,8 +39,11 @@
                 </div>
             </tab>
             <tab heading="Liked Memes">
-
               
+              <div class="d-flex flex-column p-2">
+                <div class="alert alert-dismissible alert-primary">
+                <h3 style="text-align:center;">Here you can find all memes liked by you</h3>
+              </div>
                 <div *ngFor="let like of liked" class="align-self-stretch">
                   <div *ngFor="let photo of photos" class="align-self-stretch">
                   <ng-container *ngIf="like?.likedId == photo.id">
@@ -39,19 +51,27 @@
                   </ng-container>
                   </div>
                 </div>
-
+              </div>
 
             </tab>
             <tab heading="Commented Memes">
               <div class="d-flex flex-column p-2">
-                
-                <div *ngFor="let photo of photos" class="align-self-stretch">
-              <div *ngFor="let comment of comments" class="align-self-stretch">
-                <ng-container *ngIf="photos.indexOf(photo) === 0">
-                  <app-meme-card [photos]="photo" ></app-meme-card>
-                </ng-container>
-                </div>
+                <div class="alert alert-dismissible alert-primary">
+                <h3 style="text-align:center;">Here you can find all memes comented by you</h3>
               </div>
+              <div *ngFor="let photo of photos" class="align-self-stretch">
+                
+              <div *ngFor="let comment of comments" class="align-self-stretch">
+                <ng-container *ngIf="comment?.commentedPhotoId == photo.id">
+              
+               
+                <app-meme-card [photos]="photo" ></app-meme-card>
+        
+              </ng-container>
+            
+            </div>
+          
+             </div>
             </div>
             </tab>
           </tabset>

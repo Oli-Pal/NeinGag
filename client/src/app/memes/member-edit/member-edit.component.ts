@@ -30,7 +30,7 @@ export class MemberEditComponent implements OnInit {
   photo: Photo;
   pagination: Pagination;
   pageNumber = 1; 
-  pageSize = 5; 
+  pageSize = 500; 
   likes: number;
   dislikes: number;
   contentOf: string;
