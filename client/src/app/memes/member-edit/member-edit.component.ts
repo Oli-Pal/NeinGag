@@ -24,6 +24,7 @@ export class MemberEditComponent implements OnInit {
   members: Member[];
   comments: Comment[];
   comment: Comment;
+  commentsNoDuplicates :Comment[] = [];
   user: User;
   photos: Photo[];
   liked: Like[];
@@ -87,6 +88,7 @@ export class MemberEditComponent implements OnInit {
   getUserComments(){
     this.memberService.getUserComments(this.user.id, this.pageNumber,this.pageSize).subscribe(response =>{
       this.comments = response.result;
+      this.getComments(); 
       this.pagination = response.pagination;
     })
   }
@@ -96,6 +98,15 @@ export class MemberEditComponent implements OnInit {
       this.liked = response.result;
       this.pagination = response.pagination;
     })
+  }
+
+  getComments() {
+    for(let i=0; i<this.comments.length; i++) {
+        if(!this.commentsNoDuplicates.some(x => x.commentedPhotoId===this.comments[i].commentedPhotoId)) {
+          this.commentsNoDuplicates.push(this.comments[i]);
+        }   
+    }
+    debugger;
   }
  
 }

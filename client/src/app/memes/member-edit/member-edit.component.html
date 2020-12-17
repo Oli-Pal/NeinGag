@@ -61,13 +61,13 @@
               </div>
               <div *ngFor="let photo of photos" class="align-self-stretch">
                 
-              <div *ngFor="let comment of comments" class="align-self-stretch">
-                <ng-container *ngIf="comment?.commentedPhotoId == photo.id">
-              
-               
-                <app-meme-card [photos]="photo" ></app-meme-card>
-        
-              </ng-container>
+              <div *ngFor="let comment of commentsNoDuplicates" class="align-self-stretch">
+                <div *ngIf="comment.commentedPhotoId">
+                  <ng-container *ngIf="comment?.commentedPhotoId == photo.id">              
+                    <app-meme-card [photos]="photo" ></app-meme-card>       
+                  </ng-container>
+                </div>
+                
             
             </div>
           
