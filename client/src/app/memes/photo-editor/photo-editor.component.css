@@ -1,0 +1,51 @@
+.preview-img  {
+    width:20%;
+    height:150px;
+    margin-right: 10px;
+   
+    
+}
+.desc-adding{
+    width: 80%;
+    height:150px;
+    resize: none;
+   
+}
+
+.container-all{
+    width: 100%;
+    border: 2px groove rgb(29, 27, 27);
+    border-radius: .5em;
+    padding: 10px;
+    display: grid;
+    align-items: center;
+    margin-bottom: 5px;
+    transition: background-color .5s;
+    
+  }
+
+.container-file{
+    
+  }
+
+.labe{
+    width:50%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+.after-photoadded{
+    /* border: 2px groove rgb(29, 27, 27); */
+    padding:10px;
+    margin-bottom: 40px;
+    display: flex;
+    
+    
+}
+.actions{
+    display: block;
+   margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    
+}

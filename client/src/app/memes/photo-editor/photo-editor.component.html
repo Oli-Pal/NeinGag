@@ -1,9 +1,12 @@
-<div class="row justify-content-center">
-    <h5>Description:</h5>
+<div class="row justify-content-center mt-5">
+    
+        <div class="col-3"></div>
         
-        
-        <div class="col-3">
-            
+        <div class="col-6">
+            <div class="container-all">
+                <div class="container-file">
+            <h1 class="mb-5 text-center">Upload a Meme</h1>
+           
             <div ng2FileDrop
                  [ngClass]="{'nv-file-over': hasBaseDropzoneOver}"
                  (fileOver)="fileOverBase($event)"
@@ -11,50 +14,44 @@
                  class="card bg-faded p-3 text-center mb-3 my-drop-zone">
                  <i class="fa fa-upload fa-3x"></i>
                 Drop photos here
+                <label  class="btn btn-success mt-3 labe" >
+                    <input type="file" style="display: none;" ng2FileSelect [uploader]="uploader" />
+                    <h5>Choose File</h5></label>
             </div>
-            Single
-            <input type="file" ng2FileSelect [uploader]="uploader" />
-        </div>
+           
+        </div>   
     
-        <div class="col-md-9" style="margin-bottom: 40px" *ngIf="uploader?.queue?.length">
-    
-            <h3>Upload queue</h3>
-            <p>Queue length: {{ uploader?.queue?.length }}</p>
-            <input type="text" (keyup)="onKey($event)" name="Description" placeholder="Write your description here">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th width="50%">Name</th>
-                    <th>Size</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let item of uploader.queue">
-                    <td><strong>{{ item?.file?.name }}</strong></td>
-                    <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-                </tr>
-                </tbody>
-            </table>
-    
+        <div class="after-photoadded"  *ngIf="uploader?.queue?.length">
+            <img [src]="previewPath " alt="Avatar" class="preview-img">
+            <textarea type="text" class="desc-adding" (keyup)="onKey($event)" name="Description"
+             placeholder="Write your description here" ></textarea>
+        
             <div>
                 <div>
-                    Queue progress:
-                    <div class="progress" >
-                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
-                    </div>
                 </div>
-                <button type="button" class="btn btn-success btn-s"
+            </div>
+        </div>
+        <div class="progress" *ngIf="uploader?.queue?.length">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+        </div>
+            <div class="actions"  *ngIf="uploader?.queue?.length">
+                
+                <button type="button" class="btn btn-success btn-s "
                         (click)="uploader.uploadAll()" 
                         [disabled]="!uploader.getNotUploadedItems().length">
-                    <span class="fa fa-upload"></span> Upload
+                    <span class="fa fa-upload"></span> POST
                 </button>
-                <button type="button" class="btn btn-warning btn-s"
-                        (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
-                    <span class="fa fa-ban"></span> Cancel
-                </button>
+                
                 <button type="button" class="btn btn-danger btn-s"
                         (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                    <span class="fa fa-trash"></span> Remove
+                    <span class="fa fa-trash"></span> REMOVE
                 </button>
             </div>
+            
+            
+        
+        </div>
     </div>
+        <div class="col-3"></div>
+    </div>
+    
