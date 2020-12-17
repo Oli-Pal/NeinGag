@@ -31,9 +31,10 @@
             </tab>
             <tab heading="Liked Memes">
 
-              <div *ngFor="let photo of photos" class="align-self-stretch">
+              
                 <div *ngFor="let like of liked" class="align-self-stretch">
-                  <ng-container *ngIf="like?.likerId == member?.id">
+                  <div *ngFor="let photo of photos" class="align-self-stretch">
+                  <ng-container *ngIf="like?.likedId == photo.id">
                     <app-meme-card [photos]="photo" ></app-meme-card>
                   </ng-container>
                   </div>
@@ -46,7 +47,7 @@
                 
                 <div *ngFor="let photo of photos" class="align-self-stretch">
               <div *ngFor="let comment of comments" class="align-self-stretch">
-                <ng-container *ngIf="comment?.commenterId == member?.id">
+                <ng-container *ngIf="photos.indexOf(photo) === 0">
                   <app-meme-card [photos]="photo" ></app-meme-card>
                 </ng-container>
                 </div>

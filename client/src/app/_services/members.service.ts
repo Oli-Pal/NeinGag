@@ -72,17 +72,17 @@ export class MembersService {
     
   }
 
-  getAllComments(pageNumber, pageSize) {
+  getUserComments(id: number, pageNumber, pageSize) {
     let params = getPaginationHeaders(pageNumber, pageSize);
     //params = params.append('Container', container);
-    return getPaginatedResult<Comment[]>(this.baseUrl + 'comment/', params, this.http);
+    return getPaginatedResult<Comment[]>(this.baseUrl + 'comment/byUser/' + id, params, this.http);
     
   }
 
-  getAllLikes(pageNumber, pageSize) {
+  getUserLikes(id: number, pageNumber, pageSize) {
     let params = getPaginationHeaders(pageNumber, pageSize);
     //params = params.append('Container', container);
-    return getPaginatedResult<Like[]>(this.baseUrl + 'users/likes/', params, this.http);
+    return getPaginatedResult<Like[]>(this.baseUrl + 'users/userlikes/' + id, params, this.http);
     
   }
 

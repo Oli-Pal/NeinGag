@@ -42,6 +42,7 @@ namespace API.Controllers
             
             return Ok(users);
         }
+        //zwraca komenty po id usera
         [HttpGet("byUser/{id}")]
         public async Task<ActionResult<IEnumerable<CommentDto>>> GetUserComments(int id)
         {
@@ -86,6 +87,7 @@ namespace API.Controllers
             return Ok(x);
         }
 
+        //zwraca komentarze po id zdjecia
         [HttpGet("{id}/ById")]
         public async Task<IActionResult> GetCommentById(int id)
         {

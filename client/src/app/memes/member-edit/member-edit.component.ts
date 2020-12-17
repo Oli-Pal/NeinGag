@@ -47,7 +47,8 @@ export class MemberEditComponent implements OnInit {
       this.photo = photos;
       this.loadPhotos();
       this.loadMember();
-      this.getAllComments();
+      this.getUserComments();
+      this.getAllLikes();
     
     });
   }
@@ -74,7 +75,7 @@ export class MemberEditComponent implements OnInit {
     this.pageNumber = event.page;
     this.loadPhotos();
     //this.getComments()
-    this.getAllComments();
+    this.getUserComments();
   }
 
   // getComments(){
@@ -83,15 +84,15 @@ export class MemberEditComponent implements OnInit {
   //     this.pagination = response.pagination;
   //   })
   // }
-  getAllComments(){
-    this.memberService.getAllComments(this.pageNumber,this.pageSize).subscribe(response =>{
+  getUserComments(){
+    this.memberService.getUserComments(this.user.id, this.pageNumber,this.pageSize).subscribe(response =>{
       this.comments = response.result;
       this.pagination = response.pagination;
     })
   }
 
   getAllLikes(){
-    this.memberService.getAllLikes(this.pageNumber,this.pageSize).subscribe(response =>{
+    this.memberService.getUserLikes(this.user.id ,this.pageNumber,this.pageSize).subscribe(response =>{
       this.liked = response.result;
       this.pagination = response.pagination;
     })
