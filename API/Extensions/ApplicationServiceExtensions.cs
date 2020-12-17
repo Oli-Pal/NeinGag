@@ -19,6 +19,7 @@ namespace API.Extensions
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+            
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlite(config.GetConnectionString("DefaultConnection"));

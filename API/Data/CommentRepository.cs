@@ -66,5 +66,18 @@ namespace API.Data
             .ProjectTo<CommentDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
         }
+
+        public async Task<IEnumerable<Commentt>> GetAllCommentsAsync()
+        {
+            return await _context.Comments
+            .ToListAsync();
+        }
+        public async Task<IEnumerable<CommentDto>> GetUserCommentsAsync(int id)
+        {
+            return await _context.Comments
+            .Where(p => p.CommenterId == id)
+            .ProjectTo<CommentDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+        }
     }
 }

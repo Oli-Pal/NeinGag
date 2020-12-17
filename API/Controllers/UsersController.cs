@@ -91,6 +91,14 @@ namespace API.Controllers
             
             return Ok(x);
         }
+
+        [HttpGet("userlikes/{id}")]
+        public async Task<ActionResult<IEnumerable<LikeDto>>> GetAllLikes(int id)
+        {
+            var likes = await _userRepository.GetUserLikesAsync(id);
+            
+            return Ok(likes);
+        }
     
 
         // ---------- dislikes -----------

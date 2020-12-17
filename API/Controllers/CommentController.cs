@@ -35,6 +35,23 @@ namespace API.Controllers
         }
 
         // COMMENTS
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<CommentDto>>> GetComments()
+        {
+            var users = await _commentRepository.GetAllCommentsAsync();
+            
+            return Ok(users);
+        }
+        [HttpGet("byUser/{id}")]
+        public async Task<ActionResult<IEnumerable<CommentDto>>> GetUserComments(int id)
+        {
+            var users = await _commentRepository.GetUserCommentsAsync(id);
+            
+            return Ok(users);
+        }
+
+
+
         // /api/comment/ ---
         [HttpPost("{id}/{photoId}")]
         public async Task<ActionResult<IEnumerable<CommentDto>>> CommentUser(int id, int photoId, [FromForm] CommentDto commentDto)

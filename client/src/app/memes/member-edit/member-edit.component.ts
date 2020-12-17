@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Pagination } from 'src/app/_models/pagination';
 import { Comment } from 'src/app/_models/comment';
 import { NgForm } from '@angular/forms';
+import { Like } from 'src/app/_models/like';
 
 @Component({
   selector: 'app-member-edit',
@@ -25,6 +26,7 @@ export class MemberEditComponent implements OnInit {
   comment: Comment;
   user: User;
   photos: Photo[];
+  liked: Like[];
   photo: Photo;
   pagination: Pagination;
   pageNumber = 1; 
@@ -45,6 +47,7 @@ export class MemberEditComponent implements OnInit {
       this.photo = photos;
       this.loadPhotos();
       this.loadMember();
+      this.getAllComments();
     
     });
   }
@@ -70,6 +73,28 @@ export class MemberEditComponent implements OnInit {
   pageChanged(event: any){
     this.pageNumber = event.page;
     this.loadPhotos();
+    //this.getComments()
+    this.getAllComments();
+  }
+
+  // getComments(){
+  //   this.memberService.getComments(this.photo.id,this.pageNumber,this.pageSize).subscribe(response => {
+  //     this.comments = response.result;
+  //     this.pagination = response.pagination;
+  //   })
+  // }
+  getAllComments(){
+    this.memberService.getAllComments(this.pageNumber,this.pageSize).subscribe(response =>{
+      this.comments = response.result;
+      this.pagination = response.pagination;
+    })
+  }
+
+  getAllLikes(){
+    this.memberService.getAllLikes(this.pageNumber,this.pageSize).subscribe(response =>{
+      this.liked = response.result;
+      this.pagination = response.pagination;
+    })
   }
  
 }

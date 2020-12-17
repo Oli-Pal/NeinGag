@@ -154,7 +154,12 @@ namespace API.Data
         {
             _context.Remove(entity);
         }
-
+        public async Task<IEnumerable<Like>> GetUserLikesAsync(int id)
+        {
+             return await _context.Likes
+                    .Where(p => p.LikerId == id)
+                    .ToListAsync();
+        }
 
        
     }
