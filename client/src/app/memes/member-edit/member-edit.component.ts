@@ -13,6 +13,7 @@ import { Pagination } from 'src/app/_models/pagination';
 import { Comment } from 'src/app/_models/comment';
 import { NgForm } from '@angular/forms';
 import { Like } from 'src/app/_models/like';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 declare let alertify: any;
 
 @Component({
@@ -39,7 +40,10 @@ export class MemberEditComponent implements OnInit {
   container: 'comments';
   toastr: any;
  
-  constructor(private accountService: AccountService, private memberService: MembersService, private photosService: PhotosService,private route: ActivatedRoute) { 
+  constructor(private accountService: AccountService,
+     private memberService: MembersService,
+      private photosService: PhotosService,private route: ActivatedRoute,
+      private alertify: AlertifyService) { 
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
     this.memberService.getMember(this.user.username).subscribe(member => this.member = member);
     this.loadMember();
@@ -53,7 +57,6 @@ export class MemberEditComponent implements OnInit {
       this.loadPhotos();
       this.getUserComments();
       this.getAllLikes();
-    
     });
   }
 
@@ -82,12 +85,6 @@ export class MemberEditComponent implements OnInit {
     this.getUserComments();
   }
 
-  // getComments(){
-  //   this.memberService.getComments(this.photo.id,this.pageNumber,this.pageSize).subscribe(response => {
-  //     this.comments = response.result;
-  //     this.pagination = response.pagination;
-  //   })
-  // }
   getUserComments(){
     this.memberService.getUserComments(this.user.id, this.pageNumber,this.pageSize).subscribe(response =>{
       this.comments = response.result;
@@ -105,39 +102,22 @@ export class MemberEditComponent implements OnInit {
 
   getComments() {
     for(let i=0; i<this.comments.length; i++) {
-        if(!this.commentsNoDuplicates.some(x => x.commentedPhotoId===this.comments[i].commentedPhotoId)) {
+        if(!this.commentsNoDuplicates.some(x => x.commentedPhotoId === this.comments[i].commentedPhotoId)) {
           this.commentsNoDuplicates.push(this.comments[i]);
-        }   
+        }
     }
   }
   
   deletePhoto(photoId: number) {
-    
-    //alert();
+    this.alertify.confirm('Are you sure you want to delete this meme?', () => {
       this.memberService.deletePhoto(photoId).subscribe(() => {
         this.photos = this.photos.filter(x => x.id !== photoId);
-      });
+        this.alertify.success('Deletion Completed');
+      }, error => {
+     this.alertify.error('Cancel');
+    });
+    });
     }
-  // alert(){
-  //   alertify.confirm().setting({
-  //     'closable': true,
-  //     'message': 'Are you sure?'
-  //   }).show()
-  // }
-
 
   
-  alert(){
-    
-    alertify.confirm('Confirm Message', function()
-    {
-       alertify.success('Ok')
-       return true;
-    }, function(){
-          alertify.error('Cancel')});
-          return false;
   }
- 
-  
- 
-}
