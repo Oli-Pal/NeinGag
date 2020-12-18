@@ -6,6 +6,8 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Comment } from '../_models/comment';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
+import { Photo } from '../_models/photo';
+import { Like } from '../_models/like';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +69,20 @@ export class MembersService {
     let params = getPaginationHeaders(pageNumber, pageSize);
     //params = params.append('Container', container);
     return getPaginatedResult<Comment[]>(this.baseUrl + 'comment/' + id, params, this.http);
+    
+  }
+
+  getUserComments(id: number, pageNumber, pageSize) {
+    let params = getPaginationHeaders(pageNumber, pageSize);
+    //params = params.append('Container', container);
+    return getPaginatedResult<Comment[]>(this.baseUrl + 'comment/byUser/' + id, params, this.http);
+    
+  }
+
+  getUserLikes(id: number, pageNumber, pageSize) {
+    let params = getPaginationHeaders(pageNumber, pageSize);
+    //params = params.append('Container', container);
+    return getPaginatedResult<Like[]>(this.baseUrl + 'users/userlikes/' + id, params, this.http);
     
   }
 

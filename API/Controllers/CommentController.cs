@@ -23,16 +23,36 @@ namespace API.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly ICommentRepository _commentRepository;
+        private readonly IPhotoService _photoService;
         public CommentController(IUserRepository userRepository, IMapper mapper, 
-             ICommentRepository commentRepository)
+             ICommentRepository commentRepository, IPhotoService photoService)
         {
             
             _mapper = mapper;
             _userRepository = userRepository;
             _commentRepository = commentRepository;
+            _photoService = photoService;
         }
 
         // COMMENTS
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<CommentDto>>> GetComments()
+        {
+            var users = await _commentRepository.GetAllCommentsAsync();
+            
+            return Ok(users);
+        }
+        //zwraca komenty po id usera
+        [HttpGet("byUser/{id}")]
+        public async Task<ActionResult<IEnumerable<CommentDto>>> GetUserComments(int id)
+        {
+            var users = await _commentRepository.GetUserCommentsAsync(id);
+            
+            return Ok(users);
+        }
+
+
+
         // /api/comment/ ---
         [HttpPost("{id}/{photoId}")]
         public async Task<ActionResult<IEnumerable<CommentDto>>> CommentUser(int id, int photoId, [FromForm] CommentDto commentDto)
@@ -41,7 +61,7 @@ namespace API.Controllers
             var comment = await _commentRepository.GetComment(id, photoId);
             // if(comment != null)
             //     _userRepository.Delete<Comment>(comment);
-            if(await _userRepository.GetPhotoByIdAsync(photoId) == null)
+            if(await _photoService.GetPhotoByIdAsync(photoId) == null)
                 return NotFound();
 
             
@@ -67,6 +87,7 @@ namespace API.Controllers
             return Ok(x);
         }
 
+        //zwraca komentarze po id zdjecia
         [HttpGet("{id}/ById")]
         public async Task<IActionResult> GetCommentById(int id)
         {

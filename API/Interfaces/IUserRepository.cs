@@ -20,13 +20,12 @@ namespace API.Interfaces
         Task<IEnumerable<MemberDto>> GetMembersAsync();
         Task<MemberDto> GetMemberAsync(string username);
 
-        Task<PagedList<PhotoDto>> GetPhotosAsync(UserParams userParams);
-        Task<PagedList<PhotoDto>> GetPopularPhotosAsync(UserParams userParams);
+       
     
         //likeee
         Task<Like> GetLike(int userId, int photoId);
 
-        Task<PhotoDto> GetPhotoByIdAsync(int id);
+        
 
         void Add<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
@@ -37,6 +36,7 @@ namespace API.Interfaces
         Task<IEnumerable<int>> GetPhotoDisLikes(int id);
         Task<int> GetNumberOfPhotoDisLikes(int id);
         Task<IEnumerable<PhotoDto>> GetUserPhotosAsync(string username);
+        Task<IEnumerable<Like>> GetUserLikesAsync(int id);
 
 
         

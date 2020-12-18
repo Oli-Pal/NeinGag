@@ -18,7 +18,6 @@ namespace API.Helpers
 
             CreateMap<Commentt, CommentDto>();
 
-
             CreateMap<RegisterDto, AppUser>();
         }
     }

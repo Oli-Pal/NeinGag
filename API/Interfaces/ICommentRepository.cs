@@ -17,6 +17,8 @@ namespace API.Interfaces
         Task<Commentt> GetCommentById(int id);
 
         Task<IEnumerable<CommentDto>> GetCommentsAsync(int id);
+        Task<IEnumerable<Commentt>> GetAllCommentsAsync();
+        Task<IEnumerable<CommentDto>> GetUserCommentsAsync(int id);
 
     }
 }
