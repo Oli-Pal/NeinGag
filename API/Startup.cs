@@ -23,7 +23,6 @@ using API.Middleware;
 using API.Helpers;
 using Stripe;
 
-
 namespace API
 {
     public class Startup
@@ -33,8 +32,7 @@ namespace API
         public Startup(IConfiguration config)
         {
             _config = config;
-            // set config using env var
-            StripeConfiguration.SetApiKey(_config.GetSection("Stripe")["SecretKey"]);
+            StripeConfiguration.SetApiKey(config.GetSection("Stripe")["SecretKey"]);
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
