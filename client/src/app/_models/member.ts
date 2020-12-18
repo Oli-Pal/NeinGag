@@ -11,4 +11,5 @@ export interface Member {
     country: string;
     photos: Photo[];
     comments: Comment[];
+    amount: number;
   }

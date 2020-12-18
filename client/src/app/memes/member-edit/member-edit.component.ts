@@ -14,6 +14,7 @@ import { Comment } from 'src/app/_models/comment';
 import { NgForm } from '@angular/forms';
 import { Like } from 'src/app/_models/like';
 import { AlertifyService } from 'src/app/_services/alertify.service';
+import { stringify } from 'querystring';
 declare let alertify: any;
 
 @Component({
@@ -39,6 +40,13 @@ export class MemberEditComponent implements OnInit {
   contentOf: string;
   container: 'comments';
   toastr: any;
+  amountNr: number;
+
+  amount: string = "1700";
+   currency: string = "pln";
+    source: string = "tok_visa";
+     receiptEmail: string = "hello_dotnet@example.com";
+ 
  
   constructor(private accountService: AccountService,
      private memberService: MembersService,
@@ -119,5 +127,24 @@ export class MemberEditComponent implements OnInit {
     });
     }
 
+    sendMoney(){
+
+      this.memberService.sendMoney(this.amount, this.currency, this.source, this.receiptEmail).subscribe(
+        () =>{
+          this.amountNr = parseInt(this.amount);
+          this.member.amount += this.amountNr;
+
+        }
+      )
+    }
+
+
+    // addComment(){
+    //   // debugger;
+    // this.memberService.addComment(this.user.id,this.photos.id, this.contentOf).subscribe(comment =>{
+    //   this.comments.unshift(comment);
+    //   this.messageForm.reset();
+    //   this.getComments();
+    // });
   
   }

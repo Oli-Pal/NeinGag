@@ -99,4 +99,13 @@ export class MembersService {
     }));
   }
   
+
+  sendMoney(amount: string, currency: string, source: string, receiptEmail: string) {
+    const form = new FormData();
+    form.append("amount", amount);
+    form.append("currency", currency);
+    form.append("source", source);
+    form.append("receiptEmail", receiptEmail);
+    return this.http.post(this.baseUrl + 'charges/', form);
+  }
 }

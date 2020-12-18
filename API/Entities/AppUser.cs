@@ -32,7 +32,7 @@ namespace API.Entities
 
         public ICollection<Commentt> Comments { get; set; } 
         
-
+        public int Amount { get; set; }
         
         // public int GetAge(){
             
