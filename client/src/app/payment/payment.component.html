@@ -1,0 +1,86 @@
+
+<div class="container mt-5">
+<div class="card">
+    <p></p><h3 style="text-align:center;">Checkout</h3>
+    <div class="col-12">
+    <strong>Amount:</strong>
+    <input
+            name="Amount"
+            required
+            [(ngModel)]="amount"
+            type="text" 
+            class="form-control input-sm" 
+            placeholder="" 
+            rows="2">
+            <p></p>
+    <!-- <strong>Source:</strong>
+    <input
+            name="source"
+            required
+            [(ngModel)]="source"
+            type="text" 
+            class="form-control input-sm" 
+            placeholder="" 
+            rows="2"> -->
+    <strong>Email:</strong>
+    <input
+            name="receiptEmail"
+            required
+            [(ngModel)]="receiptEmail"
+            type="text" 
+            class="form-control input-sm" 
+            placeholder="" 
+            rows="2">
+            
+    <p></p>
+    
+    <strong>Card number:</strong>
+    <input
+            name="cardNumber"
+            required
+            [(ngModel)]="cardNumber"
+            type="text" 
+            class="form-control input-sm" 
+            placeholder="" 
+            rows="2">
+            <p></p>
+    
+    
+        <strong>Date:</strong>
+            <input
+            name="Date"
+            required
+            [(ngModel)]="date"
+            type="text" 
+            class="form-control input-sm" 
+            placeholder="" 
+            rows="2">
+            <p></p>
+    
+    <strong>CVC:</strong>
+    <input
+            name="CVC"
+            required
+            [(ngModel)]="cvc"
+            type="text" 
+            class="form-control input-sm" 
+            placeholder="" 
+            rows="2">
+            <p></p>
+            <strong>Region:</strong>
+    <input
+            name="region"
+            required
+            [(ngModel)]="region"
+            type="text" 
+            class="form-control input-sm" 
+            placeholder="" 
+            rows="2">
+            <p></p>
+            <p style="text-align:center;">Current balance:
+            {{member.amount}}</p>
+    <p></p>
+    <p><button type="button" class="btn btn-danger btn-block" (click)="sendMoney()"  >Buy coins</button> </p>
+  </div>
+</div>
+</div>

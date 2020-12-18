@@ -23,38 +23,11 @@
         <p></p>
             <div class="card">
             <h3 style="text-align:center;">Buy some coins</h3>
-            <strong>Amount:</strong>
-            <input
-                    name="Amount"
-                    required
-                    [(ngModel)]="amount"
-                    type="text" 
-                    class="form-control input-sm" 
-                    placeholder="" 
-                    rows="2">
-          
-            <!-- <strong>Source:</strong>
-            <input
-                    name="source"
-                    required
-                    [(ngModel)]="source"
-                    type="text" 
-                    class="form-control input-sm" 
-                    placeholder="" 
-                    rows="2"> -->
-            <strong>Email:</strong>
-            <input
-                    name="receiptEmail"
-                    required
-                    [(ngModel)]="receiptEmail"
-                    type="text" 
-                    class="form-control input-sm" 
-                    placeholder="" 
-                    rows="2">
+            
                     <strong style="text-align:center;">Current balance:</strong>
                     <p style="text-align:center;">{{member.amount}}</p>
-            <p></p>
-            <p><button type="button" class="btn btn-danger btn-block" (click)="sendMoney()"  >Buy coins</button> </p>
+            
+            <p><button type="button" class="btn btn-danger btn-block" [routerLink]="['/payment/']" >Buy coins</button> </p>
           </div>
         </div>
         

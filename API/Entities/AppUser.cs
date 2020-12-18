@@ -34,6 +34,8 @@ namespace API.Entities
         
         public int Amount { get; set; }
         
+        
+        
         // public int GetAge(){
             
         //     return DateOfBirth.CalculateAge();

@@ -1,5 +1,4 @@
-
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToastRef, ToastrService } from 'ngx-toastr';
 import { Member } from 'src/app/_models/member';
 import { Photo } from 'src/app/_models/photo';
@@ -18,11 +17,11 @@ import { stringify } from 'querystring';
 declare let alertify: any;
 
 @Component({
-  selector: 'app-member-edit',
-  templateUrl: './member-edit.component.html',
-  styleUrls: ['./member-edit.component.css'],
+  selector: 'app-payment',
+  templateUrl: './payment.component.html',
+  styleUrls: ['./payment.component.css']
 })
-export class MemberEditComponent implements OnInit {
+export class PaymentComponent implements OnInit {
   member: Member;
   members: Member[];
   comments: Comment[];
@@ -41,11 +40,16 @@ export class MemberEditComponent implements OnInit {
   container: 'comments';
   toastr: any;
   amountNr: number;
+  amount: string = "1700";
+   currency: string = "pln";
+    source: string = "tok_visa";
+     receiptEmail: string = "hello_dotnet@example.com";
+     cardNumber: string = "9293 2929 2939 2929";
+     cvc: string = "923";
+     date: string = "01/2020";
+     region: string= "Poland";
 
-
- 
- 
-  constructor(private accountService: AccountService,
+   constructor(private accountService: AccountService,
      private memberService: MembersService,
       private photosService: PhotosService,private route: ActivatedRoute,
       private alertify: AlertifyService) { 
@@ -125,7 +129,17 @@ export class MemberEditComponent implements OnInit {
     });
     }
 
-    
+    sendMoney(){
+
+      this.memberService.sendMoney(this.amount, this.currency, this.source, this.receiptEmail, this.cardNumber, this.date, this.cvc, this.region).subscribe(
+        () =>{
+          this.amountNr = parseInt(this.amount);
+          this.updateAmount(this.amountNr);
+          //this.member.amount += this.amountNr;
+        }
+      )
+      
+    }
 
     updateAmount(amount: number){
       this.memberService.updateAmount(amount,this.user.id).subscribe(data => {
@@ -135,13 +149,4 @@ export class MemberEditComponent implements OnInit {
       });
     }
 
-
-    // addComment(){
-    //   // debugger;
-    // this.memberService.addComment(this.user.id,this.photos.id, this.contentOf).subscribe(comment =>{
-    //   this.comments.unshift(comment);
-    //   this.messageForm.reset();
-    //   this.getComments();
-    // });
-  
-  }
+}

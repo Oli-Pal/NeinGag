@@ -212,6 +212,9 @@ namespace API.Controllers
             return BadRequest("Problem addding photo");
         }
 
+       
+
+
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(int photoId)
         {
