@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="progress" *ngIf="uploader?.queue?.length">
-            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+            <div class="progress-bar" role="progressbar"  [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
         </div>
             <div class="actions"  *ngIf="uploader?.queue?.length">
                 
@@ -44,7 +44,7 @@
                 
                 <button type="button" class="btn btn-danger btn-s"
                         (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                    <span class="fa fa-trash"></span> REMOVE
+                    <span class="fa fa-trash"></span> CANCEL
                 </button>
             </div>
             

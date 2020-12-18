@@ -66,6 +66,7 @@ export class PhotoEditorComponent implements OnInit {
       if (response) {
         const photo = JSON.parse(response);
         this.member?.photos?.push(photo);
+        alert('File uploaded successfully');
         
       }
     };
