@@ -52,9 +52,9 @@
                     placeholder="" 
                     rows="2">
                     <strong style="text-align:center;">Current balance:</strong>
-                    <p style="text-align:center;">{{member?.amount}}</p>
+                    <p style="text-align:center;">{{member.amount}}</p>
             <p></p>
-            <p><button type="button" class="btn btn-danger btn-block" routerLink='/memes' routerLinkActive='active' >Buy coins</button> </p>
+            <p><button type="button" class="btn btn-danger btn-block" (click)="sendMoney()"  >Buy coins</button> </p>
           </div>
         </div>
         

@@ -106,6 +106,15 @@ export class MembersService {
     form.append("currency", currency);
     form.append("source", source);
     form.append("receiptEmail", receiptEmail);
-    return this.http.post(this.baseUrl + 'charges/', form);
+    return this.http.post(this.baseUrl + 'charges/', form)
+      
+  }
+
+
+  //[HttpPost("add-coins/{amount}/{id}")]
+  //public async Task<ActionResult<MemberDto>> AddCoins(int amount, int id)
+
+  updateAmount(amount: number, id: number){
+    return this.http.post(this.baseUrl + "users/add-coins/" + amount + "/" + id, {});
   }
 }

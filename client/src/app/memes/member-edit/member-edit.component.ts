@@ -65,6 +65,7 @@ export class MemberEditComponent implements OnInit {
       this.loadPhotos();
       this.getUserComments();
       this.getAllLikes();
+
     });
   }
 
@@ -132,10 +133,19 @@ export class MemberEditComponent implements OnInit {
       this.memberService.sendMoney(this.amount, this.currency, this.source, this.receiptEmail).subscribe(
         () =>{
           this.amountNr = parseInt(this.amount);
-          this.member.amount += this.amountNr;
-
+          this.updateAmount(this.amountNr);
+          //this.member.amount += this.amountNr;
         }
       )
+      
+    }
+
+    updateAmount(amount: number){
+      this.memberService.updateAmount(amount,this.user.id).subscribe(data => {
+        this.toastr.success("asdaad");
+      }, error => {
+        this.toastr.error(error);
+      });
     }
 
 
