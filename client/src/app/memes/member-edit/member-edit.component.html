@@ -20,9 +20,19 @@
             </div>
           </div>
         </div>
+        <p></p>
+            <div class="card">
+            <h3 style="text-align:center;">Buy some coins</h3>
+            
+                    <strong style="text-align:center;">Current balance:</strong>
+                    <p style="text-align:center;">{{member.amount}}</p>
+            
+            <p><button type="button" class="btn btn-danger btn-block" [routerLink]="['/payment/']" >Buy coins</button> </p>
+          </div>
+        </div>
         
 
-      </div>
+      
       <div class="col-8">
         <div class="tab-pannel" >
           <tabset [justified]="true">

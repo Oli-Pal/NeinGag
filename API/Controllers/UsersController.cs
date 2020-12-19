@@ -201,6 +201,19 @@ namespace API.Controllers
             return BadRequest("Problem addding photo");
         }
 
+        [HttpPost("add-coins/{amount}/{id}")]
+        public async Task<ActionResult<MemberDto>> AddCoins(int amount, int id)
+        {
+            
+            var user = await _userRepository.GetUserByIdAsync(id);
+            user.Amount += amount;
+            if (await _userRepository.SaveAllAsync())
+            return Ok(user);
+            return BadRequest("Problem addding photo");
+        }
+
+       
+
 
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(int photoId)

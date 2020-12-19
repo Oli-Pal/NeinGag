@@ -21,8 +21,11 @@ namespace API.DTOs
         public DateTime LastActive { get; set; }  = DateTime.Now;
 
         public string Country { get; set; }
+        public int Amount { get; set; }
 
         public ICollection<PhotoDto> Photos { get; set; }
+
+        
 
     }
 }

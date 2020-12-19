@@ -11,6 +11,7 @@ import { MemeListComponent } from './memes/meme-list/meme-list.component';
 import { PhotoEditorComponent } from './memes/photo-editor/photo-editor.component';
 import { PopularListComponent } from './memes/popular-list/popular-list.component';
 import { MessagesComponent } from './messages/messages.component';
+import { PaymentComponent } from './payment/payment.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -34,6 +35,7 @@ const routes: Routes = [
   {path: 'errors', component: TestErrorsComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'server-error', component: ServerErrorComponent},
+  {path: 'payment', component: PaymentComponent},
   {path: '**', component: NotFoundComponent, pathMatch: 'full'}
 ];
 
