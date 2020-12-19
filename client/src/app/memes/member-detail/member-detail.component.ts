@@ -1,7 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { take } from 'rxjs/operators';
+import { Like } from 'src/app/_models/like';
 import { Member } from 'src/app/_models/member';
+import { Pagination } from 'src/app/_models/pagination';
 import { Photo } from 'src/app/_models/photo';
+import { User } from 'src/app/_models/user';
+import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
 import { PhotosService } from 'src/app/_services/photos.service';
 
@@ -15,12 +20,22 @@ export class MemberDetailComponent implements OnInit {
   @Input() members: Member[];
   photos: Photo[];
   @Input() photoss: Photo;
+  liked: Like[];
+  pagination: Pagination;
+  pageNumber = 1; 
+  pageSize = 500; 
+  user: User;
+
   constructor(private memberService: MembersService, private route: ActivatedRoute,
-     private photosService: PhotosService, private router: Router) { }
+     private photosService: PhotosService, private router: Router, private accountService: AccountService) { 
+    
+     
+     }
 
   ngOnInit(): void {
     this.loadMember();
     this.loadMemberPhotos();
+   
   }
   loadMember(){
     this.memberService.getMember(this.route.snapshot.paramMap.get('username'))
@@ -42,5 +57,7 @@ export class MemberDetailComponent implements OnInit {
         }
       });
   }
+
+
 
 }

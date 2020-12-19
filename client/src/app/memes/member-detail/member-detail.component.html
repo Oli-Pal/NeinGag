@@ -1,55 +1,66 @@
-<div class="container  mt-5">
-  <div class="row">
-    <div class="col-2"></div>
-    <div class="col-6">
-      <div class="border">
-      <img class="border d-inline border-left border-danger rounded-circle" src="../../../../../assets/img/user.png" alt="{{member?.nickname}}">
-      
-      <h5 class="d-inline ">{{member?.nickname}}</h5>
-      &nbsp;
-      <strong class="float-right ">Member Since: {{member?.created | date: 'dd-MM-yyyy'}}</strong>
-      <tabset>
-        <tab heading="Memes uploaded" >
-      <div *ngFor="let memphotos of photos">
-        <div class="card mb-4" >
-          <div class="card-header"><h6>{{memphotos?.description}} </h6>
-          </div>
-          <div class="card-img-wrapper" >
-              <ng-container>
-      
-                <img class="userPhotos card-img-top " [routerLink]="['/comments/', this.memphotos?.id]" src="{{memphotos?.url }}" alt="">
-          </ng-container>
-      </div>
-          <div class="card-body p-1">
-              <h6 class="card-title ">
-                  <div class="d-flex">
-                  <li class="list-inline-item "><p>100 points</p></li>
-                  <li class="list-inline-item mr-auto"><p>90 comments</p></li>
-              </div>
-                 <ul class="list-inline d-flex animate member-icons ml-2">
-                  <ng-container>
-                     <li class="list-inline-item "><button class="btn btn-success"><i class="fa fa-thumbs-up"></i></button></li>
-                     <li class="list-inline-item "><button class="btn btn-danger"><i class="fa fa-thumbs-down"></i></button></li>
-                     <li class="list-inline-item mr-auto"><button class="btn btn-primary" [routerLink]="['/comments/', this.memphotos?.id]">
-                      <i class="fa fa-comments"></i></button></li>
-                  </ng-container>
-                  </ul>
+ <div class="container mt-4">
+      <div class="row">
+       
+        <div class="col-2">
+        </div>
+        <div class="col-8">
+          <div class="tab-pannel" >
+            <tabset [justified]="true">
+              <tab heading="Memes of {{member?.nickname}} ">
+                <div class="d-flex flex-column p-2">
+                  <div class="alert alert-dismissible alert-primary">
+                  <h3 style="text-align:center;">Here you can find all memes posted by {{member?.nickname}}</h3>
+                </div>
+                    <div *ngFor="let photo of photos" class="align-self-stretch">
+                        <ng-container *ngIf="member?.id == photo?.appUserId">
+                          <app-meme-card [photos]="photo" ></app-meme-card>
+                         
+                          
+                        </ng-container>
+                    </div>
+                  </div>
+              </tab>
+              <tab heading="Memes Liked By {{member?.nickname}}">
                 
-              </h6>
-          </div>
-      </div>
-      </div>
-      </tab>
-      <tab heading="Most Liked Memes">
-        
-
-
-
-      </tab>
-    </tabset>
-    </div>
-    </div>
-    </div>
-    <div class="col-4"></div>
-    </div>
+                <div class="d-flex flex-column p-2">
+                  <div class="alert alert-dismissible alert-primary">
+                  <h3 style="text-align:center;">Here you can find all memes liked by {{member?.nickname}}</h3>
+                </div>
+                  <div *ngFor="let like of liked" class="align-self-stretch">
+                    <div *ngFor="let photo of photos" class="align-self-stretch">
+                      <ng-container *ngIf="like?.likedId == photo.id">
+                        <app-meme-card [photos]="photo" ></app-meme-card>
+                        
+                        
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
   
+              </tab>
+              <tab heading="Commented Memes">
+                <!-- <div class="d-flex flex-column p-2">
+                  <div class="alert alert-dismissible alert-primary">
+                  <h3 style="text-align:center;">Here you can find all memes comented by you</h3>
+                </div>
+                <div *ngFor="let photo of photos" class="align-self-stretch">
+                  
+                <div *ngFor="let comment of commentsNoDuplicates" class="align-self-stretch">
+                  <div *ngIf="comment.commentedPhotoId">
+                    <ng-container *ngIf="comment?.commentedPhotoId == photo.id">              
+                      <app-meme-card [photos]="photo" ></app-meme-card>       
+                    </ng-container>
+                  </div>
+                  
+              
+              </div>
+            
+               </div>
+              </div> -->
+              </tab>
+            </tabset>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-2"></div>

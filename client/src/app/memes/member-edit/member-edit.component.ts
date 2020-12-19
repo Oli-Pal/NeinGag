@@ -103,7 +103,7 @@ export class MemberEditComponent implements OnInit {
     this.memberService.getUserLikes(this.user.id ,this.pageNumber,this.pageSize).subscribe(response =>{
       this.liked = response.result;
       this.pagination = response.pagination;
-    })
+    });
   }
 
   getComments() {
