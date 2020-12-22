@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
@@ -13,6 +14,7 @@ import { PopularListComponent } from './memes/popular-list/popular-list.componen
 import { MessagesComponent } from './messages/messages.component';
 import { PaymentComponent } from './payment/payment.component';
 import { RegisterComponent } from './register/register.component';
+import { AdminGuard } from './_guards/admin.guard';
 import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
@@ -26,7 +28,8 @@ const routes: Routes = [
       {path: 'edit', component: MemberEditComponent},
       {path: 'messages', component: MessagesComponent},
       {path: 'add-photo', component: PhotoEditorComponent},
-      {path: 'comments/:id', component: MemeCommentsComponent}
+      {path: 'comments/:id', component: MemeCommentsComponent},
+      {path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard]}
     ]
   },
   {path: 'memes', component: MemeListComponent},
