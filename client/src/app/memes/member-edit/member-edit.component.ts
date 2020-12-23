@@ -27,7 +27,7 @@ export class MemberEditComponent implements OnInit {
   members: Member[];
   comments: Comment[];
   comment: Comment;
-  commentsNoDuplicates :Comment[] = [];
+  commentsNoDuplicates: Comment[] = [];
   user: User;
   photos: Photo[];
   liked: Like[];
@@ -87,7 +87,6 @@ export class MemberEditComponent implements OnInit {
   pageChanged(event: any){
     this.pageNumber = event.page;
     this.loadPhotos();
-    //this.getComments()
     this.getUserComments();
   }
 
@@ -100,7 +99,7 @@ export class MemberEditComponent implements OnInit {
   }
 
   getAllLikes(){
-    this.memberService.getUserLikes(this.user.id ,this.pageNumber,this.pageSize).subscribe(response =>{
+    this.memberService.getUserLikes(this.user.id, this.pageNumber, this.pageSize).subscribe(response =>{
       this.liked = response.result;
       this.pagination = response.pagination;
     });
@@ -128,7 +127,7 @@ export class MemberEditComponent implements OnInit {
     
 
     updateAmount(amount: number){
-      this.memberService.updateAmount(amount,this.user.id).subscribe(data => {
+      this.memberService.updateAmount(amount, this.user.id).subscribe(data => {
         this.toastr.success("asdaad");
       }, error => {
         this.toastr.error(error);
