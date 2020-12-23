@@ -141,7 +141,7 @@ namespace API.Controllers
 
 
 
-                [AllowAnonymous]
+        [AllowAnonymous]
         [HttpGet("photos")]
         public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPhotos([FromQuery]UserParams userParams)
         {

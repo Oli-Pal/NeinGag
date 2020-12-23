@@ -9,7 +9,7 @@
               <tab heading="Memes of {{member?.nickname}} ">
                 <div class="d-flex flex-column p-2">
                   <div class="alert alert-dismissible alert-primary">
-                  <h3 style="text-align:center;">Memes posted by {{member?.nickname}}</h3>
+                  <h3 style="text-align:center;">Here you can find all memes posted by {{member?.nickname}}</h3>
                 </div>
                     <div *ngFor="let photo of photos" class="align-self-stretch">
                         <ng-container *ngIf="member?.id == photo?.appUserId">
@@ -24,7 +24,7 @@
                 
                 <div class="d-flex flex-column p-2">
                   <div class="alert alert-dismissible alert-primary">
-                  <h3 style="text-align:center;">Memes liked by {{member?.nickname}}</h3>
+                  <h3 style="text-align:center;">Here you can find all memes liked by {{member?.nickname}}</h3>
                 </div>
                   <div *ngFor="let like of liked" class="align-self-stretch">
                     <div *ngFor="let photo of photos" class="align-self-stretch">
@@ -39,11 +39,12 @@
   
               </tab>
               <tab heading="Commented Memes">
-                <div class="d-flex flex-column p-2">
+                <!-- <div class="d-flex flex-column p-2">
                   <div class="alert alert-dismissible alert-primary">
-                  <h3 style="text-align:center;">Memes commented by {{member?.nickname}}</h3>
+                  <h3 style="text-align:center;">Here you can find all memes comented by you</h3>
                 </div>
                 <div *ngFor="let photo of photos" class="align-self-stretch">
+                  
                 <div *ngFor="let comment of commentsNoDuplicates" class="align-self-stretch">
                   <div *ngIf="comment.commentedPhotoId">
                     <ng-container *ngIf="comment?.commentedPhotoId == photo.id">              
@@ -55,7 +56,7 @@
               </div>
             
                </div>
-              </div>
+              </div> -->
               </tab>
             </tabset>
           </div>
