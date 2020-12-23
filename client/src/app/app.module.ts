@@ -25,11 +25,6 @@ import { PhotoEditorComponent } from './memes/photo-editor/photo-editor.componen
 import { PopularListComponent } from './memes/popular-list/popular-list.component';
 import { InputTextComponent } from './_forms/input-text/input-text.component';
 import { PaymentComponent } from './payment/payment.component';
-import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
-import { HasRoleDirective } from './_directives/has-role.directive';
-import { UserManagmentComponent } from './admin/user-managment/user-managment.component';
-import { MemesManagmentComponent } from './admin/memes-managment/memes-managment.component';
-import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 
 @NgModule({
   declarations: [
@@ -49,12 +44,7 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
     PhotoEditorComponent,
     PopularListComponent,
     InputTextComponent,
-    PaymentComponent,
-    AdminPanelComponent,
-    HasRoleDirective,
-    UserManagmentComponent,
-    MemesManagmentComponent,
-    RolesModalComponent
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
