@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     public class UsersController : BaseApiController
     {
         private readonly IUserRepository _userRepository;
@@ -56,6 +56,7 @@ namespace API.Controllers
   
 
         // /api/users/idusera/like/idzdjecia ---
+        [Authorize]
         [HttpPost("{id}/like/{photoId}")]
         public async Task<IActionResult> LikeUser(int id, int photoId)
         {
@@ -103,6 +104,7 @@ namespace API.Controllers
 
         // ---------- dislikes -----------
         // /api/users/ ---
+        [Authorize]
         [HttpPost("{id}/dislike/{photoId}")]
         public async Task<IActionResult> DisLikeUser(int id, int photoId)
         {
@@ -141,7 +143,7 @@ namespace API.Controllers
 
 
 
-                [AllowAnonymous]
+        [AllowAnonymous]
         [HttpGet("photos")]
         public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPhotos([FromQuery]UserParams userParams)
         {
@@ -163,6 +165,7 @@ namespace API.Controllers
             return Ok(photos);
         }
               //get do loadingu w detail meme
+
         [HttpGet("get-photo/{id}")]
         public async Task<ActionResult<PhotoDto>> GetPhotoByIdAsync(int id)
         {
@@ -170,7 +173,7 @@ namespace API.Controllers
             return Ok(photo);
         }
 
-
+        [Authorize]
        [HttpPost("add-photo")]
         public async Task<ActionResult<PhotoDto>> AddPhoto([FromForm] PhotoUpdateDto photoUpdateDto)
         {
@@ -200,7 +203,7 @@ namespace API.Controllers
 
             return BadRequest("Problem addding photo");
         }
-
+        [Authorize]
         [HttpPost("add-coins/{amount}/{id}")]
         public async Task<ActionResult<MemberDto>> AddCoins(int amount, int id)
         {
@@ -214,7 +217,7 @@ namespace API.Controllers
 
        
 
-
+        [Authorize]
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(int photoId)
         {

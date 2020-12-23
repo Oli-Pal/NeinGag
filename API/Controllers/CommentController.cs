@@ -35,6 +35,7 @@ namespace API.Controllers
         }
 
         // COMMENTS
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CommentDto>>> GetComments()
         {
@@ -79,7 +80,7 @@ namespace API.Controllers
             
             return BadRequest("Failed to add comment");
         }
-
+        [AllowAnonymous]
         [HttpGet("{id}/number")]
         public async Task<IActionResult> GetNumberOfPhotoComments(int id)
         {
@@ -95,7 +96,7 @@ namespace API.Controllers
             
             return Ok(x);
         }
-
+         [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<CommentDto>>> GetCommentsAsync(int id)
         {

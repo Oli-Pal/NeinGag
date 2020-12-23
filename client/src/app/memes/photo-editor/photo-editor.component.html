@@ -24,7 +24,7 @@
         <div class="after-photoadded"  *ngIf="uploader?.queue?.length">
             <img [src]="previewPath " alt="Avatar" class="preview-img">
             <textarea type="text" class="desc-adding" (keyup)="onKey($event)" name="Description"
-             placeholder="Write your description here" ></textarea>
+             placeholder="Write your description here" autofocus ></textarea>
         
             <div>
                 <div>

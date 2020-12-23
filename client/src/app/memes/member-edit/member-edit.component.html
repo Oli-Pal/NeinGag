@@ -25,7 +25,7 @@
             <h3 style="text-align:center;">Buy some coins</h3>
             
                     <strong style="text-align:center;">Current balance:</strong>
-                    <p style="text-align:center;">{{member.amount}}</p>
+                    <p style="text-align:center;">{{member?.amount}}</p>
             
             <p><button type="button" class="btn btn-danger btn-block" [routerLink]="['/payment/']" >Buy coins</button> </p>
           </div>
@@ -44,7 +44,7 @@
                   <div *ngFor="let photo of photos" class="align-self-stretch">
                       <ng-container *ngIf="member?.id == photo?.appUserId">
                         <app-meme-card [photos]="photo" ></app-meme-card>
-                        <p><button type="button" class="btn btn-danger btn-block" (click)="deletePhoto(photo?.id)" >Delete meme</button> </p>
+                        <p><button type="button" class="btn btn-danger btn-block" style="margin-top: -10px;" (click)="deletePhoto(photo?.id)" >Delete meme</button> </p>
                         
                       </ng-container>
                   </div>

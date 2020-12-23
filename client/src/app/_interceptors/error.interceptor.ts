@@ -44,8 +44,6 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.router.navigateByUrl('/server-error', navigationExtras);
                 break;
             default:
-              this.toastr.error('Something unexpected went down !!!');
-              console.log(error);
               break;
           }
         }
