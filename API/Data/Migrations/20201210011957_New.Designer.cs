@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201210011957_New")]
+    partial class New
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,9 +22,6 @@ namespace API.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Amount")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Country")
@@ -52,45 +51,6 @@ namespace API.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("API.Entities.Commentt", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CommentedPhotoId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CommenterId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ContentOf")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommentedPhotoId");
-
-                    b.HasIndex("CommenterId");
-
-                    b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("API.Entities.DisLike", b =>
-                {
-                    b.Property<int>("DisLikerId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("DisLikedId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("DisLikerId", "DisLikedId");
-
-                    b.HasIndex("DisLikedId");
-
-                    b.ToTable("DisLikes");
                 });
 
             modelBuilder.Entity("API.Entities.Like", b =>
@@ -133,44 +93,6 @@ namespace API.Data.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("API.Entities.Commentt", b =>
-                {
-                    b.HasOne("API.Entities.Photo", "CommentedPhoto")
-                        .WithMany("Comments")
-                        .HasForeignKey("CommentedPhotoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Entities.AppUser", "Commenter")
-                        .WithMany("Comments")
-                        .HasForeignKey("CommenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CommentedPhoto");
-
-                    b.Navigation("Commenter");
-                });
-
-            modelBuilder.Entity("API.Entities.DisLike", b =>
-                {
-                    b.HasOne("API.Entities.Photo", "DisLiked")
-                        .WithMany("DisLikers")
-                        .HasForeignKey("DisLikedId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("API.Entities.AppUser", "DisLiker")
-                        .WithMany("DisLikees")
-                        .HasForeignKey("DisLikerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DisLiked");
-
-                    b.Navigation("DisLiker");
-                });
-
             modelBuilder.Entity("API.Entities.Like", b =>
                 {
                     b.HasOne("API.Entities.Photo", "Liked")
@@ -203,10 +125,6 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
-                    b.Navigation("Comments");
-
-                    b.Navigation("DisLikees");
-
                     b.Navigation("Likees");
 
                     b.Navigation("Photos");
@@ -214,10 +132,6 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Photo", b =>
                 {
-                    b.Navigation("Comments");
-
-                    b.Navigation("DisLikers");
-
                     b.Navigation("Likers");
                 });
 #pragma warning restore 612, 618
