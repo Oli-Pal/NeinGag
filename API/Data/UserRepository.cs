@@ -65,14 +65,7 @@ namespace API.Data
             return await _context.Likes.FirstOrDefaultAsync(u => u.LikerId == userId && u.LikedId == photoId);
         }
        
-        // public async Task<IEnumerable<int>> GetUserLikes(int id)
-        // {
-        //     var user = await _context.Users
-        //         .Include(x => x.Likees)
-        //         .FirstOrDefaultAsync(u => u.Id == id);
-
-        //     return user.Likees.Where(u => u.LikerId == id).Select(i => i.LikedId);
-        // }
+        
 
     //photolikes - zwracanie listy uzytkownikow ktorzy lubia zdjecie
             public async Task<IEnumerable<int>> GetPhotoLikes(int id)

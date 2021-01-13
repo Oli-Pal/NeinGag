@@ -6,7 +6,7 @@ using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-
+using System.Security.Claims;
 using System.Collections.Generic;
 using System.Linq;
 using API.DTOs;
@@ -15,6 +15,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using API.Data;
+using System;
 
 namespace API.Services
 {
@@ -23,8 +24,11 @@ namespace API.Services
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly Cloudinary _cloudinary;
-        public PhotoService(IOptions<CloudinarySettings> config,DataContext context, IMapper mapper)
+        private readonly IUserRepository _userRepository;
+        public PhotoService(IOptions<CloudinarySettings> config, DataContext context, IMapper mapper, IUserRepository userRepository)
         {
+     
+            _userRepository = userRepository;
             _mapper = mapper;
             _context = context;
 
@@ -55,6 +59,36 @@ namespace API.Services
             return uploadResult;
         }
 
+
+        public async Task<PhotoDto> AddPhotoService([FromForm] PhotoUpdateDto photoUpdateDto, string username)
+        {
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
+            var result = await AddPhotoAsync(photoUpdateDto.File);
+
+            if (result.Error != null) throw new Exception(result.Error.Message);
+
+            var photo = new Photo
+            {
+
+                Url = result.SecureUrl.AbsoluteUri,
+                PublicId = result.PublicId,
+                Description = photoUpdateDto.Description
+            };
+
+            user.Photos.Add(photo);
+
+            if (await _userRepository.SaveAllAsync())
+            {
+                
+               return _mapper.Map<PhotoDto>(photo);
+              
+                
+            }
+
+
+            throw new Exception("Problem addding photo");
+        }
         public async Task<DeletionResult> DeletePhotoAsync(string publicId)
         {
             var deleteParams = new DeletionParams(publicId);
@@ -63,6 +97,30 @@ namespace API.Services
 
             return result;
         }
+
+         public async Task<IAsyncResult> DeletePhotoService(int photoId, string username)
+        {
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
+            var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+
+            if (photo == null) throw new Exception ("Photo doesn't exist");
+
+            if (photo.PublicId != null)
+            {
+                var result = await DeletePhotoAsync(photo.PublicId);
+                if (result.Error != null) throw new Exception (result.Error.Message);
+            }
+
+            user.Photos.Remove(photo);
+
+             if (await _userRepository.SaveAllAsync()) return Task.CompletedTask;
+             
+              throw new Exception ("Failed to delete the photo");
+
+            
+        }
+
 
 
         public async Task<PagedList<PhotoDto>> GetPhotosAsync(UserParams userParams)
@@ -76,7 +134,7 @@ namespace API.Services
             .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
-         public async Task<PagedList<PhotoDto>> GetPopularPhotosAsync(UserParams userParams)
+        public async Task<PagedList<PhotoDto>> GetPopularPhotosAsync(UserParams userParams)
         {
             var query = _context.Photos
             .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
@@ -86,9 +144,9 @@ namespace API.Services
             .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
-         public async Task<PhotoDto> GetPhotoByIdAsync(int id)
+        public async Task<PhotoDto> GetPhotoByIdAsync(int id)
         {
-            
+
             return await _context.Photos
             .Where(x => x.Id == id)
             .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)

@@ -118,5 +118,12 @@ namespace API.Services
             throw new Exception ("Failed to like");
         }
 
+
+
+        public async Task<IEnumerable<PhotoDto>> GetUserPhotosService(string username)
+        {
+            var photos = await _userRepository.GetUserPhotosAsync(username);
+            return photos.ToList();
+        }
     }
 }
