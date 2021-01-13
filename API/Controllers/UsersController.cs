@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -22,9 +23,10 @@ namespace API.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IPhotoService _photoService;
-        public UsersController(IUserRepository userRepository, IMapper mapper, 
-            IPhotoService photoService)
+        private readonly IUsersService _usersService;
+        public UsersController(IUserRepository userRepository, IMapper mapper, IUsersService usersService, IPhotoService photoService)
         {
+            _usersService = usersService;
             _photoService = photoService;
             _mapper = mapper;
             _userRepository = userRepository;
@@ -34,12 +36,115 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
-            var users = await _userRepository.GetMembersAsync();
+            try
+            {
+                var users = await _usersService.GetUsersService();
+
+                return Ok(users);
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
             
-            return Ok(users);
         }
-        
-        
+
+        [HttpGet("{username}", Name = "GetUser")]
+        public async Task<ActionResult<MemberDto>> GetUser(string username)
+        {
+            try
+            {
+                var user = await _usersService.GetUserService(username);
+                return Ok(user);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+           
+        }
+
+
+        [HttpGet("userlikes/{id}")]
+        public async Task<ActionResult<IEnumerable<LikeDto>>> GetAllLikes(int id)
+        {
+            try
+            {
+                var likes = await _usersService.GetAllLikesService(id);
+
+                return Ok(likes);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
+        [HttpGet("{id}/likes")]
+        public async Task<ActionResult> GetNumberOfPhotoLikes(int id)
+        {
+            try
+            {
+                var like = await _usersService.GetNumberOfPhotoLikesService(id);
+
+                return Ok(like);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
+        [Authorize]
+        [HttpPost("{id}/like/{photoId}")]
+        public async Task<ActionResult> LikeUser(int id, int photoId)
+        {
+            try
+            {
+                
+                var likeIt = await _usersService.LikeUserService(id, photoId);
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                
+                throw ;
+            }
+        }
+
+
+
+        [Authorize]
+        [HttpPost("{id}/dislike/{photoId}")]
+        public async Task<ActionResult> DisLikeUser(int id, int photoId)
+        {
+             try
+            {
+                
+                var dislikeIt = await _usersService.LikeUserService(id, photoId);
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                
+                throw ;
+            }
+        }
+
+       [HttpGet("{id}/dislikes")]
+        public async Task<IActionResult> GetNumberOfPhotoDisLikes(int id)
+        {
+            var x = await _userRepository.GetNumberOfPhotoDisLikes(id);
+
+            return Ok(x);
+        }
+
         [HttpGet("photos/{username}")]
         public async Task<ActionResult<IEnumerable<PhotoDto>>> GetUserPhotos(string username)
         {
@@ -47,105 +152,18 @@ namespace API.Controllers
             return Ok(photos);
         }
 
-        
-        [HttpGet("{username}", Name = "GetUser")]
-        public async Task<ActionResult<MemberDto>> GetUser(string username)
-        {
-            return await _userRepository.GetMemberAsync(username);
-        }
-  
 
-        // /api/users/idusera/like/idzdjecia ---
-        [Authorize]
-        [HttpPost("{id}/like/{photoId}")]
-        public async Task<IActionResult> LikeUser(int id, int photoId)
-        {
-            //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
-            var like = await _userRepository.GetLike(id, photoId);
-            var dislike = await _userRepository.GetDisLike(id, photoId);
-            if(like != null)
-                _userRepository.Delete<Like>(like);
+     
 
-            if(dislike != null)
-                _userRepository.Delete<DisLike>(dislike);
 
-            if(await _photoService.GetPhotoByIdAsync(photoId) == null)
-                return NotFound();
-
-            if(like == null){
-            like = new Like
-            {
-                LikerId = id,
-                LikedId = photoId
-            };
-
-            _userRepository.Add<Like>(like);}
-            if (await _userRepository.SaveAllAsync())
-                return Ok();
-            return BadRequest("Failed to like");
-        }
-
-        [HttpGet("{id}/likes")]
-        public async Task<IActionResult> GetNumberOfPhotoLikes(int id)
-        {
-            var x = await _userRepository.GetNumberOfPhotoLikes(id);
-            
-            return Ok(x);
-        }
-
-        [HttpGet("userlikes/{id}")]
-        public async Task<ActionResult<IEnumerable<LikeDto>>> GetAllLikes(int id)
-        {
-            var likes = await _userRepository.GetUserLikesAsync(id);
-            
-            return Ok(likes);
-        }
-    
-
-        // ---------- dislikes -----------
-        // /api/users/ ---
-        [Authorize]
-        [HttpPost("{id}/dislike/{photoId}")]
-        public async Task<IActionResult> DisLikeUser(int id, int photoId)
-        {
-            //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
-            var dislike = await _userRepository.GetDisLike(id, photoId);
-            var like = await _userRepository.GetLike(id, photoId);
-            if(dislike != null)
-                _userRepository.Delete<DisLike>(dislike);
-            if(like != null)
-                _userRepository.Delete<Like>(like);
-
-            if(await _photoService.GetPhotoByIdAsync(photoId) == null)
-                return NotFound();
-
-            if(dislike == null){
-                dislike = new DisLike
-            {
-                DisLikerId = id,
-                DisLikedId = photoId
-                
-            };
-
-            _userRepository.Add<DisLike>(dislike);}
-            if (await _userRepository.SaveAllAsync())
-                return Ok();
-            return BadRequest("Failed to like");
-        }
-
-        [HttpGet("{id}/dislikes")]
-        public async Task<IActionResult> GetNumberOfPhotoDisLikes(int id)
-        {
-            var x = await _userRepository.GetNumberOfPhotoDisLikes(id);
-            
-            return Ok(x);
-        }
+       
+ 
 
 
 
         [AllowAnonymous]
         [HttpGet("photos")]
-        public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPhotos([FromQuery]UserParams userParams)
+        public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPhotos([FromQuery] UserParams userParams)
         {
             var photos = await _photoService.GetPhotosAsync(userParams);
 
@@ -153,10 +171,10 @@ namespace API.Controllers
 
             return Ok(photos);
         }
-        
-         [AllowAnonymous]
+
+        [AllowAnonymous]
         [HttpGet("popular-photos")]
-        public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPopularPhotos([FromQuery]UserParams userParams)
+        public async Task<ActionResult<IEnumerable<PhotoDto>>> GetPopularPhotos([FromQuery] UserParams userParams)
         {
             var photos = await _photoService.GetPopularPhotosAsync(userParams);
 
@@ -164,7 +182,7 @@ namespace API.Controllers
 
             return Ok(photos);
         }
-              //get do loadingu w detail meme
+        //get do loadingu w detail meme
 
         [HttpGet("get-photo/{id}")]
         public async Task<ActionResult<PhotoDto>> GetPhotoByIdAsync(int id)
@@ -174,12 +192,12 @@ namespace API.Controllers
         }
 
         [Authorize]
-       [HttpPost("add-photo")]
+        [HttpPost("add-photo")]
         public async Task<ActionResult<PhotoDto>> AddPhoto([FromForm] PhotoUpdateDto photoUpdateDto)
         {
-            
+
             var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
-          
+
 
             var result = await _photoService.AddPhotoAsync(photoUpdateDto.File);
 
@@ -187,7 +205,7 @@ namespace API.Controllers
 
             var photo = new Photo
             {
-                
+
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId,
                 Description = photoUpdateDto.Description
@@ -197,9 +215,9 @@ namespace API.Controllers
 
             if (await _userRepository.SaveAllAsync())
             {
-                return CreatedAtRoute("GetUser", new {username = user.UserName} ,_mapper.Map<PhotoDto>(photo));
+                return CreatedAtRoute("GetUser", new { username = user.UserName }, _mapper.Map<PhotoDto>(photo));
             }
-                
+
 
             return BadRequest("Problem addding photo");
         }
@@ -207,15 +225,15 @@ namespace API.Controllers
         [HttpPost("add-coins/{amount}/{id}")]
         public async Task<ActionResult<MemberDto>> AddCoins(int amount, int id)
         {
-            
+
             var user = await _userRepository.GetUserByIdAsync(id);
             user.Amount += amount;
             if (await _userRepository.SaveAllAsync())
-            return Ok(user);
+                return Ok(user);
             return BadRequest("Problem addding photo");
         }
 
-       
+
 
         [Authorize]
         [HttpDelete("delete-photo/{photoId}")]
@@ -239,8 +257,8 @@ namespace API.Controllers
 
             return BadRequest("Failed to delete the photo");
         }
-    
-    
+
+
     }
 }
 

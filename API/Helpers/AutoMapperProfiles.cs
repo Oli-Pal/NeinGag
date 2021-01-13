@@ -17,7 +17,8 @@ namespace API.Helpers
             .ForMember(dest => dest.Nickname, opt => opt.MapFrom(src => src.AppUser.NickName));
 
             CreateMap<Commentt, CommentDto>();
-
+            CreateMap<Like, LikeDto>();
+        
             CreateMap<RegisterDto, AppUser>();
         }
     }

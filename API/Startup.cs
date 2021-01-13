@@ -40,6 +40,9 @@ namespace API
         {
             services.AddApplicationServices(_config);
             services.AddControllers();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
             services.Configure<CloudinarySettings>(_config.GetSection("CloudinarySettings"));
             services.AddCors();
            services.AddIdentityServices(_config);
