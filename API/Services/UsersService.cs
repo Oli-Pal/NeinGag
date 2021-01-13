@@ -48,6 +48,15 @@ namespace API.Services
             
         }
 
+        public async Task<int> GetNumberOfPhotoDisLikesService(int id)
+        {
+            var dislike = await _userRepository.GetNumberOfPhotoDisLikes(id);
+
+            return dislike;
+        }
+
+
+
         public async Task<IAsyncResult> LikeUserService(int id, int photoId)
         {
             var like = await _userRepository.GetLike(id, photoId);

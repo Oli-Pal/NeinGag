@@ -13,6 +13,8 @@ namespace API.Interfaces
          Task<IEnumerable<LikeDto>> GetAllLikesService(int id);
          
           Task<int> GetNumberOfPhotoLikesService(int id);
+          Task<int> GetNumberOfPhotoDisLikesService(int id);
+          
           Task<IAsyncResult> LikeUserService(int id, int photoId);
           Task<IAsyncResult> DisLikeUserService(int id, int photoId);
     }

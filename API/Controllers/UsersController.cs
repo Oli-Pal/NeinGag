@@ -99,6 +99,22 @@ namespace API.Controllers
             }
         }
 
+        [HttpGet("{id}/dislikes")]
+        public async Task<IActionResult> GetNumberOfPhotoDisLikes(int id)
+        {
+              try
+            {
+                var dislike = await _usersService.GetNumberOfPhotoDisLikesService(id);
+
+                return Ok(dislike);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
         [Authorize]
         [HttpPost("{id}/like/{photoId}")]
         public async Task<ActionResult> LikeUser(int id, int photoId)
@@ -137,13 +153,7 @@ namespace API.Controllers
             }
         }
 
-       [HttpGet("{id}/dislikes")]
-        public async Task<IActionResult> GetNumberOfPhotoDisLikes(int id)
-        {
-            var x = await _userRepository.GetNumberOfPhotoDisLikes(id);
-
-            return Ok(x);
-        }
+       
 
         [HttpGet("photos/{username}")]
         public async Task<ActionResult<IEnumerable<PhotoDto>>> GetUserPhotos(string username)
