@@ -139,7 +139,7 @@ namespace API.Controllers
              try
             {
                 
-                var dislikeIt = await _usersService.LikeUserService(id, photoId);
+                var dislikeIt = await _usersService.DisLikeUserService(id, photoId);
 
                 return Ok();
             }
