@@ -18,8 +18,10 @@ namespace API.Extensions
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             
             services.AddDbContext<DataContext>(options =>

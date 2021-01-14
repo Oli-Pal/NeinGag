@@ -23,23 +23,23 @@ namespace API.Data
         }
 
         //COMMENTS ---------------------------------------------
-        public async Task<IEnumerable<int>> GetUserComments(int id)
-        {
-            var user = await _context.Users
-                .Include(x => x.Comments)
-                .FirstOrDefaultAsync(u => u.Id == id);
+        // public async Task<IEnumerable<int>> GetUserComments(int id)
+        // {
+        //     var user = await _context.Users
+        //         .Include(x => x.Comments)
+        //         .FirstOrDefaultAsync(u => u.Id == id);
 
-            return user.Comments.Where(u => u.CommenterId == id).Select(i => i.Id);
-        }
+        //     return user.Comments.Where(u => u.CommenterId == id).Select(i => i.Id);
+        // }
 
-            public async Task<IEnumerable<int>> GetPhotoComments(int id)
-        {
-            var user = await _context.Photos
-                .Include(x => x.Comments)
-                .FirstOrDefaultAsync(u => u.Id == id);
+        //     public async Task<IEnumerable<int>> GetPhotoComments(int id)
+        // {
+        //     var user = await _context.Photos
+        //         .Include(x => x.Comments)
+        //         .FirstOrDefaultAsync(u => u.Id == id);
 
-            return user.Comments.Where(u => u.CommentedPhotoId == id).Select(i => i.Id);
-        }
+        //     return user.Comments.Where(u => u.CommentedPhotoId == id).Select(i => i.Id);
+        // }
 
              public async Task<int> GetNumberOfPhotoComments(int id)
         {

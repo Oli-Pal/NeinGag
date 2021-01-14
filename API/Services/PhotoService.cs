@@ -25,9 +25,11 @@ namespace API.Services
         private readonly IMapper _mapper;
         private readonly Cloudinary _cloudinary;
         private readonly IUserRepository _userRepository;
-        public PhotoService(IOptions<CloudinarySettings> config, DataContext context, IMapper mapper, IUserRepository userRepository)
+        private readonly IPhotoRepository _photoRepository;
+        public PhotoService(IOptions<CloudinarySettings> config, DataContext context, IMapper mapper, IUserRepository userRepository, IPhotoRepository photoRepository)
         {
-     
+            _photoRepository = photoRepository;
+
             _userRepository = userRepository;
             _mapper = mapper;
             _context = context;
@@ -80,10 +82,10 @@ namespace API.Services
 
             if (await _userRepository.SaveAllAsync())
             {
-                
-               return _mapper.Map<PhotoDto>(photo);
-              
-                
+
+                return _mapper.Map<PhotoDto>(photo);
+
+
             }
 
 
@@ -98,59 +100,50 @@ namespace API.Services
             return result;
         }
 
-         public async Task<IAsyncResult> DeletePhotoService(int photoId, string username)
+        public async Task<IAsyncResult> DeletePhotoService(int photoId, string username)
         {
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
             var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
 
-            if (photo == null) throw new Exception ("Photo doesn't exist");
+            if (photo == null) throw new Exception("Photo doesn't exist");
 
             if (photo.PublicId != null)
             {
                 var result = await DeletePhotoAsync(photo.PublicId);
-                if (result.Error != null) throw new Exception (result.Error.Message);
+                if (result.Error != null) throw new Exception(result.Error.Message);
             }
 
             user.Photos.Remove(photo);
 
-             if (await _userRepository.SaveAllAsync()) return Task.CompletedTask;
-             
-              throw new Exception ("Failed to delete the photo");
+            if (await _userRepository.SaveAllAsync()) return Task.CompletedTask;
 
-            
+            throw new Exception("Failed to delete the photo");
+
+
         }
 
 
 
-        public async Task<PagedList<PhotoDto>> GetPhotosAsync(UserParams userParams)
+        public async Task<PagedList<PhotoDto>> GetPhotosAsyncService(UserParams userParams)
         {
-            var query = _context.Photos
-            .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
-            .OrderByDescending(x => x.Id)
-            .AsNoTracking();
+            var q = await _photoRepository.GetPhotosAsync(userParams);
 
-            return await PagedList<PhotoDto>
-            .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+           return q;
         }
 
-        public async Task<PagedList<PhotoDto>> GetPopularPhotosAsync(UserParams userParams)
+        public async Task<PagedList<PhotoDto>> GetPopularPhotosAsyncService(UserParams userParams)
         {
-            var query = _context.Photos
-            .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
-            .OrderByDescending(x => (x.Likers.Count - x.DisLikers.Count));
+            var popular = await _photoRepository.GetPopularPhotosAsync(userParams);
 
-            return await PagedList<PhotoDto>
-            .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+            return popular;
         }
 
-        public async Task<PhotoDto> GetPhotoByIdAsync(int id)
+        public async Task<PhotoDto> GetPhotoByIdAsyncService(int id)
         {
 
-            return await _context.Photos
-            .Where(x => x.Id == id)
-            .ProjectTo<PhotoDto>(_mapper.ConfigurationProvider)
-            .SingleOrDefaultAsync();
+            var photo = await _photoRepository.GetPhotoByIdAsync(id);
+            return photo;
         }
     }
 }

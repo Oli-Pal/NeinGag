@@ -36,15 +36,7 @@ namespace API.Data
                     .ToListAsync();
         }
 
-//raczej nieuzywane
-        //   public async Task<IEnumerable<int>> GetUserDisLikes(int id)
-        // {
-        //     var user = await _context.Users
-        //         .Include(x => x.DisLikees)
-        //         .FirstOrDefaultAsync(u => u.Id == id);
 
-        //     return user.DisLikees.Where(u => u.DisLikerId == id).Select(i => i.DisLikedId);
-        // }
 
          public async Task<IEnumerable<LikeDto>> GetUserLikesAsync(int id)
         {

@@ -16,9 +16,9 @@ namespace API.Interfaces
         Task<DeletionResult> DeletePhotoAsync(string publicId);
         Task<IAsyncResult> DeletePhotoService(int photoId, string username);
 
-         Task<PagedList<PhotoDto>> GetPhotosAsync(UserParams userParams);
-        Task<PagedList<PhotoDto>> GetPopularPhotosAsync(UserParams userParams);
-        Task<PhotoDto> GetPhotoByIdAsync(int id);
+        Task<PagedList<PhotoDto>> GetPhotosAsyncService(UserParams userParams);
+        Task<PagedList<PhotoDto>> GetPopularPhotosAsyncService(UserParams userParams);
+        Task<PhotoDto> GetPhotoByIdAsyncService(int id);
         
     }
 }

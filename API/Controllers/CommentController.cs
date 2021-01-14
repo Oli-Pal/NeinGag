@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -19,109 +20,147 @@ namespace API.Controllers
     [Authorize]
     public class CommentController : BaseApiController
     {
-        
+
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly ICommentRepository _commentRepository;
         private readonly IPhotoService _photoService;
-        public CommentController(IUserRepository userRepository, IMapper mapper, 
-             ICommentRepository commentRepository, IPhotoService photoService)
+        
+        private readonly ICommentService _commentService;
+        public CommentController(IUserRepository userRepository, IMapper mapper,
+        ICommentRepository commentRepository, IPhotoService photoService, ICommentService commentService)
         {
-            
+            _commentService = commentService;
             _mapper = mapper;
             _userRepository = userRepository;
             _commentRepository = commentRepository;
             _photoService = photoService;
         }
 
-        // COMMENTS
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<CommentDto>>> GetComments()
-        {
-            var users = await _commentRepository.GetAllCommentsAsync();
+    // COMMENTS
+    [AllowAnonymous]
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<CommentDto>>> GetComments()
+    {
+        try
+        { 
+            var users = await _commentService.GetAllCommentsAsyncService();
+
+            return Ok(users);
             
+        }
+        catch (Exception)
+        {
+            
+            throw;
+        }
+       
+    }
+    //zwraca komenty po id usera
+    [HttpGet("byUser/{id}")]
+    public async Task<ActionResult<IEnumerable<CommentDto>>> GetUserComments(int id)
+    {
+        try
+        {
+            var users = await _commentService.GetUserCommentsAsyncService(id);
+
             return Ok(users);
         }
-        //zwraca komenty po id usera
-        [HttpGet("byUser/{id}")]
-        public async Task<ActionResult<IEnumerable<CommentDto>>> GetUserComments(int id)
+        catch (Exception)
         {
-            var users = await _commentRepository.GetUserCommentsAsync(id);
             
-            return Ok(users);
+            throw;
         }
+      
+    }
 
 
 
-        // /api/comment/ ---
-        [HttpPost("{id}/{photoId}")]
-        public async Task<ActionResult<IEnumerable<CommentDto>>> CommentUser(int id, int photoId, [FromForm] CommentDto commentDto)
+
+
+    [AllowAnonymous]
+    [HttpGet("{id}/number")]
+    public async Task<IActionResult> GetNumberOfPhotoComments(int id)
+    {
+        try
         {
-            //List<int> likeList = _userRepository.GetPhotoLikes(photoId);
-            var comment = await _commentRepository.GetComment(id, photoId);
-            // if(comment != null)
-            //     _userRepository.Delete<Comment>(comment);
-            if(await _photoService.GetPhotoByIdAsync(photoId) == null)
-                return NotFound();
+            var x = await _commentService.GetNumberOfPhotoCommentsService(id);
 
-            
-                comment = new Commentt
-            {
-                Id = commentDto.Id,
-                CommenterId = id,
-                CommentedPhotoId = photoId,
-                ContentOf = commentDto.ContentOf
-            };
-
-            _userRepository.Add<Commentt>(comment);
-            if (await _userRepository.SaveAllAsync())
-                return Ok();
-            
-            return BadRequest("Failed to add comment");
-        }
-        [AllowAnonymous]
-        [HttpGet("{id}/number")]
-        public async Task<IActionResult> GetNumberOfPhotoComments(int id)
-        {
-            var x = await _commentRepository.GetNumberOfPhotoComments(id);
             return Ok(x);
         }
-
-        //zwraca komentarze po id zdjecia
-        [HttpGet("{id}/ById")]
-        public async Task<IActionResult> GetCommentById(int id)
+        catch (Exception)
         {
-            var x = await _commentRepository.GetCommentById(id);
             
+            throw;
+        }
+        
+    }
+
+    //zwraca komentarze po id zdjecia
+    [HttpGet("{id}/ById")]
+    public async Task<IActionResult> GetCommentById(int id)
+    {
+        try
+        {
+            var x = await _commentService.GetCommentByIdService(id);
+
             return Ok(x);
         }
-         [AllowAnonymous]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<CommentDto>>> GetCommentsAsync(int id)
+        catch (Exception)
         {
-            var x = await _commentRepository.GetCommentsAsync(id);
             
+            throw;
+        }
+        
+    }
+    [AllowAnonymous]
+    [HttpGet("{id}")]
+    public async Task<ActionResult<IEnumerable<CommentDto>>> GetCommentsAsync(int id)
+    {
+        try
+        {
+            var x = await _commentService.GetCommentsAsyncService(id);
+
             return Ok(x);
         }
-
-
-        [HttpDelete("delete/{id}/{commenterId}")]
-        public async Task<ActionResult<Commentt>> DeleteComment(int id, int commenterId)
+        catch (Exception)
         {
-           var user = await _userRepository.GetUserByIdAsync(commenterId);
+            
+            throw;
+        }
+        
+    }
 
-            //var comment = user.Comments.FirstOrDefault(x => x.Id == id);
 
-            var comment = await _commentRepository.GetCommentById(id);
-            if (comment == null) return NotFound();
-
-            //user.Comments.Remove(comment);
-            _userRepository.Delete<Commentt>(comment);
-
-            if (await _userRepository.SaveAllAsync()) return Ok();
-
-            return BadRequest("Failed to delete comment");
+    // /api/comment/ ---
+    [HttpPost("{id}/{photoId}")]
+    public async Task<ActionResult<IEnumerable<CommentDto>>> CommentUser(int id, int photoId, [FromForm] CommentDto commentDto)
+    {
+        try
+        {
+            var addingComment = await _commentService.CommentUserService(id, photoId, commentDto);
+            return Ok();
+        }
+        catch (Exception)
+        {
+            
+            throw;
         }
     }
+
+    [HttpDelete("delete/{id}/{commenterId}")]
+    public async Task<ActionResult<Commentt>> DeleteComment(int id, int commenterId)
+    {
+        try
+        {
+            var delcoms = await _commentService.DeleteCommentService(id, commenterId);
+            return Ok();
+        }
+        catch (Exception)
+        {
+            
+            throw;
+        }
+    }
+}
 }

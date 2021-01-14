@@ -23,7 +23,7 @@ export class PhotosService {
       params = params.append('pageSize', itemsPerPage.toString());
     }
 
-    return this.http.get<Photo[]>(this.baseUrl + 'users/photos/', {observe: 'response', params}).pipe(
+    return this.http.get<Photo[]>(this.baseUrl + 'photo/photos/', {observe: 'response', params}).pipe(
         map(response =>{
           this.paginatedResult.result = response.body;
           if(response.headers.get('Pagination') !== null){
@@ -41,7 +41,7 @@ export class PhotosService {
       params = params.append('pageSize', itemsPerPage.toString());
     }
 
-    return this.http.get<Photo[]>(this.baseUrl + 'users/popular-photos/', {observe: 'response', params}).pipe(
+    return this.http.get<Photo[]>(this.baseUrl + 'photo/popular-photos/', {observe: 'response', params}).pipe(
         map(response =>{
           this.paginatedResult.result = response.body;
           if(response.headers.get('Pagination') !== null){
@@ -67,6 +67,6 @@ export class PhotosService {
   getPhotoById(id: number) {
     const photos = this.photos.find(x => x.id === id);
     if (photos !== undefined) { return of(photos); }
-    return this.http.get<Photo>(this.baseUrl + 'users/get-photo/' + id);
+    return this.http.get<Photo>(this.baseUrl + 'photo/get-photo/' + id);
   }
 }

@@ -21,16 +21,13 @@ namespace API.Controllers
     public class UsersController : BaseApiController
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
-        private readonly IPhotoService _photoService;
+
         private readonly IUsersService _usersService;
-        public UsersController(IUserRepository userRepository, IMapper mapper, IUsersService usersService, IPhotoService photoService)
+        public UsersController(IUserRepository userRepository, IUsersService usersService)
         {
             _usersService = usersService;
-            _photoService = photoService;
-            _mapper = mapper;
             _userRepository = userRepository;
-            _photoService = photoService;
+          
         }
 
         [HttpGet]
@@ -172,7 +169,7 @@ namespace API.Controllers
         }
 
         
-        
+        //???????
         [Authorize]
         [HttpPost("add-coins/{amount}/{id}")]
         public async Task<ActionResult<MemberDto>> AddCoins(int amount, int id)

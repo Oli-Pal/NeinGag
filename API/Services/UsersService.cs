@@ -68,7 +68,7 @@ namespace API.Services
             if (dislike != null)
                 _userRepository.Delete<DisLike>(dislike);
 
-            if (await _photoService.GetPhotoByIdAsync(photoId) == null)
+            if (await _photoService.GetPhotoByIdAsyncService(photoId) == null)
                 throw new Exception ("Photos doesn't exist");
 
             if (like == null)
@@ -97,7 +97,7 @@ namespace API.Services
             if (like != null)
                 _userRepository.Delete<Like>(like);
 
-            if (await _photoService.GetPhotoByIdAsync(photoId) == null)
+            if (await _photoService.GetPhotoByIdAsyncService(photoId) == null)
                  throw new Exception ("Photos doesn't exist");
 
             if (dislike == null)

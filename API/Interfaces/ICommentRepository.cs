@@ -10,8 +10,8 @@ namespace API.Interfaces
     public interface ICommentRepository
     {
                 //comment
-        Task<IEnumerable<int>> GetUserComments(int id);
-        Task<IEnumerable<int>> GetPhotoComments(int id);
+        // Task<IEnumerable<int>> GetUserComments(int id);
+        // Task<IEnumerable<int>> GetPhotoComments(int id);
         Task<int> GetNumberOfPhotoComments(int id);
         Task<Commentt> GetComment(int userId, int photoId);
         Task<Commentt> GetCommentById(int id);

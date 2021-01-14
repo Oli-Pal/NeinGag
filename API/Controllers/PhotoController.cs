@@ -33,7 +33,7 @@ namespace API.Controllers
         {
             try
             {
-                var photos = await _photoService.GetPhotosAsync(userParams);
+                var photos = await _photoService.GetPhotosAsyncService(userParams);
 
                 Response.AddPaginationHeader(photos.CurrentPage, photos.PageSize, photos.TotalCount, photos.TotalCount);
 
@@ -54,7 +54,7 @@ namespace API.Controllers
 
             try
             {
-                var photos = await _photoService.GetPopularPhotosAsync(userParams);
+                var photos = await _photoService.GetPopularPhotosAsyncService(userParams);
 
                 Response.AddPaginationHeader(photos.CurrentPage, photos.PageSize, photos.TotalCount, photos.TotalCount);
 
@@ -72,8 +72,17 @@ namespace API.Controllers
         [HttpGet("get-photo/{id}")]
         public async Task<ActionResult<PhotoDto>> GetPhotoByIdAsync(int id)
         {
-            var photo = await _photoService.GetPhotoByIdAsync(id);
-            return Ok(photo);
+            try
+            {
+                var photo = await _photoService.GetPhotoByIdAsyncService(id);
+                return Ok(photo);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
         }
 
         [Authorize]
