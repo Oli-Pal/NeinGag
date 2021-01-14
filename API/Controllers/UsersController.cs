@@ -42,7 +42,7 @@ namespace API.Controllers
             catch (System.Exception)
             {
                 
-                throw;
+                return BadRequest();
             }
             
         }
@@ -58,7 +58,7 @@ namespace API.Controllers
             catch (Exception)
             {
                 
-                throw;
+                return BadRequest();
             }
            
         }
@@ -76,7 +76,7 @@ namespace API.Controllers
             catch (Exception)
             {
                 
-                throw;
+                return BadRequest();
             }
         }
 
@@ -92,7 +92,7 @@ namespace API.Controllers
             catch (Exception)
             {
                 
-                throw;
+                return BadRequest();
             }
         }
 
@@ -108,7 +108,7 @@ namespace API.Controllers
             catch (Exception)
             {
                 
-                throw;
+                return BadRequest();
             }
         }
 
@@ -126,7 +126,7 @@ namespace API.Controllers
             catch (Exception)
             {
                 
-                throw ;
+                return BadRequest();
             }
         }
 
@@ -146,7 +146,7 @@ namespace API.Controllers
             catch (Exception)
             {
                 
-                throw ;
+                return BadRequest();
             }
         }
 
@@ -164,7 +164,7 @@ namespace API.Controllers
             catch (Exception)
             {
                 
-                throw ;
+                return BadRequest();
             }
         }
 
