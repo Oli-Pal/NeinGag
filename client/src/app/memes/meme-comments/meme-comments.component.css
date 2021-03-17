@@ -62,9 +62,10 @@ background-color: rgb(166, 214, 233);
     width:50px;
     margin-top: 10px;
     margin-left: auto;
-   
     margin-right: 30px;
 }
+
+
 
 .container-img{
     display: grid;

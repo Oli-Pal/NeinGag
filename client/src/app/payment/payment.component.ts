@@ -135,7 +135,7 @@ export class PaymentComponent implements OnInit {
         () =>{
           this.amountNr = parseInt(this.amount);
           this.updateAmount(this.amountNr);
-          //this.member.amount += this.amountNr;
+          location.replace('/edit');
         }
       )
       

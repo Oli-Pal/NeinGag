@@ -74,10 +74,6 @@ namespace API.Controllers
       
     }
 
-
-
-
-
     [AllowAnonymous]
     [HttpGet("{id}/number")]
     public async Task<IActionResult> GetNumberOfPhotoComments(int id)

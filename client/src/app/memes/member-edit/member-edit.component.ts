@@ -128,7 +128,7 @@ export class MemberEditComponent implements OnInit {
 
     updateAmount(amount: number){
       this.memberService.updateAmount(amount, this.user.id).subscribe(data => {
-        this.toastr.success("asdaad");
+        this.toastr.success("noice");
       }, error => {
         this.toastr.error(error);
       });
